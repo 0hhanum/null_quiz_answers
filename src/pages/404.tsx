@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { HeadFC, PageProps } from "gatsby";
 import Helmet from "../components/Helmet";
 

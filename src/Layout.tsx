@@ -2,20 +2,21 @@ import React from "react";
 import styled from "styled-components";
 
 const Main = styled.main``;
+const Nav = styled.section``;
+const Img = styled.img`
+    width: 35%;
+    margin-top: 10px;
+`;
 const Layout: React.FC<any> = ({ children }) => {
     return (
         <Main className="container">
-            <section>
+            <Nav>
                 <header>
                     <nav>
-                        <img
-                            src="/images/logo.svg"
-                            width="35%"
-                            style={{ marginTop: 10 }}
-                        />
+                        <Img src="/images/logo.svg" />
                     </nav>
                 </header>
-            </section>
+            </Nav>
             <section>{children}</section>
         </Main>
     );
