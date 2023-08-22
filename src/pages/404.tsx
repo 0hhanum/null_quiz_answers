@@ -1,19 +1,10 @@
 import * as React from "react";
-import { Link, HeadFC, PageProps } from "gatsby";
+import { HeadFC, PageProps } from "gatsby";
+import Helmet from "../components/Helmet";
 
 const NotFoundPage: React.FC<PageProps> = () => {
-    return (
-        <main>
-            <h1>Page not found</h1>
-            <p>
-                Sorry 😔, we couldn’t find what you were looking for.
-                <br />
-                <Link to="/">Go home</Link>.
-            </p>
-        </main>
-    );
+    return <h1>Page not found</h1>;
 };
 
 export default NotFoundPage;
-
-export const Head: HeadFC = () => <title>Not found</title>;
+export const Head: HeadFC = () => <Helmet title="404" />;
