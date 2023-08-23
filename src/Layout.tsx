@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { makeAssetPath } from "./utils";
 
 const Main = styled.main``;
 const Nav = styled.section``;
@@ -13,7 +14,7 @@ const Layout: React.FC<any> = ({ children }) => {
             <Nav>
                 <header>
                     <nav>
-                        <Img src="/images/logo.svg" />
+                        <Img src={makeAssetPath("/images/logo.svg")} />
                     </nav>
                 </header>
             </Nav>

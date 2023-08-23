@@ -1,5 +1,6 @@
 import { graphql, useStaticQuery } from "gatsby";
 import React from "react";
+import { makeAssetPath } from "../utils";
 
 interface IHelmet {
     title?: string;
@@ -23,7 +24,7 @@ export default function Helmet({ title }: IHelmet) {
             <link
                 rel="shortcut icon"
                 type="image/svg+xml"
-                href={"/images/favicon.ico"}
+                href={makeAssetPath("/images/favicon.ico")}
             ></link>
         </>
     );
