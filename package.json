@@ -24,6 +24,7 @@
         "gatsby-plugin-mdx": "^5.11.0",
         "gatsby-plugin-styled-components": "^6.11.0",
         "gatsby-source-filesystem": "^5.11.0",
+        "highlight.js": "^11.8.0",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "styled-components": "^6.0.7"

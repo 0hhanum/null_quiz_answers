@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { PageProps, graphql } from "gatsby";
 import Helmet from "../components/Helmet";
 import { styled } from "styled-components";
+import hljs from "highlight.js/lib/core";
+import javascript from "highlight.js/lib/languages/javascript";
 
 const Container = styled.div.attrs({ className: "container" })`
     margin-top: 15%;
@@ -10,13 +12,22 @@ const DateContainer = styled.div`
     display: flex;
     justify-content: end;
 `;
+hljs.registerLanguage("javascript", javascript);
+
 const Content = ({
     children,
     data: { mdx },
 }: PageProps<Queries.getContentDetailQuery>) => {
     const { title, date, tags, relatedLinks } = mdx!.frontmatter!;
+    useEffect(() => {
+        hljs.highlightAll();
+    }, []);
     return (
         <>
+            <link
+                rel="stylesheet"
+                href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github.min.css"
+            />
             <Container>
                 <h1>{title}</h1>
                 <div>
