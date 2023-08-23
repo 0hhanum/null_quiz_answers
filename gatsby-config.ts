@@ -21,5 +21,6 @@ const config: GatsbyConfig = {
             __key: "pages",
         },
     ],
+    pathPrefix: "/null_quiz_answers",
 };
 export default config;
