@@ -18,12 +18,13 @@ export default function Helmet({ title }: IHelmet) {
     return (
         <>
             <title>
-                {title ? `${title} | ` : ""}
-                {titleQueryResponse?.site?.siteMetadata?.title}
+                {title
+                    ? `${title} | ${titleQueryResponse?.site?.siteMetadata?.title}`
+                    : titleQueryResponse?.site?.siteMetadata?.title}
             </title>
             <link
                 rel="shortcut icon"
-                type="image/svg+xml"
+                type="image/x-icon"
                 href={makeAssetPath("/images/favicon.ico")}
             ></link>
         </>
