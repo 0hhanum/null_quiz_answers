@@ -8,7 +8,7 @@ import javascript from "highlight.js/lib/languages/javascript";
 const Container = styled.div.attrs({ className: "container" })`
     margin-top: 15%;
 `;
-const DateContainer = styled.div`
+const FlexEndContainer = styled.div`
     display: flex;
     justify-content: end;
 `;
@@ -39,9 +39,9 @@ const Content = ({
                         </i>
                     ))}
                 </div>
-                <DateContainer>
+                <FlexEndContainer>
                     <i>{date}</i>
-                </DateContainer>
+                </FlexEndContainer>
                 <hr />
             </Container>
             <Container>
@@ -57,6 +57,13 @@ const Content = ({
                     ))}
                 </ul>
             </article>
+            <FlexEndContainer>
+                <a
+                    href={`https://github.com/0hhanum/null_quiz_answers/issues/new?title=${title} 수정 요청&body=잘못된 정보를 고쳐주시면 기프티콘을 드려요 :)`}
+                >
+                    <p>잘못된 정보가 있나요?</p>
+                </a>
+            </FlexEndContainer>
         </>
     );
 };
