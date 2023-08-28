@@ -1,1 +1,1 @@
-# Welcome to the Answer Page of the Quiz Application
+# Answers hub of the Quiz Application null
