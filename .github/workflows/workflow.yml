@@ -4,7 +4,8 @@ on:
     pull_request:
         branches:
             - master
-
+        type:
+            - closed
 jobs:
     run_workflows:
         runs-on: ubuntu-latest
