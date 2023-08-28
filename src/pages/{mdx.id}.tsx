@@ -67,8 +67,8 @@ export const Head = ({ data }: PageProps<Queries.getContentDetailQuery>) => (
 );
 
 export const query = graphql`
-    query getContentDetail($frontmatter__slug: String) {
-        mdx(frontmatter: { slug: { eq: $frontmatter__slug } }) {
+    query getContentDetail($id: String!) {
+        mdx(id: { eq: $id }) {
             id
             frontmatter {
                 title
