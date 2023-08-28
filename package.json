@@ -9,12 +9,12 @@
     "scripts": {
         "develop": "gatsby develop",
         "start": "gatsby develop",
-        "build": "gatsby build",
+        "build": "gatsby build --prefix-paths",
         "serve": "gatsby serve",
         "clean": "gatsby clean",
         "typecheck": "tsc --noEmit",
-        "deploy": "gatsby build --prefix-paths && gh-pages -d public -b gh-pages",
-        "predeploy": "jest"
+        "deploy": "gh-pages -d public -b gh-pages",
+        "test": "jest"
     },
     "dependencies": {
         "@mdx-js/react": "^2.3.0",
