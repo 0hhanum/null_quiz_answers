@@ -4,6 +4,8 @@ on:
     push:
         paths:
             - "**/*.mdx"
+        branches:
+            - "lab2"
 
 jobs:
     push_to_firebase:
@@ -11,11 +13,13 @@ jobs:
 
         steps:
             - name: Checkout Repository
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
+            - name: Get changed files
+              id: changed-files
+              uses: tj-actions/changed-files@v38
 
-            - name: Get changed .mdx filenames
-              id: get-changed-files
+            - name: List all changed files
               run: |
-                  FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.mdx$')
-                  echo "Changed MDX files: $FILES"
-                  echo "::set-output name=files::$FILES"
+                  for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+                    echo "$file was changed"
+                  done
