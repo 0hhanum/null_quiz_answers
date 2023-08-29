@@ -19,7 +19,9 @@ const IndexPage = ({
             <MdxList>
                 {allMdx.edges?.map((mdx) => (
                     <li>
-                        <a href={mdx.node.id}>{mdx.node.frontmatter?.title}</a>
+                        <a href={`answer/${mdx.node.id}`}>
+                            {mdx.node.frontmatter?.title}
+                        </a>
                     </li>
                 ))}
             </MdxList>

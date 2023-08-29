@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { PageProps, graphql } from "gatsby";
-import Helmet from "../components/Helmet";
+import Helmet from "../../components/Helmet";
 import { styled } from "styled-components";
 import hljs from "highlight.js/lib/core";
 import javascript from "highlight.js/lib/languages/javascript";
