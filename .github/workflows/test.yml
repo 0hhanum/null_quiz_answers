@@ -1,0 +1,21 @@
+name: Push MDX Filenames to Firebase
+
+on:
+    push:
+        paths:
+            - "**/*.mdx"
+
+jobs:
+    push_to_firebase:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v2
+
+            - name: Get changed .mdx filenames
+              id: get-changed-files
+              run: |
+                  FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.mdx$')
+                  echo "Changed MDX files: $FILES"
+                  echo "::set-output name=files::$FILES"
