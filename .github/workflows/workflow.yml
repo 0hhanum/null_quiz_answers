@@ -35,3 +35,11 @@ jobs:
               with:
                   github_token: ${{ secrets.GH_TOKEN }}
                   publish_dir: ./public
+
+            - name: Configure Firebase credentials
+              env:
+                  FIREBASE_CERTIFICATION: ${{ secrets.FIREBASE_CERTIFICATION }}
+                  FIREBASE_DB_PATH: ${{ secrets.FIREBASE_DB_PATH }}
+                  run: |
+                      echo "$FIREBASE_CERTIFICATION" > null_firebase_auth.json
+                      node firebase.js
