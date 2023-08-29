@@ -17,6 +17,8 @@ jobs:
             - name: Get changed files
               id: changed-files
               uses: tj-actions/changed-files@v38
+              with:
+                  files: "**.*.mdx"
 
             - name: List all changed files
               run: |
