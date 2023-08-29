@@ -29,6 +29,6 @@ jobs:
               with:
                   node-version: "14"
             - name: Run Node.js script
-              run: node ../.github/scripts/test.js
+              run: node test.js
               env:
                   CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
