@@ -1,22 +1,24 @@
-name: Push MDX Filenames to Firebase
+name: Save mdx data on firebase db
 
 on:
     push:
+        # branches:
+        #     - gh-pages
         paths:
             - "**/*.mdx"
-        branches:
-            - "lab2"
 
 jobs:
-    push_to_firebase:
+    save_to_firebase:
         runs-on: ubuntu-latest
-
         steps:
             - name: Checkout Repository
               uses: actions/checkout@v3
+
             - name: Get changed files
               id: changed-files
               uses: tj-actions/changed-files@v38
+              with:
+                  files: "**/*.{mdx}"
 
             - name: List all changed files
               run: |
