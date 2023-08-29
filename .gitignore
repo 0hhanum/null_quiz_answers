@@ -278,3 +278,4 @@ google-services.json
 
 # Android Profiling
 *.hprof
+null_firebase_auth.json
