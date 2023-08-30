@@ -29,4 +29,4 @@ jobs:
                   FIREBASE_DB_PATH: ${{ secrets.FIREBASE_DB_PATH }}
               run: |
                   echo "$FIREBASE_CERTIFICATION" > null_firebase_auth.json
-                  node .github/scripts/firebase.js
+                  yarn firebase
