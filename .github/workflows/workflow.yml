@@ -26,9 +26,12 @@ jobs:
                   echo "$credential" > credential.json
 
             - name: Create dotenv
+              env:
+                  FIREBASE_CERTIFICATION_PATH=${{ secrets.FIREBASE_CERTIFICATION_PATH }}
+                  FIREBASE_DB_PATH=${{ secrets.FIREBASE_DB_PATH }}
               run: |
-                  echo "FIREBASE_CERTIFICATION_PATH=${{ secrets.FIREBASE_CERTIFICATION_PATH }}" >> .env
-                  echo "FIREBASE_DB_PATH=${{ secrets.FIREBASE_DB_PATH }}" >> .env
+                  echo "FIREBASE_CERTIFICATION_PATH=$FIREBASE_CERTIFICATION_PATH" >> .env
+                  echo "FIREBASE_DB_PATH=$FIREBASE_DB_PATH" >> .env
                   echo "test=aaaa" >> .env
 
             - name: Configure Firebase credentials
