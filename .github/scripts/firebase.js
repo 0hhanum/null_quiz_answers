@@ -10,6 +10,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 console.log(process.env.FIREBASE_DB_PATH);
 console.log(process.env.test);
+console.log(process.env.ppp);
 
 // const admin = require("firebase-admin");
 // // console.log(process.env.FIREBASE_CERTIFICATION_PATH);
