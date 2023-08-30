@@ -10,11 +10,9 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const admin = require("firebase-admin");
-const FireBaseCertification = JSON.parse(
-    process.env.FIREBASE_CERTIFICATION_PATH
-);
+const firebaseCertification = require(process.env.FIREBASE_CERTIFICATION_PATH);
 admin.initializeApp({
-    credential: admin.credential.cert(FireBaseCertification),
+    credential: admin.credential.cert(firebaseCertification),
     databaseURL: process.env.FIREBASE_DB_PATH,
 });
 
