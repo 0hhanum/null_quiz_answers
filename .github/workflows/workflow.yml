@@ -1,14 +1,9 @@
 name: Main Workflow
 
 on:
-    pull_request:
+    push:
         branches:
             - master
-        type:
-            - closed
-        pull_request_target:
-            types:
-                - closed
 
 jobs:
     run_workflows:
@@ -46,4 +41,4 @@ jobs:
                   FIREBASE_DB_PATH: ${{ secrets.FIREBASE_DB_PATH }}
               run: |
                   echo "$FIREBASE_CERTIFICATION" > null_firebase_auth.json
-                  node firebase.js
+                  node .github/scripts/firebase.js
