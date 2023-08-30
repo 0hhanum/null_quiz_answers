@@ -21,7 +21,7 @@ jobs:
                   for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
                     echo "$file was changed"
                   done
-                  CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
+                  echo "CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}"
 
             - name: Set up Node.js
               uses: actions/setup-node@v2
