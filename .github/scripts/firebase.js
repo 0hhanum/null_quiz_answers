@@ -11,6 +11,8 @@ dotenv.config();
 
 const admin = require("firebase-admin");
 // console.log(process.env.FIREBASE_CERTIFICATION_PATH);
+const path = require("path");
+
 const firebaseCertification = require(path.join(
     __dirname,
     "../../../credential.json"
