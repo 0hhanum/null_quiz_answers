@@ -11,7 +11,7 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v2
               with:
-                  ref: master
+                  ref: lab3
 
             - name: Set up Node.js
               uses: actions/setup-node@v2
