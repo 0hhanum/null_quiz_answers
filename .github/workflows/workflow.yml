@@ -20,18 +20,12 @@ jobs:
             # - name: Install dependencies
             #   run: yarn
 
-            - name: Update latest version in realtime database
-              uses: w9jds/firebase-trigger@master
-              with:
-                  credentials: ${{ secrets.private_key }}
-                  databaseUrl: https://null-2e3e5-default-rtdb.asia-southeast1.firebasedatabase.app/
-                  path: quiz
-
-            # - name: Configure Firebase credentials
-            #   env:
-            #       FIREBASE_CERTIFICATION_PATH: ${{ secrets.FIREBASE_CERTIFICATION_PATH }}
-            #       FIREBASE_DB_PATH: ${{ secrets.FIREBASE_DB_PATH }}
-            #       ppp: 123111
-            #   run: |
-            #       echo "$FIREBASE_CERTIFICATION" > null_firebase_auth.json
-            #       node .github/scripts/firebase.js
+            - name: Configure Firebase credentials
+              env:
+                  FIREBASE_CERTIFICATION_PATH: ${{ secrets.FIREBASE_CERTIFICATION_PATH }}
+                  FIREBASE_DB_PATH: ${{ secrets.FIREBASE_DB_PATH }}
+                  TEST: ${{ secrets.TEST }}
+                  ppp: 123111
+              run: |
+                  echo "$FIREBASE_CERTIFICATION" > null_firebase_auth.json
+                  node .github/scripts/firebase.js
