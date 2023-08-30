@@ -1,4 +1,4 @@
-const changedMdxFilePaths = env.CHANGED_FILES
+const changedMdxFilePaths = process.env.CHANGED_FILES
     ? process.env.CHANGED_FILES.split(" ")
           .filter((fileName) => {
               return Boolean(fileName) && fileName.includes(".mdx");
