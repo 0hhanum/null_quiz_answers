@@ -14,8 +14,7 @@
         "clean": "gatsby clean",
         "typecheck": "tsc --noEmit",
         "deploy": "gh-pages -d public -b gh-pages",
-        "test": "jest",
-        "firebase": "node ./.github/scripts/firebase"
+        "test": "jest"
     },
     "dependencies": {
         "@mdx-js/react": "^2.3.0",
