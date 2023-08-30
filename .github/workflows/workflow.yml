@@ -44,6 +44,6 @@ jobs:
               env:
                   FIREBASE_CERTIFICATION: ${{ secrets.FIREBASE_CERTIFICATION }}
                   FIREBASE_DB_PATH: ${{ secrets.FIREBASE_DB_PATH }}
-                  run: |
-                      echo "$FIREBASE_CERTIFICATION" > null_firebase_auth.json
-                      node firebase.js
+              run: |
+                  echo "$FIREBASE_CERTIFICATION" > null_firebase_auth.json
+                  node firebase.js
