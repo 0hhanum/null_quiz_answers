@@ -1,8 +1,10 @@
-const changedMdxFilePaths = process.env.CHANGED_FILES.split(" ")
-    .filter((fileName) => {
-        return Boolean(fileName) && fileName.includes(".mdx");
-    })
-    .map((fileName) => fileName.replace('"', ""));
+const changedMdxFilePaths = env.CHANGED_FILES
+    ? process.env.CHANGED_FILES.split(" ")
+          .filter((fileName) => {
+              return Boolean(fileName) && fileName.includes(".mdx");
+          })
+          .map((fileName) => fileName.replace('"', ""))
+    : [];
 const mdxParser = require("./mdxParser");
 const dotenv = require("dotenv");
 dotenv.config();
