@@ -44,5 +44,4 @@ jobs:
                   CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
 
               run: |
-                  echo "$FIREBASE_CERTIFICATION" > null_firebase_auth.json
                   node .github/scripts/firebase.js

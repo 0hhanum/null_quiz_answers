@@ -34,6 +34,7 @@ const quizRef = db.ref("quiz");
 const updateQuizData = async (mdxFilePath) => {
     const { title, tags, question, questionType, choices, answer, slug } =
         mdxParser(mdxFilePath);
+    console.log(slug);
     await quizRef.child(slug).set({
         title,
         tags,
