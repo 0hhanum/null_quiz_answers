@@ -22,7 +22,6 @@ jobs:
 
             - name: Configure Firebase credentials
               env:
-                  FIREBASE_CERTIFICATION_PATH: ${{ secrets.FIREBASE_CERTIFICATION_PATH }}
                   FIREBASE_DB_PATH: ${{ secrets.FIREBASE_DB_PATH }}
                   PROJECT_ID: ${{ secrets.PROJECT_ID }}
                   PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}

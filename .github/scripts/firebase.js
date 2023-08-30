@@ -14,7 +14,7 @@ const credential = {
     type: "service_account",
     project_id: process.env.PROJECT_ID,
     universe_domain: "googleapis.com",
-    private_key: process.env.PRIVATE_KEY,
+    private_key: process.env.PRIVATE_KEY.replace(/\\n/g, "\n"),
     private_key_id: process.env.PRIVATE_KEY_ID,
     client_email: process.env.CLIENT_EMAIL,
     client_id: process.env.CLIENT_ID,
