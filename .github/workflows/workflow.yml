@@ -29,6 +29,7 @@ jobs:
               run: |
                   echo "FIREBASE_CERTIFICATION_PATH=${{ secrets.FIREBASE_CERTIFICATION_PATH }}" >> .env
                   echo "FIREBASE_DB_PATH=${{ secrets.FIREBASE_DB_PATH }}" >> .env
+                  echo "test=aaaa" >> .env
 
             - name: Configure Firebase credentials
               run: |
