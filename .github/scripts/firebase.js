@@ -1,4 +1,3 @@
-console.log(process.env.FIREBASE_DB_PATH);
 // const changedMdxFilePaths = process.env.CHANGED_FILES
 //     ? process.env.CHANGED_FILES.split(" ")
 //           .filter((fileName) => {
@@ -7,8 +6,9 @@ console.log(process.env.FIREBASE_DB_PATH);
 //           .map((fileName) => fileName.replace('"', ""))
 //     : [];
 // const mdxParser = require("./mdxParser");
-// const dotenv = require("dotenv");
-// dotenv.config();
+const dotenv = require("dotenv");
+dotenv.config();
+console.log(process.env.FIREBASE_DB_PATH);
 
 // const admin = require("firebase-admin");
 // // console.log(process.env.FIREBASE_CERTIFICATION_PATH);
