@@ -1,14 +1,9 @@
 name: Main Workflow
 
 on:
-    pull_request:
+    push:
         branches:
             - master
-        type:
-            - closed
-        pull_request_target:
-            types:
-                - closed
 
 jobs:
     run_workflows:
