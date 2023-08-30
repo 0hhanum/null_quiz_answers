@@ -1,4 +1,5 @@
 console.log(123 + +process.env.TEST);
+console.log(process.env.TEST);
 // const changedMdxFilePaths = process.env.CHANGED_FILES
 //     ? process.env.CHANGED_FILES.split(" ")
 //           .filter((fileName) => {
