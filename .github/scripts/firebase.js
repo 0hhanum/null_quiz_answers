@@ -51,5 +51,7 @@ const updateQuizData = async (mdxFilePath) => {
         console.log("All updates completed.");
     } catch (error) {
         console.error("An error occurred:", error);
+    } finally {
+        process.exit(0);
     }
 })();
