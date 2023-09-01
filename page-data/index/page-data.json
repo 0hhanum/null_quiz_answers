@@ -1,1 +1,1 @@
-{"componentChunkName":"component---src-pages-index-tsx","path":"/","result":{"data":{"allMdx":{"edges":[{"node":{"frontmatter":{"title":"this is the example","slug":"example"}}}]}},"pageContext":{}},"staticQueryHashes":["1003650488"],"slicesMap":{}}
+{"componentChunkName":"component---src-pages-index-tsx","path":"/","result":{"data":{"allMdx":{"edges":[{"node":{"frontmatter":{"title":"this is the example","slug":"example"}}},{"node":{"frontmatter":{"title":"this is the example","slug":"korean"}}}]}},"pageContext":{}},"staticQueryHashes":["1003650488"],"slicesMap":{}}
