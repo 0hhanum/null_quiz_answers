@@ -45,17 +45,18 @@ jobs:
                   github_token: ${{ secrets.GH_TOKEN }}
                   publish_dir: ./public
 
-            - name: Create credential json file
-              run: |
-                  credential='{"type": "service_account", "project_id": "null-2e3e5", "private_key_id": "'${{ secrets.private_key_id }}'", "client_email": "'${{ secrets.client_email }}'", "client_id": "'${{ secrets.client_id }}'", "universe_domain": "googleapis.com", "auth_uri": "'${{ secrets.auth_uri }}'", "token_uri": "'${{ secrets.token_uri }}'", "auth_provider_x509_cert_url": "'${{ secrets.auth_provider_x509_cert_url }}'", "client_x509_cert_url": "'${{ secrets.client_x509_cert_url }}'"}'
-                  echo "$credential" > credential.json
-
-            - name: Configure Firebase credentials
+            - name: Save change on firebase
               env:
-                  FIREBASE_CERTIFICATION_PATH: ${{ secrets.FIREBASE_CERTIFICATION_PATH }}
                   FIREBASE_DB_PATH: ${{ secrets.FIREBASE_DB_PATH }}
+                  PROJECT_ID: ${{ secrets.PROJECT_ID }}
+                  PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+                  CLIENT_EMAIL: ${{ secrets.CLIENT_EMAIL }}
+                  CLIENT_ID: ${{ secrets.CLIENT_ID }}
+                  AUTH_URI: ${{ secrets.AUTH_URI }}
+                  TOKEN_URI: ${{ secrets.TOKEN_URI }}
+                  AUTH_PROVIDER_X509_CERT_URL: ${{ secrets.AUTH_PROVIDER_X509_CERT_URL }}
+                  CLIENT_X509_CERT_URL: ${{ secrets.CLIENT_X509_CERT_URL }}
                   CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
 
               run: |
-                  echo "$FIREBASE_CERTIFICATION" > null_firebase_auth.json
                   node .github/scripts/firebase.js
