@@ -34,20 +34,28 @@ const quizRef = db.ref("quiz");
 
 const updateQuizData = async (mdxFilePath) => {
     const absoluteMdxPath = path.join(__dirname, mdxFilePath);
-    if (fs.existsSync(absoluteMdxPath)) {
-        const { title, tags, question, questionType, choices, answer, slug } =
-            mdxParser(absoluteMdxPath);
-        await quizRef.child(slug).set({
-            title,
-            tags,
-            question,
-            questionType,
-            choices,
-            answer,
-        });
-    } else {
-        // file removes
-        await quizRef.child(slug).remove();
+    try {
+        if (fs.existsSync(absoluteMdxPath)) {
+            const {
+                title,
+                tags,
+                question,
+                questionType,
+                choices,
+                answer,
+                slug,
+            } = mdxParser(absoluteMdxPath);
+            await quizRef.child(slug).set({
+                title,
+                tags,
+                question,
+                questionType,
+                choices,
+                answer,
+            });
+        }
+    } catch (e) {
+        console.error(e);
     }
 };
 
