@@ -1,5 +1,7 @@
 const changedMdxFilePaths = process.env.CHANGED_FILES
-    ? process.env.CHANGED_FILES.split(" ")
+    ? Buffer.from(process.env.CHANGED_FILES, "base64")
+          .toString("utf-8")
+          .split(" ")
           .filter((fileName) => {
               return Boolean(fileName) && fileName.includes(".mdx");
           })
