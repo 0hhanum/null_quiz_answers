@@ -1,3 +1,8 @@
+const mdxParser = require("./mdxParser");
+const dotenv = require("dotenv");
+const fs = require("fs");
+const path = require("path");
+dotenv.config();
 const changedMdxFilePaths = process.env.CHANGED_FILES
     ? process.env.CHANGED_FILES.split(" ")
           .filter((fileName) => {
@@ -5,10 +10,6 @@ const changedMdxFilePaths = process.env.CHANGED_FILES
           })
           .map((fileName) => "../../" + fileName.replace('"', ""))
     : [];
-const mdxParser = require("./mdxParser");
-const dotenv = require("dotenv");
-dotenv.config();
-
 const admin = require("firebase-admin");
 const credential = {
     type: "service_account",
@@ -32,9 +33,10 @@ const db = admin.database();
 const quizRef = db.ref("quiz");
 
 const updateQuizData = async (mdxFilePath) => {
-    if (fs.existsSync(mdxFilePath)) {
+    const absoluteMdxPath = path.join(__dirname, mdxFilePath);
+    if (fs.existsSync(absoluteMdxPath)) {
         const { title, tags, question, questionType, choices, answer, slug } =
-            mdxParser(mdxFilePath);
+            mdxParser(absoluteMdxPath);
         await quizRef.child(slug).set({
             title,
             tags,
