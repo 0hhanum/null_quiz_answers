@@ -44,6 +44,7 @@ const updateQuizData = async (mdxFilePath) => {
             answer,
         });
     } else {
+        // file removes
         await quizRef.child(slug).remove();
     }
 };
