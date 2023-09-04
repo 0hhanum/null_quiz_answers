@@ -44,6 +44,8 @@ describe("Test MDX files.", () => {
                 expect(Array.isArray(frontmatter.question)).toBe(true);
                 expect(QUESTION_TYPES).toContain(frontmatter.questionType);
                 expect(Array.isArray(frontmatter.answer)).toBe(true);
+                expect(typeof frontmatter.slug).toBe("string");
+                expect(/\s/.test(frontmatter.slug)).toBe(false); // Check for whitespace
 
                 if (frontmatter.questionType === "객관식") {
                     expect(frontmatter.choices).toBeDefined();
