@@ -19,10 +19,10 @@ const IndexPage = ({
             <h1>Welcome to the answer hub of null.</h1>
             <MdxList>
                 {allMdx.edges?.map((mdx) => (
-                    <li>
+                    <li key={mdx.node.id}>
                         <a
                             href={`answer/${replaceWhitespace(
-                                mdx.node.frontmatter?.slug
+                                mdx.node.frontmatter?.slug!
                             )}`}
                         >
                             {mdx.node.frontmatter?.title}
@@ -41,6 +41,7 @@ export const query = graphql`
         allMdx {
             edges {
                 node {
+                    id
                     frontmatter {
                         title
                         slug
