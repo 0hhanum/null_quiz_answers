@@ -5,7 +5,7 @@ const { describe, test } = require("@jest/globals");
 
 const BASE_DIR = path.join(__dirname, "../");
 const QUESTION_TYPES = ["객관식", "주관식", "OX", "빈칸"];
-const 객관식_보기_개수 = 4;
+const 객관식_보기_개수 = [2, 4];
 
 // Utility function to read MDX files and parse frontmatter
 const readMdxFile = (filePath) => {
@@ -50,7 +50,9 @@ describe("Test MDX files.", () => {
                 if (frontmatter.questionType === "객관식") {
                     expect(frontmatter.choices).toBeDefined();
                     expect(Array.isArray(frontmatter.choices)).toBe(true);
-                    expect(frontmatter.choices.length).toBe(객관식_보기_개수);
+                    expect(frontmatter.choices.length).toBeOneOf(
+                        객관식_보기_개수
+                    );
                 } else if (frontmatter.questionType === "빈칸") {
                     expect(Array.isArray(frontmatter.choices)).toBe(true);
                     frontmatter.choices.forEach((choice) => {
