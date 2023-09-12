@@ -2,7 +2,6 @@ import React from "react";
 import { PageProps, HeadFC, graphql } from "gatsby";
 import Helmet from "../components/Helmet";
 import { styled } from "styled-components";
-import { replaceWhitespace } from "../utils";
 
 const Container = styled.div`
     display: flex;
@@ -19,12 +18,8 @@ const IndexPage = ({
             <h1>Welcome to the answer hub of null.</h1>
             <MdxList>
                 {allMdx.edges?.map((mdx) => (
-                    <li>
-                        <a
-                            href={`answer/${replaceWhitespace(
-                                mdx.node.frontmatter?.slug
-                            )}`}
-                        >
+                    <li key={mdx.node.id}>
+                        <a href={`answer/${mdx.node.frontmatter?.slug!}`}>
                             {mdx.node.frontmatter?.title}
                         </a>
                     </li>
@@ -41,6 +36,7 @@ export const query = graphql`
         allMdx {
             edges {
                 node {
+                    id
                     frontmatter {
                         title
                         slug
