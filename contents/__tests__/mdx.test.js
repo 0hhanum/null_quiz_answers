@@ -14,6 +14,25 @@ const readMdxFile = (filePath) => {
   return { frontmatter };
 };
 
+expect.extend({
+  toBeOneOf(received, values) {
+    const pass = values.includes(received);
+    if (pass) {
+      return {
+        message: () =>
+          `expected ${received} to be one of [${values.join(", ")}]`,
+        pass: true,
+      };
+    } else {
+      return {
+        message: () =>
+          `expected ${received} not to be one of [${values.join(", ")}]`,
+        pass: false,
+      };
+    }
+  },
+});
+
 describe("Test MDX files.", () => {
   const categories = fs
     .readdirSync(BASE_DIR, { withFileTypes: true })
