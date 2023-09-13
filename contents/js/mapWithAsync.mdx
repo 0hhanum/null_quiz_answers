@@ -3,29 +3,29 @@ title: map()는 await을 기다리지 않는다.
 slug: map-doesn't-wait-for-await
 date: 2023-09-13
 tags:
-    - JS
-    - JS미세팁
+  - JS
+  - JS미세팁
 relatedLinks:
-    - https://constructionsite.tistory.com/43
-    - https://velog.io/@minsangk/2019-09-06-0209-%EC%9E%91%EC%84%B1%EB%90%A8-eik06xy8mm
+  - https://constructionsite.tistory.com/43
+  - https://velog.io/@minsangk/2019-09-06-0209-%EC%9E%91%EC%84%B1%EB%90%A8-eik06xy8mm
 questionType: 객관식
 question: |
-    - 일반적인 경우. 다음 코드 스니펫의 결과로 적당한 것은?
-    - ```
-      <code>
-      async function someFunction(array) {
-        return await array.map(async (item) => await someAsyncFunction(item));
-      }
-      console.log(await someFunction(arr));
-      </code>
-      ```
+  - 일반적인 경우. 다음 코드 스니펫의 결과로 적당한 것은?
+  - ```
+    <code>
+    async function someFunction(array) {
+      return await array.map(async (item) => await someAsyncFunction(item));
+    }
+    console.log(await someFunction(arr));
+    </code>
+    ```
 choices:
-    - 1, 2, 3
-    - [ Promise { <pending> }, Promise { <pending> } ]
-    - 오류 발생
-    - []
+  - "1, 2, 3"
+  - "[ Promise { <pending> }, Promise { <pending> } ]"
+  - "오류 발생"
+  - "[]"
 answer:
-    - B
+  - B
 level: 3
 ---
 
