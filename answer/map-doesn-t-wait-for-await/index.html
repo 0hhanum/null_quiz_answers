@@ -7,17 +7,87 @@ data-styled.g2[id="Header__Img-sc-88xloa-1"]{content:"iUiTAs,"}/*!sc*/
 data-styled.g3[id="mdxfrontmatter__slug__Container-sc-14z8vhw-0"]{content:"jepbnA,"}/*!sc*/
 .gPpXoF{display:flex;justify-content:end;}/*!sc*/
 data-styled.g4[id="mdxfrontmatter__slug__FlexEndContainer-sc-14z8vhw-1"]{content:"gPpXoF,"}/*!sc*/
-</style><title data-gatsby-head="true">this is the example | null_quiz_answers</title><link rel="shortcut icon" type="image/x-icon" href="https://0hhanum.github.io/null_quiz_answers/images/favicon.ico" data-gatsby-head="true"/></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" id="gatsby-focus-wrapper"><div><main class="container"><section class="Header__Nav-sc-88xloa-0 kiRgA-D"><nav><!--$--><img src="https://0hhanum.github.io/null_quiz_answers/images/logo.svg" class="Header__Img-sc-88xloa-1 iUiTAs"/><!--/$--></nav></section><section><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github.min.css"/><div class="mdxfrontmatter__slug__Container-sc-14z8vhw-0 jepbnA container"><h1>this is the example</h1><div><i>About </i><i>Example<!-- -->, </i><i>JS<!-- -->, </i><i>CS</i></div><div class="mdxfrontmatter__slug__FlexEndContainer-sc-14z8vhw-1 gPpXoF"><i>2023/08/22</i></div><hr/></div><div class="mdxfrontmatter__slug__Container-sc-14z8vhw-0 jepbnA container"><section><h1>Example1</h1>
-<p>Write contents under the underline by markdown.</p>
-<h2>Example2</h2>
-<p>Write contents under the underline by markdown.</p>
-<pre><code class="language-javascript">const a = 123;
-const b = 44;
-const c = () =&gt; a + b;
-</code></pre></section></div><article><h3>더 알아보려면?</h3><ul><li><a href="https://github.com/0hhanum">https://github.com/0hhanum</a></li><li><a href="https://github.com/0hhanum">https://github.com/0hhanum</a></li><li><a href="https://github.com/0hhanum">https://github.com/0hhanum</a></li></ul></article><div class="mdxfrontmatter__slug__FlexEndContainer-sc-14z8vhw-1 gPpXoF"><a href="https://github.com/0hhanum/null_quiz_answers/issues/new?title=this is the example 수정 요청&amp;body=잘못된 정보를 고쳐주시면 기프티콘을 드려요 :)"><p>잘못된 정보가 있나요?</p></a></div></section></main></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/answer/unavailable-handle-korean/";/*]]>*/</script><!-- slice-start id="_gatsby-scripts-1" -->
+</style><title data-gatsby-head="true">map()는 await을 기다리지 않는다. | null_quiz_answers</title><link rel="shortcut icon" type="image/x-icon" href="https://0hhanum.github.io/null_quiz_answers/images/favicon.ico" data-gatsby-head="true"/></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" id="gatsby-focus-wrapper"><div><main class="container"><section class="Header__Nav-sc-88xloa-0 kiRgA-D"><nav><!--$--><img src="https://0hhanum.github.io/null_quiz_answers/images/logo.svg" class="Header__Img-sc-88xloa-1 iUiTAs"/><!--/$--></nav></section><section><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github.min.css"/><div class="mdxfrontmatter__slug__Container-sc-14z8vhw-0 jepbnA container"><h1>map()는 await을 기다리지 않는다.</h1><div><i>About </i><i>JS<!-- -->, </i><i>JS미세팁</i></div><div class="mdxfrontmatter__slug__FlexEndContainer-sc-14z8vhw-1 gPpXoF"><i>2023/09/13</i></div><hr/></div><div class="mdxfrontmatter__slug__Container-sc-14z8vhw-0 jepbnA container"><section><h1>async / await</h1>
+<h3><code>async / await</code>은 ES6에서 추가된 문법으로, Promise 기반의 비동기 코드를 읽기 쉽고 직관적으로 만들어줍니다.</h3>
+<p><code>async</code> 키워드는 함수를 비동기 함수로 만듭니다. <code>async</code>가 선언된 함수 내에서 <code>await</code> 키워드를 사용하여 비동기 작업이 완료될 때까지 기다릴 수 있습니다.
+<code>await</code>은 Promise가 완료될 때까지 함수의 실행을 일시 중단합니다. 그리고 Promise가 완료되면 해당 값을 반환합니다.</p>
+<pre><code class="language-javascript">async function fetchData() {
+  const response = await fetch(&quot;https://api.example.com/data&quot;);
+  const data = await response.json();
+  return data;
+}
+</code></pre>
+<h1>왜?</h1>
+<h3><code>map()</code> 메서드의 콜백 인자로 <code>async</code> 함수를 전달하고 <code>await</code> 처리도 잘 했는데 왜 Promise 객체가 그대로 반환될까요?</h3>
+<p>해당 콜백함수가 동작하는 환경에 대해 생각해봐야 합니다.
+<code>map()</code> 메서드는 Array 클래스의 메서드 중 하나로, 구현체는 아래와 비슷하게 생겼을 것입니다. (실제 V8엔진 구현이 js로 되어  있다는 건 아닙니다.)</p>
+<pre><code class="language-javascript">Array.prototype.map = function (callback) {
+  const result = [];
+  for (let i = 0; i &lt; this.length; i++) {
+    const mappedValue = callback(this[i], i, this);
+    result.push(mappedValue);
+  }
+  return result;
+};
+</code></pre>
+<p><code>callback</code>의 인자로 <code>async</code> 함수를 전달한다면 동작할까요?
+그렇지 않겠죠.</p>
+<p>비동기 처리가 가능하려면 map 메서드 자체가 <code>async</code> 함수가 되어 callback의 반환 값을 기다려야 합니다.</p>
+<p>아래와 같이요.</p>
+<pre><code class="language-javascript">Array.prototype.map = async function (callback) {
+  const result = [];
+  for (let i = 0; i &lt; this.length; i++) {
+    const mappedValue = await callback(this[i], i, this);
+    result.push(mappedValue);
+  }
+  return result;
+};
+</code></pre>
+<p>이처럼 map() 메서드 자체가 비동기 처리를 지원하지 않기 때문에 <code>async</code> 함수를 인자로 전달해도 원하는대로 동작하지 않습니다.</p>
+<p>콜백함수가 이행되지 않은 Promise 객체를 그대로 반환하며, 따라서 결과값으로 Promise 객체 배열을 얻게 됩니다.</p>
+<p><code>await</code> 키워드는 Promise 객체만 이행할 수 있기 때문에 아래의 <code>await</code> 또한 아무것도 기다리지 않게 되죠.</p>
+<pre><code class="language-javascript">const arr = await map(someAsyncFunction); // Promise 배열
+</code></pre>
+<p>이는 Array의 순회 메서드 <code>forEach()</code>, <code>reduce()</code>, <code>filter()</code>등이 모두 동일합니다.</p>
+<h1>어떻게?</h1>
+<h3>그렇다면 어떻게 처리해야 좋을까요</h3>
+<ol>
+<li>for문 사용
+선언형을 포기하고 순차적으로 실행할 수 있습니다.</li>
+</ol>
+<pre><code class="language-javascript">for (let i = 0; i &lt; arr; i++) {
+  const result = await someAsyncFunc(arr[i]);
+  resultArr.push(result);
+}
+
+// for...of 도 동일
+</code></pre>
+<p>아래 방식보다 ~~간지 가 안나고~~ 모든 비동기 요청을 순차적으로(waterfall) 처리해야 한다는 단점이 있습니다.</p>
+<ol start="2">
+<li>Promise.all()</li>
+</ol>
+<pre><code class="language-javascript">function someFunction(array) {
+	  return await array.map(async (item) =&gt; await someAsyncFunction(item));
+}
+
+</code></pre>
+<p>위 함수는 Promise 객체 배열을 반환한다고 했었죠.
+<code>Promise.all()</code> 을 통해 순회 가능한 객체 내부의 Promise의 이행을 기다리는 Promise를 받을 수 있습니다.</p>
+<p>[Promise.all() 이란? -&gt;] (https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Promise/all)</p>
+<pre><code class="language-javascript">async function someFunction(array) {
+	  return await Promise.all(array.map(async (item) =&gt; {
+		   return someAsyncFunction(item)
+      }));
+
+ ...
+
+ const result = async someFunction(arr); // 정상 동작
+</code></pre>
+<p>다음과 같이 사용할 수 있습니다.</p>
+<p>위와 같이 처리했을 때 장점은 <code>map()</code> 메서드가 이행 전의 Promise 객체를 동기적으로 파바박 반환하고, <code>Promise.all()</code> 은 해당 객체들을 <strong>병렬적</strong>으로 처리할 수 있다는 점이에요.</p></section></div><article><h3>더 알아보려면?</h3><ul><li><a href="https://constructionsite.tistory.com/43">https://constructionsite.tistory.com/43</a></li><li><a href="https://velog.io/@minsangk/2019-09-06-0209-%EC%9E%91%EC%84%B1%EB%90%A8-eik06xy8mm">https://velog.io/@minsangk/2019-09-06-0209-%EC%9E%91%EC%84%B1%EB%90%A8-eik06xy8mm</a></li></ul></article><div class="mdxfrontmatter__slug__FlexEndContainer-sc-14z8vhw-1 gPpXoF"><a href="https://github.com/0hhanum/null_quiz_answers/issues/new?title=map()는 await을 기다리지 않는다. 수정 요청&amp;body=잘못된 정보를 고쳐주시면 기프티콘을 드려요 :)"><p>잘못된 정보가 있나요?</p></a></div></section></main></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/answer/map-doesn-t-wait-for-await/";/*]]>*/</script><!-- slice-start id="_gatsby-scripts-1" -->
           <script
             id="gatsby-chunk-mapping"
           >
-            window.___chunkMapping="{\"app\":[\"/app-0ab5298664446302bf62.js\"],\"component---src-pages-404-tsx\":[\"/component---src-pages-404-tsx-dcac18335b85676a4bd4.js\"],\"component---src-pages-answer-mdx-frontmatter-slug-tsx-content-file-path-contents-example-example-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-slug-tsx-content-file-path-contents-example-example-mdx-2b01500b3ba62e1841c4.js\"],\"component---src-pages-answer-mdx-frontmatter-slug-tsx-content-file-path-contents-js-unavailable-handle-korean-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-slug-tsx-content-file-path-contents-js-unavailable-handle-korean-mdx-c690d1300e3907ca3bc8.js\"],\"component---src-pages-index-tsx\":[\"/component---src-pages-index-tsx-756d2c393055d7ec9c90.js\"]}";
+            window.___chunkMapping="{\"app\":[\"/app-771985ad43c3c544e5ba.js\"],\"component---src-pages-404-tsx\":[\"/component---src-pages-404-tsx-dcac18335b85676a4bd4.js\"],\"component---src-pages-answer-mdx-frontmatter-slug-tsx-content-file-path-contents-example-example-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-slug-tsx-content-file-path-contents-example-example-mdx-2b01500b3ba62e1841c4.js\"],\"component---src-pages-answer-mdx-frontmatter-slug-tsx-content-file-path-contents-js-map-with-async-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-slug-tsx-content-file-path-contents-js-map-with-async-mdx-5cc9c9c64c511cb43a25.js\"],\"component---src-pages-index-tsx\":[\"/component---src-pages-index-tsx-120667efee4e62a53891.js\"]}";
           </script>
-        <script>window.___webpackCompilationHash="cf81aeddab698255776d";</script><script src="/null_quiz_answers/webpack-runtime-4db1fc4e01eb88313ca5.js" async></script><script src="/null_quiz_answers/framework-e6d1486946e8e879fece.js" async></script><script src="/null_quiz_answers/app-0ab5298664446302bf62.js" async></script><!-- slice-end id="_gatsby-scripts-1" --></body></html>
+        <script>window.___webpackCompilationHash="f5c768c8ba047a162b05";</script><script src="/null_quiz_answers/webpack-runtime-4bf6a0625d204d4f9559.js" async></script><script src="/null_quiz_answers/framework-e6d1486946e8e879fece.js" async></script><script src="/null_quiz_answers/app-771985ad43c3c544e5ba.js" async></script><!-- slice-end id="_gatsby-scripts-1" --></body></html>
