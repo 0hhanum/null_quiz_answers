@@ -7,7 +7,7 @@ data-styled.g2[id="Header__Img-sc-88xloa-1"]{content:"iUiTAs,"}/*!sc*/
 data-styled.g3[id="mdxfrontmatter__slug__Container-sc-14z8vhw-0"]{content:"jepbnA,"}/*!sc*/
 .gPpXoF{display:flex;justify-content:end;}/*!sc*/
 data-styled.g4[id="mdxfrontmatter__slug__FlexEndContainer-sc-14z8vhw-1"]{content:"gPpXoF,"}/*!sc*/
-</style><title data-gatsby-head="true">생성자 함수와 prototype 메서드 | null_quiz_answers</title><link rel="shortcut icon" type="image/x-icon" href="https://0hhanum.github.io/null_quiz_answers/images/favicon.ico" data-gatsby-head="true"/></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" id="gatsby-focus-wrapper"><div><main class="container"><section class="Header__Nav-sc-88xloa-0 kiRgA-D"><nav><!--$--><img src="https://0hhanum.github.io/null_quiz_answers/images/logo.svg" class="Header__Img-sc-88xloa-1 iUiTAs"/><!--/$--></nav></section><section><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/atom-one-dark.min.css"/><div class="mdxfrontmatter__slug__Container-sc-14z8vhw-0 jepbnA container"><h1>생성자 함수와 prototype 메서드</h1><div><i>About </i><i>JS</i></div><div class="mdxfrontmatter__slug__FlexEndContainer-sc-14z8vhw-1 gPpXoF"><i>2023/09/13</i></div><hr/></div><div class="mdxfrontmatter__slug__Container-sc-14z8vhw-0 jepbnA container"><section><h2>prototype?</h2>
+</style><title data-gatsby-head="true">생성자 함수와 prototype 메서드 | null_quiz_answers</title><link rel="shortcut icon" type="image/x-icon" href="https://0hhanum.github.io/null_quiz_answers/images/favicon.ico" data-gatsby-head="true"/></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" id="gatsby-focus-wrapper"><div><main class="container"><section class="Header__Nav-sc-88xloa-0 kiRgA-D"><nav><!--$--><img src="https://0hhanum.github.io/null_quiz_answers/images/logo.svg" class="Header__Img-sc-88xloa-1 iUiTAs"/><!--/$--></nav></section><section><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/atom-one-dark.min.css"/><div class="mdxfrontmatter__slug__Container-sc-14z8vhw-0 jepbnA container"><h1>생성자 함수와 prototype 메서드</h1><div><i>About </i><i>JS</i></div><div class="mdxfrontmatter__slug__FlexEndContainer-sc-14z8vhw-1 gPpXoF"><i>2023/10/20</i></div><hr/></div><div class="mdxfrontmatter__slug__Container-sc-14z8vhw-0 jepbnA container"><section><h2>prototype?</h2>
 <h3>객체</h3>
 <p>prototype에 대해 설명하려면 객체에 대해 알아야 합니다.
 흔히 JavaScript에서 <strong>거의 모든 것이 객체</strong>라고 설명합니다.</p>
@@ -22,7 +22,7 @@ data-styled.g4[id="mdxfrontmatter__slug__FlexEndContainer-sc-14z8vhw-1"]{content
 <li>symbol (ES6부터 도입된 고유 식별자)</li>
 </ol>
 <p>위 타입을 제외한 JS 내의 모든 요소가 객체입니다. (함수, 배열, 정규표현식, 에러, etc)</p>
-<pre><code class="language-javascript">const arr = [1,2,3] // Array의 객체
+<pre><code class="language-javascript">const arr = [1, 2, 3]; // Array의 객체
 const hanum = new Person(); // Person의 객체
 </code></pre>
 <h3>JavaScript는 프로토타입 기반 언어</h3>
@@ -30,16 +30,15 @@ const hanum = new Person(); // Person의 객체
 <p>모든 객체는 프로토타입 객체(prototype object)를 가지며 자신의 프로토타입 객체에 정의된 속성에 접근할 수 있다는 뜻입니다.</p>
 <p>예를 들어 <code>Array</code> 객체의 프로토타입은 <code>forEach()</code>, <code>map()</code> 등의 메서드를 가지고 있기 때문에 <code>[].forEach()</code> 와 같은 형식으로 메서드를 사용할 수 있습니다.</p>
 <p>생성자 함수를 사용할 경우, 아래와 같이 프로토타입 메서드를 정의합니다.</p>
-<pre><code class="language-javascript">function Person(name){
+<pre><code class="language-javascript">function Person(name) {
   this._name = name;
 }
-Person.prototype.getName = function() {
-  								return this._name
-							}
+Person.prototype.getName = function () {
+  return this._name;
+};
 
 const hanum = new Person(&quot;hanum&quot;);
 hanum.getName();
-
 </code></pre>
 <h2>프로토타입 객체에 메서드를 정의하는 것과 일반 메서드를 정의하는 것은 어떻게 다를까요?</h2>
 <p><strong>prototype 객체는 인스턴스 내부에 존재하지 않습니다.</strong>
@@ -54,7 +53,7 @@ hanum.getName();
 const p1 = new Person(&quot;p1&quot;);
 const p2 = new Person(&quot;p2&quot;);
 </code></pre>
-<p><code>p1</code>,  <code>p2</code>가 생성될 때마다 <code>getName()</code> 함수를 생성해야 하므로 자원이 낭비될 뿐더러, <strong>p1과 p2 내부에 각각 <code>getName()</code>대한 정보를 저장합니다.</strong> 기능은 같지만, 각 인스턴스에 새로운 메서드를 추가했을때와 동일하게 동작합니다. 아래처럼요.</p>
+<p><code>p1</code>, <code>p2</code>가 생성될 때마다 <code>getName()</code> 함수를 생성해야 하므로 자원이 낭비될 뿐더러, <strong>p1과 p2 내부에 각각 <code>getName()</code>대한 정보를 저장합니다.</strong> 기능은 같지만, 각 인스턴스에 새로운 메서드를 추가했을때와 동일하게 동작합니다. 아래처럼요.</p>
 <pre><code class="language-javascript">p1.someFunc = () =&gt; {};
 p2.otherFunc = () =&gt; {};
 </code></pre>
@@ -65,7 +64,7 @@ p2.otherFunc = () =&gt; {};
 <p>그 외에도 일반 메서드가 아닌 프로토타입 메서드를 사용한다면</p>
 <ul>
 <li>프로토타입 체인을 통한 상속</li>
-<li>동적 업데이트 (일반 메서드의 경우 인스턴스 생성 이후 메서드 업데이트 불가능)</li>
+<li>동적  업데이트 (일반 메서드의 경우 인스턴스 생성 이후 메서드 업데이트 불가능)</li>
 <li>코드 가독성 향상 (객체 property로 프로토타입 메서드가 표시되지 않음)</li>
 </ul>
 <p>등의 장점이 있으니, 상황에 맞게 잘 사용하는 것이 좋습니다.</p>
@@ -77,7 +76,7 @@ p2.otherFunc = () =&gt; {};
     this.name = name;
   }
   getName() {
-    return this.name
+    return this.name;
   }
 }
 </code></pre>
@@ -87,14 +86,14 @@ p2.otherFunc = () =&gt; {};
     this.name = name;
   }
 }
-Person.prototype.getName = function() {
-  								return this.name
-							}
+Person.prototype.getName = function () {
+  return this.name;
+};
 </code></pre>
 <p>와 동일합니다. 하지만 객체 메서드를 사용하는 전자가 훨씬 직관적입니다. 재미있죠?</p></section></div><article><h3>더 알아보려면?</h3><ul><li><a href="https://onlydev.tistory.com/166">https://onlydev.tistory.com/166</a></li><li><a href="https://medium.com/@bluesh55/javascript-prototype-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0-f8e67c286b67">https://medium.com/@bluesh55/javascript-prototype-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0-f8e67c286b67</a></li></ul></article><div class="mdxfrontmatter__slug__FlexEndContainer-sc-14z8vhw-1 gPpXoF"><a href="https://github.com/0hhanum/null_quiz_answers/issues/new?title=생성자 함수와 prototype 메서드 수정 요청&amp;body=잘못된 정보를 고쳐주시면 기프티콘을 드려요 :)"><p>잘못된 정보가 있나요?</p></a></div></section></main></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/answer/prototype-method-with-constructor-function/";/*]]>*/</script><!-- slice-start id="_gatsby-scripts-1" -->
           <script
             id="gatsby-chunk-mapping"
           >
-            window.___chunkMapping="{\"app\":[\"/app-6010d2eb979b00c13622.js\"],\"component---src-pages-404-tsx\":[\"/component---src-pages-404-tsx-dcac18335b85676a4bd4.js\"],\"component---src-pages-answer-mdx-frontmatter-slug-tsx-content-file-path-contents-example-example-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-slug-tsx-content-file-path-contents-example-example-mdx-4f67ee4f26f17ffdfbd3.js\"],\"component---src-pages-answer-mdx-frontmatter-slug-tsx-content-file-path-contents-js-map-with-async-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-slug-tsx-content-file-path-contents-js-map-with-async-mdx-e82dd32fe7501e1887e4.js\"],\"component---src-pages-answer-mdx-frontmatter-slug-tsx-content-file-path-contents-js-prototype-method-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-slug-tsx-content-file-path-contents-js-prototype-method-mdx-0a94af14f964f655c46d.js\"],\"component---src-pages-index-tsx\":[\"/component---src-pages-index-tsx-120667efee4e62a53891.js\"]}";
+            window.___chunkMapping="{\"app\":[\"/app-6010d2eb979b00c13622.js\"],\"component---src-pages-404-tsx\":[\"/component---src-pages-404-tsx-dcac18335b85676a4bd4.js\"],\"component---src-pages-answer-mdx-frontmatter-slug-tsx-content-file-path-contents-example-example-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-slug-tsx-content-file-path-contents-example-example-mdx-4f67ee4f26f17ffdfbd3.js\"],\"component---src-pages-answer-mdx-frontmatter-slug-tsx-content-file-path-contents-js-map-with-async-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-slug-tsx-content-file-path-contents-js-map-with-async-mdx-e82dd32fe7501e1887e4.js\"],\"component---src-pages-answer-mdx-frontmatter-slug-tsx-content-file-path-contents-js-prototype-method-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-slug-tsx-content-file-path-contents-js-prototype-method-mdx-f4916b8b82da9cae16f7.js\"],\"component---src-pages-index-tsx\":[\"/component---src-pages-index-tsx-120667efee4e62a53891.js\"]}";
           </script>
-        <script>window.___webpackCompilationHash="4f62098fdebabbba5300";</script><script src="/null_quiz_answers/webpack-runtime-890084b96f4f3679d0a6.js" async></script><script src="/null_quiz_answers/framework-e6d1486946e8e879fece.js" async></script><script src="/null_quiz_answers/app-6010d2eb979b00c13622.js" async></script><!-- slice-end id="_gatsby-scripts-1" --></body></html>
+        <script>window.___webpackCompilationHash="6029b3ca853e805863dd";</script><script src="/null_quiz_answers/webpack-runtime-7389d67cf6d6b3b3da6b.js" async></script><script src="/null_quiz_answers/framework-e6d1486946e8e879fece.js" async></script><script src="/null_quiz_answers/app-6010d2eb979b00c13622.js" async></script><!-- slice-end id="_gatsby-scripts-1" --></body></html>
