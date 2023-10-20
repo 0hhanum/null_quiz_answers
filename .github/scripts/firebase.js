@@ -36,16 +36,27 @@ const updateQuizData = async (mdxFilePath) => {
   const absoluteMdxPath = path.join(__dirname, mdxFilePath);
   try {
     if (fs.existsSync(absoluteMdxPath)) {
-      const { title, tags, question, questionType, choices, answer, slug } =
-        mdxParser(absoluteMdxPath);
-      await quizRef.child(slug).set({
+      const {
         title,
         tags,
         question,
         questionType,
+        choices,
         answer,
-        choices: choices || null,
-      });
+        slug,
+        category,
+      } = mdxParser(absoluteMdxPath);
+      await quizRef
+        .child(category)
+        .child(slug)
+        .set({
+          title,
+          tags,
+          question,
+          questionType,
+          answer,
+          choices: choices || null,
+        });
     }
   } catch (e) {
     console.error(e);
