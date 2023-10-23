@@ -69,16 +69,19 @@ describe("Test MDX files.", () => {
         expect(/\s/.test(frontmatter.slug)).toBe(false); // Check for whitespace
         expect(typeof frontmatter.level).toBe("number");
         expect(frontmatter.level >= 1 && frontmatter.level <= 5).toBe(true);
+
+        const assertArray = (arr, expectedLengths) => {
+          expect(Array.isArray(arr)).toBe(true);
+          expect(arr.length).toBeOneOf(expectedLengths);
+        };
+
         if (frontmatter.questionType === "객관식") {
-          expect(frontmatter.choices).toBeDefined();
-          expect(Array.isArray(frontmatter.choices)).toBe(true);
-          expect(frontmatter.choices.length).toBeOneOf(객관식_보기_개수);
+          assertArray(frontmatter.choices, 객관식_보기_개수);
         } else if (frontmatter.questionType === "빈칸") {
           // 빈칸 여러 개 나오는 케이스 (순차적)
           expect(Array.isArray(frontmatter.choices)).toBe(true);
           frontmatter.choices.forEach((choice) => {
-            expect(Array.isArray(choice)).toBe(true);
-            expect(choice.length).toBe(객관식_보기_개수);
+            assertArray(choice, 객관식_보기_개수);
           });
         }
         expect(typeof frontmatter.category).toBe("string");
