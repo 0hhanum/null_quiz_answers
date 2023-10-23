@@ -74,6 +74,7 @@ describe("Test MDX files.", () => {
           expect(Array.isArray(frontmatter.choices)).toBe(true);
           expect(frontmatter.choices.length).toBeOneOf(객관식_보기_개수);
         } else if (frontmatter.questionType === "빈칸") {
+          // 빈칸 여러 개 나오는 케이스 (순차적)
           expect(Array.isArray(frontmatter.choices)).toBe(true);
           frontmatter.choices.forEach((choice) => {
             expect(Array.isArray(choice)).toBe(true);
