@@ -1,7 +1,10 @@
 // Describe mdx frontmatter type
 
 type questionType = "객관식" | "주관식" | "OX" | "빈칸";
+type category = "cs" | "fe" | "react" | "js" | "ts";
+
 interface IFrontmatter {
+  id: string;
   title: string;
   date: Date; // YYYY-MM-DD (gatsby automately changes date object)
   tags: string[];
@@ -12,4 +15,5 @@ interface IFrontmatter {
   answer: string[];
   slug: string;
   level: number; // 1, 2, 3, 4, 5
+  category: category;
 }

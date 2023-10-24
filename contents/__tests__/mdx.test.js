@@ -35,6 +35,12 @@ expect.extend({
   },
 });
 
+// check isArray & length of array
+const assertArray = (arr, expectedLengths) => {
+  expect(Array.isArray(arr)).toBe(true);
+  expect(arr.length).toBeOneOf(expectedLengths);
+};
+
 describe("Test MDX files.", () => {
   const categories = fs
     .readdirSync(BASE_DIR, { withFileTypes: true })
@@ -57,35 +63,54 @@ describe("Test MDX files.", () => {
         const { frontmatter } = readMdxFile(filePath);
         // Validate frontmatter structure and properties
         expect(frontmatter).toBeDefined();
-
-        expect(typeof frontmatter.title).toBe("string");
-        expect(typeof frontmatter.date).toBe("object");
-        expect(Array.isArray(frontmatter.tags)).toBe(true);
-        expect(Array.isArray(frontmatter.relatedLinks)).toBe(true);
-        expect(Array.isArray(frontmatter.question)).toBe(true);
-        expect(QUESTION_TYPES).toContain(frontmatter.questionType);
-        expect(Array.isArray(frontmatter.answer)).toBe(true);
-        expect(typeof frontmatter.slug).toBe("string");
-        expect(/\s/.test(frontmatter.slug)).toBe(false); // Check for whitespace
-        expect(typeof frontmatter.level).toBe("number");
-        expect(frontmatter.level >= 1 && frontmatter.level <= 5).toBe(true);
-
-        const assertArray = (arr, expectedLengths) => {
-          expect(Array.isArray(arr)).toBe(true);
-          expect(arr.length).toBeOneOf(expectedLengths);
-        };
-
-        if (frontmatter.questionType === "객관식") {
-          assertArray(frontmatter.choices, 객관식_보기_개수);
-        } else if (frontmatter.questionType === "빈칸") {
+        const {
+          id,
+          title,
+          date,
+          tags,
+          relatedLinks,
+          question,
+          questionType,
+          answer,
+          slug,
+          level,
+          category,
+          choices,
+        } = frontmatter;
+        expect(typeof id).toBe("string");
+        // title
+        expect(typeof title).toBe("string");
+        // date
+        expect(typeof date).toBe("object");
+        // tags
+        expect(Array.isArray(tags)).toBe(true);
+        // relatedLinks
+        expect(Array.isArray(relatedLinks)).toBe(true);
+        // question
+        expect(Array.isArray(question)).toBe(true);
+        // questionType
+        expect(QUESTION_TYPES).toContain(questionType);
+        // answer
+        expect(Array.isArray(answer)).toBe(true);
+        // slug
+        expect(typeof slug).toBe("string");
+        expect(/\s/.test(slug)).toBe(false); // Check for whitespace
+        // level
+        expect(typeof level).toBe("number");
+        expect(level >= 1 && level <= 5).toBe(true);
+        // choices
+        if (questionType === "객관식") {
+          assertArray(choices, 객관식_보기_개수);
+        } else if (questionType === "빈칸") {
           // 빈칸 여러 개 나오는 케이스 (순차적)
-          expect(Array.isArray(frontmatter.choices)).toBe(true);
-          frontmatter.choices.forEach((choice) => {
+          expect(Array.isArray(choices)).toBe(true);
+          choices.forEach((choice) => {
             assertArray(choice, 객관식_보기_개수);
           });
         }
-        expect(typeof frontmatter.category).toBe("string");
-        expect(frontmatter.category).toBeOneOf(CATEGORIES);
+        // category
+        expect(typeof category).toBe("string");
+        expect(category).toBeOneOf(CATEGORIES);
       });
     });
   });

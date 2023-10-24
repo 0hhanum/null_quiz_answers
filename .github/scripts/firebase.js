@@ -37,6 +37,7 @@ const updateQuizData = async (mdxFilePath) => {
   try {
     if (fs.existsSync(absoluteMdxPath)) {
       const {
+        id,
         title,
         tags,
         question,
@@ -51,6 +52,7 @@ const updateQuizData = async (mdxFilePath) => {
         .child(category)
         .child(slug)
         .set({
+          id,
           title,
           tags,
           question,
