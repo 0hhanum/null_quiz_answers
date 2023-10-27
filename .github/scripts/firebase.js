@@ -44,13 +44,12 @@ const updateQuizData = async (mdxFilePath) => {
         questionType,
         choices,
         answer,
-        slug,
         category,
         level,
       } = mdxParser(absoluteMdxPath);
       await quizRef
         .child(category)
-        .child(slug)
+        .child(id)
         .set({
           id,
           title,
