@@ -13,7 +13,6 @@ interface IFrontmatter {
   questionType: questionType;
   choices?: string[] | string[][]; // 객관식 | 빈칸
   answer: string[];
-  slug: string;
   level: number; // 1, 2, 3, 4, 5
   category: category;
 }

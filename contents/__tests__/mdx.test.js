@@ -72,7 +72,6 @@ describe("Test MDX files.", () => {
           question,
           questionType,
           answer,
-          slug,
           level,
           category,
           choices,
@@ -92,9 +91,6 @@ describe("Test MDX files.", () => {
         expect(QUESTION_TYPES).toContain(questionType);
         // answer
         expect(Array.isArray(answer)).toBe(true);
-        // slug
-        expect(typeof slug).toBe("string");
-        expect(/\s/.test(slug)).toBe(false); // Check for whitespace
         // level
         expect(typeof level).toBe("number");
         expect(level >= 1 && level <= 5).toBe(true);
