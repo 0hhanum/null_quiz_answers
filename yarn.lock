@@ -6416,6 +6416,28 @@ gatsby-core-utils@^4.11.0:
     tmp "^0.2.1"
     xdg-basedir "^4.0.0"
 
+gatsby-core-utils@^4.12.1:
+  version "4.12.1"
+  resolved "https://registry.yarnpkg.com/gatsby-core-utils/-/gatsby-core-utils-4.12.1.tgz#8bfa0d65033cfa4c47dd199482589e458bf4fc9d"
+  integrity sha512-YW7eCK2M6yGQerT5LkdOHLZTNYMsDvcgeDMRy0q66FWKj7twPZX428I6NaLCMeF5dYoj1HOOO0u96iNlW5jcKQ==
+  dependencies:
+    "@babel/runtime" "^7.20.13"
+    ci-info "2.0.0"
+    configstore "^5.0.1"
+    fastq "^1.15.0"
+    file-type "^16.5.4"
+    fs-extra "^11.1.1"
+    got "^11.8.6"
+    hash-wasm "^4.9.0"
+    import-from "^4.0.0"
+    lmdb "2.5.3"
+    lock "^1.1.0"
+    node-object-hash "^2.3.10"
+    proper-lockfile "^4.1.2"
+    resolve-from "^5.0.0"
+    tmp "^0.2.1"
+    xdg-basedir "^4.0.0"
+
 gatsby-graphiql-explorer@^3.11.0:
   version "3.11.0"
   resolved "https://registry.yarnpkg.com/gatsby-graphiql-explorer/-/gatsby-graphiql-explorer-3.11.0.tgz#c49f3ddc623259f313085bd6190bf2e36b89860e"
@@ -6481,10 +6503,10 @@ gatsby-plugin-manifest@^5.11.0:
     semver "^7.5.1"
     sharp "^0.32.1"
 
-gatsby-plugin-mdx@^5.11.0:
-  version "5.11.0"
-  resolved "https://registry.yarnpkg.com/gatsby-plugin-mdx/-/gatsby-plugin-mdx-5.11.0.tgz#4cff5c28ab8facd1f6a89f2a79e754f6c81670b3"
-  integrity sha512-7kRTVRId7VvxdSRRx1oZ9FAnd6ZcSs1yvtlpitgOsh1Tv1t9jtNTRtI6onDXCLZd1lT/6q03YfBEF0x0Z75b+g==
+gatsby-plugin-mdx@^5.12.3:
+  version "5.12.3"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-mdx/-/gatsby-plugin-mdx-5.12.3.tgz#d7006fd3d9199d0b66c003a9077d9dbb6725e8b9"
+  integrity sha512-MnpI9GFA2EOzAHgmrcr2pWlBJFR9UD3njS9eFfK0M+3e40UHCcyVB1Sl63XTisGxMxPvBcFmrVbfZhMvPMfERw==
   dependencies:
     "@mdx-js/mdx" "^2.3.0"
     acorn "^8.8.2"
@@ -6493,8 +6515,8 @@ gatsby-plugin-mdx@^5.11.0:
     deepmerge "^4.3.1"
     estree-util-build-jsx "^2.2.2"
     fs-extra "^11.1.1"
-    gatsby-core-utils "^4.11.0"
-    gatsby-plugin-utils "^4.11.0"
+    gatsby-core-utils "^4.12.1"
+    gatsby-plugin-utils "^4.12.3"
     gray-matter "^4.0.3"
     mdast-util-mdx "^2.0.1"
     mdast-util-to-hast "^10.2.0"
@@ -6559,6 +6581,21 @@ gatsby-plugin-utils@^4.11.0:
     joi "^17.9.2"
     mime "^3.0.0"
 
+gatsby-plugin-utils@^4.12.3:
+  version "4.12.3"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-utils/-/gatsby-plugin-utils-4.12.3.tgz#685bb26c073ac0ecf50efe6cba5fa879905c0f75"
+  integrity sha512-AMagRfVAIwc3w66RZzq9cGPma3pkrGe/iyhktmHWDOtu45tOt0zlbSY91juuCw2Oov17WzJp2TWKQ/i0nkuLbA==
+  dependencies:
+    "@babel/runtime" "^7.20.13"
+    fastq "^1.15.0"
+    fs-extra "^11.1.1"
+    gatsby-core-utils "^4.12.1"
+    gatsby-sharp "^1.12.1"
+    graphql-compose "^9.0.10"
+    import-from "^4.0.0"
+    joi "^17.9.2"
+    mime "^3.0.0"
+
 gatsby-react-router-scroll@^6.11.0:
   version "6.11.0"
   resolved "https://registry.yarnpkg.com/gatsby-react-router-scroll/-/gatsby-react-router-scroll-6.11.0.tgz#b4d34c902773617670bdab51481a9a69d8d6634f"
@@ -6578,6 +6615,13 @@ gatsby-sharp@^1.11.0:
   integrity sha512-zJbN3JVCFur8Ilwn1scf7o8AN69//shpJhYqt3uhuwhhkU6ZMCMmVVNKHSiUiWkVqhwSRJ4y7c/I3Ys9xMxsIw==
   dependencies:
     sharp "^0.32.1"
+
+gatsby-sharp@^1.12.1:
+  version "1.12.1"
+  resolved "https://registry.yarnpkg.com/gatsby-sharp/-/gatsby-sharp-1.12.1.tgz#e8dfe8ddfddb6176363c02f255272feb9819a82c"
+  integrity sha512-e7lqA74UZau7MOktc9V+sNh86a8oNZPFIsY5Atk+C0sGlzHx0IcivsJjwLHJ6OF11SIC38a9z2wE8Nl6YiG/Ig==
+  dependencies:
+    sharp "^0.32.6"
 
 gatsby-source-filesystem@^5.11.0:
   version "5.11.0"
@@ -11476,6 +11520,20 @@ sharp@^0.32.1:
   version "0.32.5"
   resolved "https://registry.yarnpkg.com/sharp/-/sharp-0.32.5.tgz#9ddc78ead6446094f51e50355a2d4ec6e7220cd4"
   integrity sha512-0dap3iysgDkNaPOaOL4X/0akdu0ma62GcdC2NBQ+93eqpePdDdr2/LM0sFdDSMmN7yS+odyZtPsb7tx/cYBKnQ==
+  dependencies:
+    color "^4.2.3"
+    detect-libc "^2.0.2"
+    node-addon-api "^6.1.0"
+    prebuild-install "^7.1.1"
+    semver "^7.5.4"
+    simple-get "^4.0.1"
+    tar-fs "^3.0.4"
+    tunnel-agent "^0.6.0"
+
+sharp@^0.32.6:
+  version "0.32.6"
+  resolved "https://registry.yarnpkg.com/sharp/-/sharp-0.32.6.tgz#6ad30c0b7cd910df65d5f355f774aa4fce45732a"
+  integrity sha512-KyLTWwgcR9Oe4d9HwCwNM2l7+J0dUQwn/yf7S0EnTtb0eVS4RxO0eUSvxPtzT4F3SY+C4K6fqdv/DO27sJ/v/w==
   dependencies:
     color "^4.2.3"
     detect-libc "^2.0.2"

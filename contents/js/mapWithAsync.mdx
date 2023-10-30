@@ -14,7 +14,7 @@ question:
   - "
     <code>
     async function someFunction(array) {
-    return await array.map(async (item) => await someAsyncFunction(item));
+      return await array.map(async (item) => await someAsyncFunction(item));
     }
     console.log(await someFunction(arr));
     </code>
@@ -109,7 +109,7 @@ for (let i = 0; i < arr; i++) {
 // for...of 도 동일
 ```
 
-아래 방식보다 ~~간지가 안나고~~ 모든 비동기 요청을 순차적으로(waterfall) 처리해야 한다는 단점이 있습니다.
+아래 방식보다 <s>간지가 안나고</s> 모든 비동기 요청을 순차적으로(waterfall) 처리해야 한다는 단점이 있습니다.
 
 2. Promise.all()
 
