@@ -7,84 +7,107 @@ data-styled.g2[id="Header__Img-sc-88xloa-1"]{content:"iUiTAs,"}/*!sc*/
 data-styled.g3[id="mdxfrontmatter__id__Container-sc-1gyqok2-0"]{content:"joHxsW,"}/*!sc*/
 .ivHKbn{display:flex;justify-content:end;}/*!sc*/
 data-styled.g4[id="mdxfrontmatter__id__FlexEndContainer-sc-1gyqok2-1"]{content:"ivHKbn,"}/*!sc*/
-</style><title data-gatsby-head="true">map은 await을 기다리지 않는다. | null_quiz_answers</title><link rel="shortcut icon" type="image/x-icon" href="https://0hhanum.github.io/null_quiz_answers/images/favicon.ico" data-gatsby-head="true"/></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" id="gatsby-focus-wrapper"><div><main class="container"><section class="Header__Nav-sc-88xloa-0 kiRgA-D"><nav><!--$--><img src="https://0hhanum.github.io/null_quiz_answers/images/logo.svg" class="Header__Img-sc-88xloa-1 iUiTAs"/><!--/$--></nav></section><section><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/atom-one-dark.min.css"/><div class="mdxfrontmatter__id__Container-sc-1gyqok2-0 joHxsW container"><h1>map은 await을 기다리지 않는다.</h1><div><i>About </i><i>JS<!-- -->, </i><i>JS미세팁</i></div><div class="mdxfrontmatter__id__FlexEndContainer-sc-1gyqok2-1 ivHKbn"><i>2023/10/20</i></div><hr/></div><div class="mdxfrontmatter__id__Container-sc-1gyqok2-0 joHxsW container"><section><h1>async / await</h1>
-<h3><code>async / await</code>은 ES6에서 추가된 문법으로, Promise 기반의 비동기 코드를 읽기 쉽고 직관적으로 만들어줍니다.</h3>
-<p><code>async</code> 키워드는 함수를 비동기 함수로 만듭니다. <code>async</code>가 선언된 함수 내에서 <code>await</code> 키워드를 사용하여 비동기 작업이 완료될 때까지 기다릴 수 있습니다.
-<code>await</code>은 Promise가 완료될 때까지 함수의 실행을 일시 중단합니다. 그리고 Promise가 완료되면 해당 값을 반환합니다.</p>
-<pre><code class="language-javascript">async function fetchData() {
-  const response = await fetch(&quot;https://api.example.com/data&quot;);
-  const data = await response.json();
-  return data;
-}
-</code></pre>
-<h1>왜?</h1>
-<h3><code>map()</code> 메서드의 콜백 인자로 <code>async</code> 함수를 전달하고 <code>await</code> 처리도 잘 했는데 왜 Promise 객체가 그대로 반환될까요?</h3>
-<p>해당 콜백함수가 동작하는 환경에 대해 생각해봐야 합니다.
-<code>map()</code> 메서드는 Array 클래스의 메서드 중 하나로, 구현체는 아래와 비슷하게 생겼을 것입니다. (실제 V8엔진 구현이 js로 되어있다는 건 아닙니다.)</p>
-<pre><code class="language-javascript">Array.prototype.map = function (callback) {
-  const result = [];
-  for (let i = 0; i &lt; this.length; i++) {
-    const mappedValue = callback(this[i], i, this);
-    result.push(mappedValue);
-  }
-  return result;
+</style><title data-gatsby-head="true">유틸리티 타입 (1) | null_quiz_answers</title><link rel="shortcut icon" type="image/x-icon" href="https://0hhanum.github.io/null_quiz_answers/images/favicon.ico" data-gatsby-head="true"/></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" id="gatsby-focus-wrapper"><div><main class="container"><section class="Header__Nav-sc-88xloa-0 kiRgA-D"><nav><!--$--><img src="https://0hhanum.github.io/null_quiz_answers/images/logo.svg" class="Header__Img-sc-88xloa-1 iUiTAs"/><!--/$--></nav></section><section><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/atom-one-dark.min.css"/><div class="mdxfrontmatter__id__Container-sc-1gyqok2-0 joHxsW container"><h1>유틸리티 타입 (1)</h1><div><i>About </i><i>TS<!-- -->, </i><i>TS기본<!-- -->, </i><i>유틸리티_타입</i></div><div class="mdxfrontmatter__id__FlexEndContainer-sc-1gyqok2-1 ivHKbn"><i>2023/10/29</i></div><hr/></div><div class="mdxfrontmatter__id__Container-sc-1gyqok2-0 joHxsW container"><section><h1>유틸리티 타입?</h1>
+<blockquote><p>&quot;TypeScript는 공통 타입 변환을 용이하게 하기 위해 몇 가지 유틸리티 타입을
+제공합니다.&quot;</p><footer><cite>- 타입스크립트 핸드북</cite></footer></blockquote>
+<h2>Partial</h2>
+<p><code>Partial&lt;T&gt;</code>는 타입 <code>T</code>의 <mark>모든 프로퍼티를 선택적으로</mark> 만드는 타입을 구성합니다.</p>
+<pre><code class="language-javascript">type Partial&lt;T&gt; = {
+  [P in keyof T]?: T[P];
 };
 </code></pre>
-<p><code>callback</code>의 인자로 <code>async</code> 함수를 전달한다면 동작할까요?
-그렇지 않겠죠.</p>
-<p>비동기 처리가 가능하려면 map 메서드 자체가 <code>async</code> 함수가 되어 callback의 반환 값을 기다려야 합니다.</p>
-<p>아래와 같이요.</p>
-<pre><code class="language-javascript">Array.prototype.map = async function (callback) {
-  const result = [];
-  for (let i = 0; i &lt; this.length; i++) {
-    const mappedValue = await callback(this[i], i, this);
-    result.push(mappedValue);
-  }
-  return result;
+<p><code>Partial&lt;T&gt;</code>는 특정 타입 T의 모든 프로퍼티에 <code>?</code>를 붙여 선택적 프로퍼티로 만듭니다.</p>
+<pre><code class="language-javascript">interface IData {
+    title: string;
+    timestamp: number;
+    description: string;
+    tags: tag[]
+}
+function updateData(currentData: IData, newData: ?) {
+    update({
+    ...currentData,
+    ...newData,
+    timestamp: getTimestamp(),
+    });
+}
+</code></pre>
+<p>일반적으로 업데이트 함수는 기존 데이터의 특정 부분을 변경합니다.
+<code>updateData</code> 함수는 <code>newData</code>를 인자로 받아 해당 데이터를 타임스탬프와 함께 업데이트합니다.</p>
+<p>스프레드 연산자를 사 용한 것으로 보아 newData가 <b>어떤 프로퍼티를 가지는 지 확실하지 않습니다.</b>
+<code>title</code>을 업데이트 할 수도, <code>description</code>이나 <code>tags</code>를, 또는 셋 모두 업데이트 할 수도 있습니다.</p>
+<p>따라서 이 경우, <code>IData</code>의 모든 프로퍼티를 옵셔널로 만드는 <code>Partial</code> 유틸리티 타입이 적합합니다.</p>
+<pre><code class="language-javascript">Partial&lt;IData&gt;
+    {
+    title?: string;
+    timestamp?: number;
+    description?: string;
+    tags?: tag[]
+    }
+</code></pre>
+<h2>Required</h2>
+<p><code>Partial&lt;T&gt;</code>와 반대로 모든 프로퍼티를 필수로 설정하는 타입을 만드는 <code>Required&lt;T&gt;</code> 유틸리티 타입도 있습니다.</p>
+<pre><code class="language-javascript">interface IData {
+  title?: string;
+  description?: string;
+}
+const a: IData = { title: &quot;some title&quot; }; // description이 없어도 OK.
+const b: Required&lt;IData&gt; = { title: &quot;some title&quot; }; // 오류: 프로퍼티 description이 없습니다.
+</code></pre>
+<h2>Omit</h2>
+<p><code>Omit&lt;T, K&gt;</code>은 타입 <mark>T의 프로퍼티 중 K를 제거한 타입</mark>을 구성합니다.</p>
+<pre><code class="language-javascript">type Omit&lt;T, K extends keyof T&gt; = Pick&lt;T, Exclude&lt;keyof T, K&gt;&gt;;
+</code></pre>
+<p><code>T</code>의 프로퍼티를 인자로 받으며(<code>K extends keyof T</code>), <code>T</code> 프로퍼티 중 <code>K</code>를 제외한(<code>Pick&lt;T, Exclude&lt;keyof T, K&gt;&gt;</code>) 새로운 타입을 구성합니다.</p>
+<p>퀴즈의 <code>updateData</code> 함수는 <code>newData</code> 프로퍼티가 명확하지 않아도 범용적으로 사용할 수 있는 함수로 특정 프로퍼티를 제외하는 <code>Omit&lt;T, K&gt;</code>는 적합하지 않습니다.
+추상화 레벨이 한 단계 높아진다면 사용할 수는 있습니다. 아래와 같이요.</p>
+<pre><code class="language-javascript">function updateTitle(
+  currentData: IData,
+  newData: Omit&lt;IData, &quot;description&quot; | &quot;tags&quot;&gt;
+) {
+  update({
+    ...currentData,
+    ...newData,
+  });
+}
+</code></pre>
+<p>하지만 위와 같이 프로퍼티를 특정해 어떤 동작을 수행하는 경우, <code>IData</code>가 확장될 경우 의도하지 않은 속성이 같이 업데이트 될 위험이 있습니다.
+<code>newData.title</code>을 특정해 <code>title</code>을 업데이트 할 수도 있겠지만 위 경우 대상 프로퍼티를 정의해 주는 것이 논리적으로 적절합니다.</p>
+<p>이럴 경우에 <code>Pick&lt;T, K&gt;</code>을 사용합니다.</p>
+<h2>Pick</h2>
+<p><code>Pick&lt;T, K&gt;</code>은 타입 <code>T</code>에서 <mark>특정 프로퍼티를 선택해 새로운 타입을 구성</mark>합니다.</p>
+<pre><code class="language-javascript">type Pick&lt;T, K extends keyof T&gt; = {
+  [P in K]: T[P];
 };
 </code></pre>
-<p>이처럼 map() 메서드 자체가 비동기 처리를 지원하지 않기 때문에 <code>async</code> 함수를 인자로 전달해도 원하는대로 동작하지 않습니다.</p>
-<p>콜백함수가 이행되지 않은 Promise 객체를 그대로 반환하며, 따라서 결과값으로 Promise 객체 배열을 얻게 됩니다.</p>
-<p><code>await</code> 키워드는 Promise 객체만 이행할 수 있기 때문에 아래의 <code>await</code> 또한 아무것도 기다리지 않게 되죠.</p>
-<pre><code class="language-javascript">const arr = await map(someAsyncFunction); // Promise 배열
-</code></pre>
-<p>이는 Array의 순회 메서드 <code>forEach()</code>, <code>reduce()</code>, <code>filter()</code>등이 모두 동일합니다.</p>
-<h1>어떻게?</h1>
-<h3>그렇다면 어떻게 처리해야 좋을까요</h3>
-<ol>
-<li>for문 사용
-선언형을 포기하고 순차적으로 실행할 수 있습니다.</li>
-</ol>
-<pre><code class="language-javascript">for (let i = 0; i &lt; arr; i++) {
-  const result = await someAsyncFunc(arr[i]);
-  resultArr.push(result);
+<p>두 번째 인자 <code>K</code>로 <code>T</code> 타입의 프로퍼티를 받으며, <code>K</code>를 프로퍼티로 가지는 새로운 타입을 구성합니다.
+위의 <code>updateTitle()</code>에 아래와 같이 적용할 수 있습니다.</p>
+<pre><code class="language-javascript">function updateTitle(currentData: IData, newData: Pick&lt;IData, &quot;title&quot;&gt;) {
+  update({
+    ...currentData,
+    ...newData,
+  });
 }
-
-// for...of 도 동일
 </code></pre>
-<p>아래 방식보다 <s>간지가 안나고</s> 모든 비동기 요청을 순차적으로(waterfall) 처리해야 한다는 단점이 있습니다.</p>
-<ol start="2">
-<li>Promise.all()</li>
-</ol>
-<pre><code class="language-javascript">function someFunction(array) {
-	  return await array.map(async (item) =&gt; await someAsyncFunction(item));
+<h2>Record</h2>
+<p><code>Record&lt;K, T&gt;</code>는 <mark>첫 번째 인자 타입 K를 프로퍼티로, 해당 프로퍼티의 타입으로 T</mark>를 가지는 새로운 객체 타입을 구성합니다.</p>
+<pre><code class="language-javascript">type Record&lt;K extends keyof any, T&gt; = {
+  [P in K]: T;
+};
+</code></pre>
+<p>아래와 같이 사용할 수 있습니다.</p>
+<pre><code class="language-javascript">type dataState = &quot;pending&quot; | &quot;fulfilled&quot; | &quot;error&quot;
+const obj: Record&lt;dataState, IData[]&gt; = {
+    pending: IData 타입의 객체 배열,
+    fulfilled: IData 타입의 객체 배열,
+    error: IData 타입의 객체 배열,
 }
-
 </code></pre>
-<p>위 함수는 Promise 객체 배열을 반환한다고 했었죠.
-<code>Promise.all()</code> 을 통해 순회 가능한 객체 내부의 Promise의 이행을 기다리는 Promise를 받을 수 있습니다.</p>
-<p>[Promise.all() 이란? -&gt;] (https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Promise/all)</p>
-<pre><code class="language-javascript">async function someFunction(array) {
-	  return await Promise.all(array.map(async (item) =&gt; {
-		   return someAsyncFunction(item)
-      }));
-
- ...
-
- const result = async someFunction(arr); // 정상 동작
-</code></pre>
-<p>다음과 같이 사용할 수 있습니다.</p>
-<p>위와 같이 처리했을 때 장점은 <code>map()</code> 메서드가 이행 전의 Promise 객체를 동기적으로 파바박 반환하고, <code>Promise.all()</code> 은 해당 객체들을 <strong>병렬적</strong>으로 처리할 수 있다는 점이에요.</p></section></div><article><h3>더 알아보려면?</h3><ul><li><a href="https://constructionsite.tistory.com/43">https://constructionsite.tistory.com/43</a></li><li><a href="https://velog.io/@minsangk/2019-09-06-0209-%EC%9E%91%EC%84%B1%EB%90%A8-eik06xy8mm">https://velog.io/@minsangk/2019-09-06-0209-%EC%9E%91%EC%84%B1%EB%90%A8-eik06xy8mm</a></li></ul></article><div class="mdxfrontmatter__id__FlexEndContainer-sc-1gyqok2-1 ivHKbn"><a href="https://github.com/0hhanum/null_quiz_answers/issues/new?title=map은 await을 기다리지 않는다. 수정 요청&amp;body=잘못된 정보를 고쳐주시면 기프티콘을 드려요 :)"><p>잘못된 정보가 있나요?</p></a></div></section></main></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/answer/pwhqcvxxz8qd/";/*]]>*/</script><!-- slice-start id="_gatsby-scripts-1" -->
+<p><code>Partial</code>과의 콤비네이션도 가넝.</p>
+<pre><code class="language-javascript">type dataState = &quot;pending&quot; | &quot;fulfilled&quot; | &quot;error&quot;
+const obj: Partial&lt;Record&lt;dataState, IData[]&gt;&gt; = {
+    pending: IData 타입의 객체 배열
+} // fulfilled, error 프로퍼티가 없어도 OK.
+</code></pre></section></div><article><h3>더 알아보려면?</h3><ul><li><a href="https://typescript-kr.github.io/pages/utility-types.html">https://typescript-kr.github.io/pages/utility-types.html</a></li></ul></article><div class="mdxfrontmatter__id__FlexEndContainer-sc-1gyqok2-1 ivHKbn"><a href="https://github.com/0hhanum/null_quiz_answers/issues/new?title=유틸리티 타입 (1) 수정 요청&amp;body=잘못된 정보를 고쳐주시면 기프티콘을 드려요 :)"><p>잘못된 정보가 있나요?</p></a></div></section></main></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/answer/v5o42oni321p/";/*]]>*/</script><!-- slice-start id="_gatsby-scripts-1" -->
           <script
             id="gatsby-chunk-mapping"
           >
