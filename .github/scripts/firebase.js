@@ -31,6 +31,7 @@ admin.initializeApp({
 
 const db = admin.database();
 const quizRef = db.ref("quiz");
+const quizCategoryRef = db.ref("quizCategory");
 
 const updateQuizData = async (mdxFilePath) => {
   const absoluteMdxPath = path.join(__dirname, mdxFilePath);
@@ -47,19 +48,20 @@ const updateQuizData = async (mdxFilePath) => {
         category,
         level,
       } = mdxParser(absoluteMdxPath);
-      await quizRef
-        .child(category)
-        .child(id)
-        .set({
-          id,
-          title,
-          tags,
-          question,
-          questionType,
-          answer,
-          choices: choices || null,
-          level,
-        });
+      await quizRef.child(id).set({
+        id,
+        title,
+        tags,
+        question,
+        questionType,
+        answer,
+        choices: choices || null,
+        level,
+        category,
+      });
+      await quizCategoryRef.child(category).set({
+        [id]: true,
+      });
     }
   } catch (e) {
     console.error(e);
