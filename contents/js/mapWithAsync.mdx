@@ -20,7 +20,7 @@ question:
     </code>
     "
 choices:
-  - "1, 2, 3"
+  - "[1, 2, 3]"
   - "[ Promise { <pending> }, Promise { <pending> } ]"
   - "오류 발생"
   - "[]"
@@ -50,7 +50,7 @@ async function fetchData() {
 ### `map()` 메서드의 콜백 인자로 `async` 함수를 전달하고 `await` 처리도 잘 했는데 왜 Promise 객체가 그대로 반환될까요?
 
 해당 콜백함수가 동작하는 환경에 대해 생각해봐야 합니다.
-`map()` 메서드는 Array 클래스의 메서드 중 하나로, 구현체는 아래와 비슷하게 생겼을 것입니다. (실제 V8엔진 구현이 js로 되어있다는 건 아닙니다.)
+`map()` 메서드는 Array 클래스의 메서드 중 하나로, 구현체는 아래와 비슷할 거에요.
 
 ```javascript
 Array.prototype.map = function (callback) {
@@ -115,7 +115,7 @@ for (let i = 0; i < arr; i++) {
 
 ```javascript
 function someFunction(array) {
-	  return await array.map(async (item) => await someAsyncFunction(item));
+	  return array.map(async (item) => await someAsyncFunction(item));
 }
 
 ```
@@ -128,7 +128,7 @@ function someFunction(array) {
 ```javascript
 async function someFunction(array) {
 	  return await Promise.all(array.map(async (item) => {
-		   return someAsyncFunction(item)
+		   return await someAsyncFunction(item)
       }));
 
  ...
