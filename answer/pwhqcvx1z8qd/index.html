@@ -20,7 +20,7 @@ data-styled.g4[id="mdxfrontmatter__id__FlexEndContainer-sc-1gyqok2-1"]{content:"
 <h1>왜?</h1>
 <h3><code>map()</code> 메서드의 콜백 인자로 <code>async</code> 함수를 전달하고 <code>await</code> 처리도 잘 했는데 왜 Promise 객체가 그대로 반환될까요?</h3>
 <p>해당 콜백함수가 동작하는 환경에 대해 생각해봐야 합니다.
-<code>map()</code> 메서드는 Array 클래스의 메서드 중 하나로, 구현체는 아래와 비슷하게 생겼을 것입니다. (실제 V8엔진 구현이 js로 되어있다는 건 아닙니다.)</p>
+<code>map()</code> 메서드는 Array 클래스의 메서드 중 하나로, 구현체는 아래와 비슷할 거에요.</p>
 <pre><code class="language-javascript">Array.prototype.map = function (callback) {
   const result = [];
   for (let i = 0; i &lt; this.length; i++) {
@@ -62,12 +62,12 @@ data-styled.g4[id="mdxfrontmatter__id__FlexEndContainer-sc-1gyqok2-1"]{content:"
 
 // for...of 도 동일
 </code></pre>
-<p>아래 방식보다 <s>간지가 안나고</s> 모든 비동기 요청을 순차적으로(waterfall) 처리해야 한다는 단점이 있습니다.</p>
+<p>아래 방식보다 <s>간지가 안나고</s> 모든 비동기 요청을 순차적으로(waterfall) 처리해야   한다는 단점이 있습니다.</p>
 <ol start="2">
 <li>Promise.all()</li>
 </ol>
 <pre><code class="language-javascript">function someFunction(array) {
-	  return await array.map(async (item) =&gt; await someAsyncFunction(item));
+	  return array.map(async (item) =&gt; await someAsyncFunction(item));
 }
 
 </code></pre>
@@ -76,7 +76,7 @@ data-styled.g4[id="mdxfrontmatter__id__FlexEndContainer-sc-1gyqok2-1"]{content:"
 <p>[Promise.all() 이란? -&gt;] (https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Promise/all)</p>
 <pre><code class="language-javascript">async function someFunction(array) {
 	  return await Promise.all(array.map(async (item) =&gt; {
-		   return someAsyncFunction(item)
+		   return await someAsyncFunction(item)
       }));
 
  ...
@@ -88,6 +88,6 @@ data-styled.g4[id="mdxfrontmatter__id__FlexEndContainer-sc-1gyqok2-1"]{content:"
           <script
             id="gatsby-chunk-mapping"
           >
-            window.___chunkMapping="{\"app\":[\"/app-b7f1cd236fb5a3f8a039.js\"],\"component---src-pages-404-tsx\":[\"/component---src-pages-404-tsx-dcac18335b85676a4bd4.js\"],\"component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-map-with-async-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-map-with-async-mdx-6d71a6d9ff931242876d.js\"],\"component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-prototype-method-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-prototype-method-mdx-268780fdd1d07e138790.js\"],\"component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-ts-utility-type-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-ts-utility-type-mdx-805f4b6abfaa39c18202.js\"],\"component---src-pages-index-tsx\":[\"/component---src-pages-index-tsx-2ca851730e7184e90e9f.js\"]}";
+            window.___chunkMapping="{\"app\":[\"/app-b7f1cd236fb5a3f8a039.js\"],\"component---src-pages-404-tsx\":[\"/component---src-pages-404-tsx-dcac18335b85676a4bd4.js\"],\"component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-map-with-async-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-map-with-async-mdx-8512f82c66520d5f8b39.js\"],\"component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-prototype-method-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-prototype-method-mdx-268780fdd1d07e138790.js\"],\"component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-ts-utility-type-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-ts-utility-type-mdx-805f4b6abfaa39c18202.js\"],\"component---src-pages-index-tsx\":[\"/component---src-pages-index-tsx-2ca851730e7184e90e9f.js\"]}";
           </script>
-        <script>window.___webpackCompilationHash="22ff579d1ec6b6a426c9";</script><script src="/null_quiz_answers/webpack-runtime-f2a07ae608017017815a.js" async></script><script src="/null_quiz_answers/framework-e6d1486946e8e879fece.js" async></script><script src="/null_quiz_answers/app-b7f1cd236fb5a3f8a039.js" async></script><!-- slice-end id="_gatsby-scripts-1" --></body></html>
+        <script>window.___webpackCompilationHash="982323dbaca1a025f4e6";</script><script src="/null_quiz_answers/webpack-runtime-2f0f63ed1d9be38de8d1.js" async></script><script src="/null_quiz_answers/framework-e6d1486946e8e879fece.js" async></script><script src="/null_quiz_answers/app-b7f1cd236fb5a3f8a039.js" async></script><!-- slice-end id="_gatsby-scripts-1" --></body></html>
