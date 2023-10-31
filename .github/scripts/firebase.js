@@ -59,7 +59,7 @@ const updateQuizData = async (mdxFilePath) => {
         level,
         category,
       });
-      await quizCategoryRef.child(category).set({
+      await quizCategoryRef.child(category).update({
         [id]: true,
       });
     }
