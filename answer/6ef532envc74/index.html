@@ -7,32 +7,31 @@ data-styled.g2[id="Header__Img-sc-88xloa-1"]{content:"iUiTAs,"}/*!sc*/
 data-styled.g3[id="mdxfrontmatter__id__Container-sc-1gyqok2-0"]{content:"joHxsW,"}/*!sc*/
 .ivHKbn{display:flex;justify-content:end;}/*!sc*/
 data-styled.g4[id="mdxfrontmatter__id__FlexEndContainer-sc-1gyqok2-1"]{content:"ivHKbn,"}/*!sc*/
-</style><title data-gatsby-head="true">다음 코드 스니펫의 결과는? | null_quiz_answers</title><link rel="shortcut icon" type="image/x-icon" href="https://0hhanum.github.io/null_quiz_answers/images/favicon.ico" data-gatsby-head="true"/></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" id="gatsby-focus-wrapper"><div><main class="container"><section class="Header__Nav-sc-88xloa-0 kiRgA-D"><nav><!--$--><img src="https://0hhanum.github.io/null_quiz_answers/images/logo.svg" class="Header__Img-sc-88xloa-1 iUiTAs"/><!--/$--></nav></section><section><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/atom-one-dark.min.css"/><div class="mdxfrontmatter__id__Container-sc-1gyqok2-0 joHxsW container"><h1>다음 코드 스니펫의 결과는?</h1><div><i>About </i><i>JS<!-- -->, </i><i>심심풀이</i></div><div class="mdxfrontmatter__id__FlexEndContainer-sc-1gyqok2-1 ivHKbn"><i>2023/10/20</i></div><hr/></div><div class="mdxfrontmatter__id__Container-sc-1gyqok2-0 joHxsW container"><section><blockquote><p>트위터 @heyImMapleLeaf 트윗에서 따온 퀴즈입니다.
-링크 하단 첨부</p></blockquote>
+</style><title data-gatsby-head="true">다음 코드 스니펫의 결과는? | null_quiz_answers</title><link rel="shortcut icon" type="image/x-icon" href="https://0hhanum.github.io/null_quiz_answers/images/favicon.ico" data-gatsby-head="true"/></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" id="gatsby-focus-wrapper"><div><main class="container"><section class="Header__Nav-sc-88xloa-0 kiRgA-D"><nav><!--$--><img src="https://0hhanum.github.io/null_quiz_answers/images/logo.svg" class="Header__Img-sc-88xloa-1 iUiTAs"/><!--/$--></nav></section><section><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/atom-one-dark.min.css"/><div class="mdxfrontmatter__id__Container-sc-1gyqok2-0 joHxsW container"><h1>다음 코드 스니펫의 결과는?</h1><div><i>About </i><i>JS<!-- -->, </i><i>심심풀이</i></div><div class="mdxfrontmatter__id__FlexEndContainer-sc-1gyqok2-1 ivHKbn"><i>2023/10/20</i></div><hr/></div><div class="mdxfrontmatter__id__Container-sc-1gyqok2-0 joHxsW container"><section><blockquote><p>트위터 @heyImMapleLeaf 트윗에서 따온 퀴즈입니다. 링크 하단 첨부</p></blockquote>
 <h2>10?</h2>
 <p>정답을 맞추셨나요?
 결과가 10인 이유는 실행 시점의 연산자의 결합 순서 때문입니다.</p>
-<p><code>i += x()</code>는 <code>i = i + x()</code>로도 나타낼 수 있습니다.
-<mark>해당 라인이 평가되는 시점의 i는 0 입니다.</mark> 따라서 <code>i = 0 + x()</code>가 됩니다.</p>
+<p><code>i += x()</code>는 <code>i = i + x()</code>로도 나타낼 수 있습니다.</p>
+<p><mark>해당 라인이 평가되는 시점의 i는 0 입니다.</mark> 따라서 <code>i = 0 + x()</code>가 됩니다.</p>
 <p>순서대로 적어보면
 <code>i += x()</code> -&gt; <code>i = i + x()</code> -&gt; <code>i = 0 + x()</code> -&gt; <code>i = 0 + 10</code></p>
 <p>이렇게 됩니다.</p>
 <p><code>x()</code>의 <code>return</code> 전에 콘솔을 찍어보면 이해하기 쉬운데요,</p>
-<pre><code class="language-javascript">    function x() {
-      i++
-      console.log(i)
-      return 10
-    }
-    i += x();
-    console.log(i)
-    // 1
-    // 10
+<pre><code class="language-javascript">function x() {
+  i++;
+  console.log(i);
+  return 10;
+}
+i += x();
+console.log(i);
+// 1
+// 10
 </code></pre>
 <p><code>i++</code>가 실행되어 <code>i</code>가 <code>1</code>이 되었다가 <code>10</code>이 됩니다.</p>
 <u>이런 헷갈리는 코드를 작성하지 않는 게 중요하겠죠?</u>
 <h3>번외</h3>
 <p>재미있는 건 연산의 순서를 변경하면 결과도 달라진다는 것.
-<code>i = x() + i</code> 의 결과는 <code>11</code>  입니다.</p>
+<code>i = x() + i</code> 의 결과는 <code>11</code>입니다.</p>
 <p>동일하게 순서대로 생각해보면</p>
 <p><code>i = x() + i</code> -&gt; <code>i = 10 + i</code> (이때 i = 1) -&gt; <code>i = 10 + 1</code></p>
 <p>이래서 11이 됩니다.</p>
@@ -40,6 +39,6 @@ data-styled.g4[id="mdxfrontmatter__id__FlexEndContainer-sc-1gyqok2-1"]{content:"
           <script
             id="gatsby-chunk-mapping"
           >
-            window.___chunkMapping="{\"app\":[\"/app-9e1b53b0b33b65b5f1e2.js\"],\"component---src-pages-404-tsx\":[\"/component---src-pages-404-tsx-dcac18335b85676a4bd4.js\"],\"component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-code-evaluate-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-code-evaluate-mdx-b2e38532abc26fd41f23.js\"],\"component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-map-with-async-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-map-with-async-mdx-8512f82c66520d5f8b39.js\"],\"component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-prototype-method-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-prototype-method-mdx-268780fdd1d07e138790.js\"],\"component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-ts-utility-type-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-ts-utility-type-mdx-805f4b6abfaa39c18202.js\"],\"component---src-pages-index-tsx\":[\"/component---src-pages-index-tsx-2ca851730e7184e90e9f.js\"]}";
+            window.___chunkMapping="{\"app\":[\"/app-9e1b53b0b33b65b5f1e2.js\"],\"component---src-pages-404-tsx\":[\"/component---src-pages-404-tsx-dcac18335b85676a4bd4.js\"],\"component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-code-evaluate-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-code-evaluate-mdx-4093b100f93f4615bd56.js\"],\"component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-map-with-async-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-map-with-async-mdx-3263195c177d6e108881.js\"],\"component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-prototype-method-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-prototype-method-mdx-268780fdd1d07e138790.js\"],\"component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-ts-utility-type-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-ts-utility-type-mdx-805f4b6abfaa39c18202.js\"],\"component---src-pages-index-tsx\":[\"/component---src-pages-index-tsx-2ca851730e7184e90e9f.js\"]}";
           </script>
-        <script>window.___webpackCompilationHash="b663b1ccbe2462f34ee9";</script><script src="/null_quiz_answers/webpack-runtime-f9d06732f85bfd7272ee.js" async></script><script src="/null_quiz_answers/framework-e6d1486946e8e879fece.js" async></script><script src="/null_quiz_answers/app-9e1b53b0b33b65b5f1e2.js" async></script><!-- slice-end id="_gatsby-scripts-1" --></body></html>
+        <script>window.___webpackCompilationHash="5e46992542ae7906f5c0";</script><script src="/null_quiz_answers/webpack-runtime-b0033e2bd7862b0106ff.js" async></script><script src="/null_quiz_answers/framework-e6d1486946e8e879fece.js" async></script><script src="/null_quiz_answers/app-9e1b53b0b33b65b5f1e2.js" async></script><!-- slice-end id="_gatsby-scripts-1" --></body></html>
