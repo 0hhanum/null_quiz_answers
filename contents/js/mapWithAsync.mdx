@@ -11,7 +11,7 @@ relatedLinks:
 questionType: 객관식
 question:
   - 일반적인 경우. 다음 코드 스니펫의 결과로 적당한 것은?
-  - "<code lang=javascript>async function someFunction(array) {\n\treturn await array.map(async (item) => await someAsyncFunction(item));\n}\nconsole.log(await someFunction(arr));</code>"
+  - "<code lang=javascript>async function func(array) {\n\treturn await array.map(\n\t\tasync (item) => {\n\t\t\treturn await someAsyncFunction(item)\n\t\t}\n\t);\n}\nconsole.log(await func(arr));</code>"
 choices:
   - "[1, 2, 3]"
   - "[ Promise { <pending> }, Promise { <pending> } ]"
