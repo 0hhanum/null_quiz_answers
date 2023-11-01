@@ -41,6 +41,12 @@ const assertArray = (arr, expectedLengths) => {
   expect(arr.length).toBeOneOf(expectedLengths);
 };
 
+// check lang prop of <code> tag string(question)
+function hasLangProp(inputString) {
+  const langMatch = inputString.match(/lang=([^\s>]+)/);
+  return !!langMatch;
+}
+
 describe("Test MDX files.", () => {
   const categories = fs
     .readdirSync(BASE_DIR, { withFileTypes: true })
@@ -87,6 +93,11 @@ describe("Test MDX files.", () => {
         expect(Array.isArray(relatedLinks)).toBe(true);
         // question
         expect(Array.isArray(question)).toBe(true);
+        question.forEach((q) => {
+          if (q.startsWith("<code")) {
+            expect(hasLangProp(q)).toBe(true);
+          }
+        });
         // questionType
         expect(QUESTION_TYPES).toContain(questionType);
         // answer

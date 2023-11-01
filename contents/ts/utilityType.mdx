@@ -11,23 +11,7 @@ relatedLinks:
 questionType: 객관식
 question:
   - 일반적인 경우, newData의 타입으로 적절한 유틸리티 타입은?
-  - "
-    <code>
-    interface IData {
-      title: string;
-      timestamp: number;
-      description: string;
-      tags: tag[];
-    }
-    function updateData(currentData: IData, newData: ?) {
-      update({
-        ...currentData,
-        ...newData,
-        timestamp: getTimestamp()
-      });
-    }
-    </code>
-    "
+  - "<code lang=typescript>interface IData {\n\ttitle: string;\n\ttimestamp: number;\n\tdescription: string;\n\ttags: tag[];\n}\nfunction updateData(currentData: IData, newData: ?) {\n\tupdate({\n\t\t...currentData,\n\t\t...newData,\n\t\ttimestamp: getTimestamp()\n\t});\n} </code>"
 choices:
   - "Partial<T>"
   - "Omit<T, K>"
@@ -38,7 +22,6 @@ answer:
 level: 1
 category: "ts"
 ---
-
 
 # 유틸리티 타입?
 
@@ -164,7 +147,6 @@ function updateTitle(currentData: IData, newData: Pick<IData, "title">) {
 ## Record
 
 `Record<K, T>`는 <mark>첫 번째 인자 타입 K를 프로퍼티로, 해당 프로퍼티의 타입으로 T</mark>를 가지는 새로운 객체 타입을 구성합니다.
-
 
 ```javascript
 type Record<K extends keyof any, T> = {

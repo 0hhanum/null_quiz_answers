@@ -11,14 +11,7 @@ relatedLinks:
 questionType: 객관식
 question:
   - 일반적인 경우. 다음 코드 스니펫의 결과로 적당한 것은?
-  - "
-    <code>
-    async function someFunction(array) {
-      return await array.map(async (item) => await someAsyncFunction(item));
-    }
-    console.log(await someFunction(arr));
-    </code>
-    "
+  - "<code lang=javascript>async function someFunction(array) {\n\treturn await array.map(async (item) => await someAsyncFunction(item));\n}\nconsole.log(await someFunction(arr));</code>"
 choices:
   - "[1, 2, 3]"
   - "[ Promise { <pending> }, Promise { <pending> } ]"
@@ -115,9 +108,8 @@ for (let i = 0; i < arr; i++) {
 
 ```javascript
 function someFunction(array) {
-	  return array.map(async (item) => await someAsyncFunction(item));
+  return array.map(async (item) => await someAsyncFunction(item));
 }
-
 ```
 
 위 함수는 Promise 객체 배열을 반환한다고 했었죠.
