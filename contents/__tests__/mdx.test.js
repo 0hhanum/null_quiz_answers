@@ -81,6 +81,7 @@ describe("Test MDX files.", () => {
           level,
           category,
           choices,
+          description,
         } = frontmatter;
         expect(typeof id).toBe("string");
         // title
@@ -118,6 +119,8 @@ describe("Test MDX files.", () => {
         // category
         expect(typeof category).toBe("string");
         expect(category).toBeOneOf(CATEGORIES);
+        // description
+        expect(Array.isArray(description)).toBe(true);
       });
     });
   });

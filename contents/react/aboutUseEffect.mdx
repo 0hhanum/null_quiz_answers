@@ -15,11 +15,15 @@ question:
   - "<code lang=javascript>const Component = ({ items }) => {\n\tconst [filter, setFilter] = useState(null);\n\tconst [filteredItems, setFilteredItems] = useState([]);\n\tuseEffect(() => {\n\t\tif (filter) {\n\t\t\tsetFilteredItems(items.filter({state} => state === filter));\n\t\t}\n\t}, [filter]);\n\t... </code>"
 choices:
   - "filteredItems 상태도, useEffect도 필요없다"
-  - "LGTM👍"
+  - "LGTM 👍"
 answer:
   - A
 level: 2
 category: "react"
+description:
+  - 불필요한 상태와 훅을 사용하고 있어요.
+  - 가독성이 떨어지고 불필요한 추가 렌더링을 발생시켜요.
+  - filteredItems가 외부 상태와 동기화되지 않아요.
 ---
 
 ## 정답
@@ -45,8 +49,10 @@ const Component = ({ items }) => {
 `useEffect`는 읽고 이해하기 쉽지 않습니다.
 문제의 경우 단순하지만 컴포넌트가 복잡해질수록 코드를 변경할 때 신경 쓸 부분이 많아집니다.
 
-<mark>상태 변경에 대응해 어떤 로직을 실행해야 할 경우, 무의식적으로 useEffect를
-사용하는 것은 많은 리액트 개발자가 저지르는 실수입니다.</mark>
+<mark>
+  상태 변경에 대응해 어떤 로직을 실행해야 할 경우, 무의식적으로 useEffect를
+  사용하는 것은 많은 리액트 개발자가 저지르는 실수입니다.
+</mark>
 
 <br />
 <br />
