@@ -21,14 +21,14 @@ data-styled.g4[id="mdxfrontmatter__id__FlexEndContainer-sc-1gyqok2-1"]{content:"
 <h3>useEffect</h3>
 <p><code>useEffect</code>는 읽고 이해하기 쉽지 않습니다.
 문제의 경우 단순하지만 컴포넌트가 복잡해질수록 코드를 변경할 때 신경 쓸 부분이 많아집니다.</p>
-<mark>상태 변경에 대응해 어떤 로직을 실행해야 할 경우, 무의식적으로 useEffect를
-사용하는 것은 많은 리액트 개발자가 저지르는 실수입니다.</mark>
+<mark><p>상태 변경에 대응해 어떤 로직을 실행해야 할 경우, 무의식적으로 useEffect를
+사용하는 것은 많은 리액트 개발자가 저지르는 실수입니다.</p></mark>
 <br/>
 <br/>
 <p>해당 로직이 외부 시스템과 함께 수행되어야 하는 <code>side effect</code>가 맞는지 고민해봐야 합니다.</p>
 <p>일반적으로 비동기 데이터를 요청하거나, 브라우저 API를 이용하거나, 타이머 함수 사용 등이 이에 해당합니다.</p>
 <p>위의 경우 그렇지 않죠.</p>
-<p>컴포넌트를 이해하 기 어렵게 만들 뿐 아니라, <code>filteredItems</code>라는 상태를 도입해 <b>불필요한 추가 렌더링을</b> 발생시킵니다.</p>
+<p>컴포넌트를 이해하기 어렵게 만들 뿐 아니라, <code>filteredItems</code>라는 상태를 도입해 <b>불필요한 추가 렌더링을</b> 발생시킵니다.</p>
 <h3>불필요한 상태</h3>
 <p>수정한 코드는 <code>filteredItems</code>를 상태로 두지 않았습니다.</p>
 <p><code>filteredItems</code> 상태를 두는 것은 추가 렌더링 외에도 <mark>데이터 동기화 문제가 있습니다.</mark></p>
@@ -39,6 +39,6 @@ data-styled.g4[id="mdxfrontmatter__id__FlexEndContainer-sc-1gyqok2-1"]{content:"
           <script
             id="gatsby-chunk-mapping"
           >
-            window.___chunkMapping="{\"app\":[\"/app-33a3522cc14aa35ab662.js\"],\"component---src-pages-404-tsx\":[\"/component---src-pages-404-tsx-dcac18335b85676a4bd4.js\"],\"component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-code-evaluate-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-code-evaluate-mdx-4093b100f93f4615bd56.js\"],\"component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-map-with-async-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-map-with-async-mdx-3263195c177d6e108881.js\"],\"component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-prototype-method-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-prototype-method-mdx-268780fdd1d07e138790.js\"],\"component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-react-about-use-effect-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-react-about-use-effect-mdx-d8b3b4139c1eac8a466e.js\"],\"component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-ts-utility-type-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-ts-utility-type-mdx-805f4b6abfaa39c18202.js\"],\"component---src-pages-index-tsx\":[\"/component---src-pages-index-tsx-2ca851730e7184e90e9f.js\"]}";
+            window.___chunkMapping="{\"app\":[\"/app-33a3522cc14aa35ab662.js\"],\"component---src-pages-404-tsx\":[\"/component---src-pages-404-tsx-dcac18335b85676a4bd4.js\"],\"component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-code-evaluate-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-code-evaluate-mdx-6735e3b5d716416ad023.js\"],\"component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-map-with-async-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-map-with-async-mdx-3263195c177d6e108881.js\"],\"component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-prototype-method-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-prototype-method-mdx-268780fdd1d07e138790.js\"],\"component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-react-about-use-effect-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-react-about-use-effect-mdx-a86543172baf354ba541.js\"],\"component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-ts-utility-type-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-ts-utility-type-mdx-805f4b6abfaa39c18202.js\"],\"component---src-pages-index-tsx\":[\"/component---src-pages-index-tsx-2ca851730e7184e90e9f.js\"]}";
           </script>
-        <script>window.___webpackCompilationHash="819c561aba56bf1eb9d2";</script><script src="/null_quiz_answers/webpack-runtime-d9ba9673b5688f43a42c.js" async></script><script src="/null_quiz_answers/framework-e6d1486946e8e879fece.js" async></script><script src="/null_quiz_answers/app-33a3522cc14aa35ab662.js" async></script><!-- slice-end id="_gatsby-scripts-1" --></body></html>
+        <script>window.___webpackCompilationHash="a08495197c94ac04e3d0";</script><script src="/null_quiz_answers/webpack-runtime-0b379acb43d639d2f9c2.js" async></script><script src="/null_quiz_answers/framework-e6d1486946e8e879fece.js" async></script><script src="/null_quiz_answers/app-33a3522cc14aa35ab662.js" async></script><!-- slice-end id="_gatsby-scripts-1" --></body></html>
