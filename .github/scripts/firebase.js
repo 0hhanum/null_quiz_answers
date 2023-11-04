@@ -47,6 +47,7 @@ const updateQuizData = async (mdxFilePath) => {
         answer,
         category,
         level,
+        description,
       } = mdxParser(absoluteMdxPath);
       await quizRef.child(id).set({
         id,
@@ -58,6 +59,7 @@ const updateQuizData = async (mdxFilePath) => {
         choices: choices || null,
         level,
         category,
+        description,
       });
       await quizCategoryRef.child(category).update({
         [id]: true,

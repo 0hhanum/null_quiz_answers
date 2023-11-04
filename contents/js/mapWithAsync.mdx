@@ -131,6 +131,7 @@ async function someFunction(array) {
  const result = async someFunction(arr); // 정상 동작
 ```
 
+
 다음과 같이 사용할 수 있습니다.
 
 위와 같이 처리했을 때 장점은 `map()` 메서드가 이행 전의 Promise 객체를 동기적으로 파바박 반환하고, `Promise.all()` 은 해당 객체들을 **병렬적**으로 처리할 수 있다는 점이에요.
