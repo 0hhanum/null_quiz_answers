@@ -1,0 +1,180 @@
+---
+id: qwf0tk47bp5s
+title: 리렌더링 횟수는?
+date: 2023-11-04
+tags:
+  - React
+  - Automatic Batching
+  - React 18
+relatedLinks:
+  - https://immigration9.github.io/react/2021/06/12/automatic-batching-react.html
+  - https://react.dev/blog/2022/03/08/react-18-upgrade-guide#automatic-batching
+  - https://github.com/reactwg/react-18/discussions/21
+questionType: 주관식
+question:
+  - React 18 + createRoot 환경에서
+  - onClick 이벤트 발생 시 컴포넌트의 리렌더링 횟수는?
+  - "<code lang=javascript>const Component = () => {\n\tconst [state1, setState1] = useState(true);\n\tconst [state2, setState2] = useState(true);\n\tconst onClick = async () => {\n\t\tsetState1((curr) => !curr);\n\t\tsetState2((curr) => !curr);\n\t\tconst state = await getServerState();\n\t\tsetState1(state);\n\t\tsetState2(state);\n\t\tsetTimeout(() => {\n\t\t\tsetState1((curr) => !curr);\n\t\t\tsetState2((curr) => !curr);\n\t\t}, 100);\n\t\tsetTimeout(() => {\n\t\t\tsetState1((curr) => !curr);\n\t\t\tsetState2((curr) => !curr);\n\t\t}, 100);\n\t};\n};</code>"
+answer:
+  - "3"
+level: 3
+category: "react"
+description:
+  - 리액트는 불필요한 리렌더링을 줄이기 위해 여러 개의 state 업데이트를 하나로 묶어요.
+  - React 18 부터는 Automatic batching을 지원해요.
+  - 리액트 이벤트 핸들러가 아니더라도 배칭이 가능해요.
+---
+
+# batching?
+
+배칭이란 리액트가 더 나은 성능을 위해 여러 상태 업데이트를 하나로 묶어 리렌더링 하는 것을 의미합니다.
+
+```javascript
+const Component = () => {
+  const [state1, setState1] = useState(true);
+  const [state2, setState2] = useState(true);
+
+  const onClick = () => {
+    setState1(false); // 리렌더링 전
+    setState2(true); // 리렌더링 전
+    // **핸들러 함수가 마무리되면 리렌더링
+  };
+
+  ...
+};
+```
+
+리액트는 상태 변경에 대응해 리렌더링합니다.
+
+하지만 위 경우, `setState1`과 `setState2`에 모두 반응하여 두 번 리렌더링한다면 성능적으로 좋지 않겠죠?
+
+또한 절반만 완료된 업데이트가 반영되어 의도하지 않은 상태 조합을 가질 수도 있습니다.
+
+이를 위해 리액트 팀은 `batching`이라는 개념을 도입했습니다.
+
+동시에 일어나는 상태 변경을 한 번에 처리해 렌더링 횟수를 최적화합니다.
+
+
+<mark>하지만 React 17까지는 이벤트 핸들러 밖에서 발생하는 업데이트에 대해서는 배칭하지 않았습니다.</mark>
+
+<br/>
+<br/>
+
+
+
+```javascript
+const Component = () => {
+  const [state1, setState1] = useState(true);
+  const [state2, setState2] = useState(true);
+
+  const onClick = () => {
+    fetchiApi().then(() => {
+      // onClick 핸들러가 마무리 된 후에 실행
+      // fetchApi의 콜백으로 동작
+      setState1(false); // 리렌더링
+      setState2(true); // 리렌더링
+    })
+  };
+
+  ...
+};
+```
+
+위 예시처럼, `onClick` 함수가 종료된 후에 실행되는 비동기 요청에 대한 콜백이나,
+
+`setTimeout`, `Promise` 혹은 네이티브 이벤트에 대한 핸들러 내부의 업데이트는 배칭되지 않았습니다.
+
+리렌더링이 두 번 발생하고 있죠.
+
+이를 해결하기 위해 React 18에서 `Automatic batching`이 소개됩니다.
+
+# Automatic batching
+
+React 18의 `createRoot`로 생성된 루트 내의 모든 업데이트는 어디서 왔는가와 무관하게 자동으로 배칭됩니다.
+
+`timeout`, `Promise`등의 비동기 처리 콜백이나 외부(네이티브) 이벤트 핸들러에 대해서도 배칭이 동작합니다.
+
+리액트 팀은 이를 `Automatic batching`이라고 소개했습니다.
+
+<b>신기한 점은 자동 배칭이 짧은 tick 동안 쌓여있는 업데이트들을 묶어 실행한다는 것입니다.</b>
+
+<br/>
+<br/>
+
+```javascript
+const Component = () => {
+  const [state1, setState1] = useState(true);
+  const [state2, setState2] = useState(true);
+  const onClick = async () => {
+    setState1((curr) => !curr); 
+    setState2((curr) => !curr); // 리렌더링
+    const state = await getServerState(); // 비동기 데이터 waiting
+    setState1(state);
+    setState2(state); // 리렌더링
+    // -------- 한 번에 리렌더링 --------- //
+    setTimeout(() => {
+      setState1((curr) => !curr);
+      setState2((curr) => !curr);
+    }, 100);
+    setTimeout(() => {
+      setState1((curr) => !curr);
+      setState2((curr) => !curr);
+    }, 100);
+    // ------------------------------- //
+  };
+};
+```
+
+퀴즈 정답은 3 입니다.
+
+핸들러 내부의 업데이트는 배칭 처리를 할 수 있다고 쳐도, 언제 끝날 지 모르는 외부 업데이트를 어떻게 배치 처리 하는지 신기하지 않나요?
+
+내부적으로 타이머를 돌리는건지, 동작원리가 궁금해져 찾아본 결과 리액트 팀의 답변을 찾았습니다.
+
+<blockquote>
+  "실질적으로 말하자면, React가 '조금 기다린다'는 것을 의미합니다 ("작업 또는 마이크로 태스크가 끝날 때까지"인 경우 기술 용어). 그러면 React가 화면을 업데이트합니다."
+  <footer>
+    <cite>https://github.com/reactwg/react-18/discussions/46#discussioncomment-846862</cite>
+  </footer>
+</blockquote>
+
+
+간단하게 리액트가 `batching` 중일시 업데이트를 큐에 쌓아두고 마이크로 태스크 큐가 비면 배칭된 업데이트를 실행한다는 식의 답변을 확인했습니다.
+
+위의 코드를 테스트해보면 100ms의 `setTimeout`이 두 개 돌아가고 있는데도 배칭되어 실행됩니다.
+
+재미있는 테스트를 해보겠습니다.
+
+```javascript
+const Component = () => {
+  const [state1, setState1] = useState(0);
+  const [state2, setState2] = useState(0);
+  console.log("rendered", state1, state2)
+  const onClick = () => {
+    // setTimeout1
+    setTimeout(() => { 
+      setState1(1);
+      setState2(1);
+    }, 100);
+    // setTimeout2
+    setTimeout(() => {
+      setState1(2);
+      setState2(2);
+    }, 101);
+  };
+};
+```
+
+위 테스트의 결과는 어떨 것 같나요?
+
+1ms 차이를 두고 배치 처리가 되는지 테스트하는 코드입니다.
+
+결과는 일관적이지 않습니다.
+
+<b>`setTimeout1`과 `setTimeout2`가 동시에 실행되기도, 묶여 실행되기도 합니다.</b>
+
+DOM 페인팅이라던지 어떤 이벤트들이 마이크로태스크큐에 남아있다면 묶여 처리되는걸로 예상됩니다.
+
+리액트 팀의 답변 이해를 돕는 테스트랄까요.
+
+재미있죠?
