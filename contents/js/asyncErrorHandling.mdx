@@ -1,0 +1,138 @@
+---
+id: klc1zg6ljoul
+title: 비동기 에러 핸들링
+date: 2023-11-05
+tags:
+  - JS
+  - 에러 핸들링
+relatedLinks:
+  - https://ko.javascript.info/try-catch
+  - https://ko.javascript.info/promise-error-handling#tasks
+questionType: 빈칸
+question:
+  - "<code lang=javascript>new Promise((res, rej) => {\n\tsetTimeout(() => {\n\t\tthrow new Error();\n\t}, 1000);\n}).catch(() => console.log('catch'));</code>"
+  - 1000ms 후 프로미스 객체의 상태는
+  - <빈칸>
+  - 이며, 콘솔에 "catch"가
+  - <빈칸>
+choices:
+  -  - Pending
+     - Rejected
+     - Fullfilled
+     - 셋 다 아님
+  -  - 출력됨
+     - 출력되지 않음
+answer: 
+  - A
+  - B
+level: 3
+category: "js"
+description:
+  - try...catch는 동기적으로 동작해요.
+  - 실행 함수 종료 이후애 에러가 발생해요.
+---
+
+프로미스 객체는 `Pending` 상태로 남고, 에러는 `.catch`절이 잡아내지 못합니다.
+
+프로미스의 실행함수는 보이지 않는 `try..catch` 블럭으로 감싸져 있지만, 자바스크립트에서 `try..catch` 블럭은 <b>동기적으로 동작하기</b> 때문입니다.
+
+코드가 원하는 대로 동작하려면 <mark>reject을 통해 *명시적*으로 에러를 .catch 블럭에 보내줘야 합니다.</mark>
+
+```javascript
+new Promise((res, rej) => {
+  setTimeout(() => {
+    rej(new Error());
+  }, 1000);
+}).catch(() => console.log("catch"));
+```
+
+# try..catch
+
+`try..catch` 구문을 떠난 이후 발생한 에러는 `catch` 블럭이 잡아낼 수 없습니다.
+
+```javascript
+try {
+  setTimeout(() => {
+    throw new Error(); // 스크립트는 여기서 죽습니다.
+  }, 100);
+} catch (e) {
+  console.error(e); // 실행되지 않음
+}
+```
+
+올바르게 처리하려면 에러가 해당 블럭 실행 시점에 발생되어야 합니다.
+
+```javascript
+setTimeout(() => {
+  try {
+    throw new Error();
+  } catch (e) {
+    console.log(e); // 콜백 함수 실행 중 동기적으로 에러 발생
+  }
+}, 100);
+```
+
+`Promise` 객체의 첫 번째 인자인 실행함수는 암시적 `try..catch` 절로 감싸져 있습니다.
+
+# Promise 에러 핸들링
+
+암시적 `try..catch`의 뜻은 무엇일까요?
+
+```javascript
+new Promise(() => {
+  throw new Error();
+}).catch(() => console.log("catch"));
+
+new Promise((resolve, reject) => {
+  reject(new Error());
+}).catch(() => console.log("catch"));
+```
+
+위 두 코드는 동일하게 동작합니다. `throw`로 에러가 던져져도, 암시적 `catch`절이 에러를 잡아 이를 `reject` 처리합니다.
+
+`.catch` 절이 실행되고, 프로미스는 `Rejected` 상태가 되죠.
+
+하지만 `try..catch`는 동기적으로 동작합니다.
+
+따라서 스케쥴 된 `setTimeout` 내에서는 에러를 잡아낼 수 없습니다.
+
+전역 에러가 발생하고 스크립트가 죽어버리죠.
+
+
+<mark>프로미스 실행함수 내에서는 반드시 `resolve` 또는 `reject`를 실행해야 합니다.</mark>
+
+<br />
+<br />
+
+암묵적 `try..catch` 내에서 에러가 처리되었다면 `Rejected`가 되었겠지만,
+
+처리할 수 없는 에러가 발생하였으므로 객체는 `Pending` 상태로 남아있게 됩니다.
+
+```javascript
+new Promise(() => {
+  throw new Error();
+}).catch(() => console.log("catch"));
+
+new Promise(async () => {
+  throw new Error();
+}).catch(() => console.log("catch"));
+```
+
+같은 원리로 두 코드는 다르게 동작합니다. 비동기 함수 내에서 에러를 발생시키면 `.catch`절이 잡아낼 수 없습니다.
+
+<b>프로미스 내의 비동기 처리에선 명시적 에러 처리를 해주는 게 중요하겠죠?</b>
+
+일반적으로 아래와 같이 사용할 수 있습니다.
+
+```javascript
+const getPromise = () => new Promise(async (resolve, reject) => {
+  try {
+    const data = await someApi();
+    resolve(data);
+  } catch (e) {
+    reject(e);
+  }
+})
+
+getPromise().catch(() => console.log("handle error"));
+```
