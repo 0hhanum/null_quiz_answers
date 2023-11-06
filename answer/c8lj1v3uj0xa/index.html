@@ -7,107 +7,47 @@ data-styled.g2[id="Header__Img-sc-88xloa-1"]{content:"iUiTAs,"}/*!sc*/
 data-styled.g3[id="mdxfrontmatter__id__Container-sc-1gyqok2-0"]{content:"joHxsW,"}/*!sc*/
 .ivHKbn{display:flex;justify-content:end;}/*!sc*/
 data-styled.g4[id="mdxfrontmatter__id__FlexEndContainer-sc-1gyqok2-1"]{content:"ivHKbn,"}/*!sc*/
-</style><title data-gatsby-head="true">유틸리티 타입 (1) | null_quiz_answers</title><link rel="shortcut icon" type="image/x-icon" href="https://0hhanum.github.io/null_quiz_answers/images/favicon.ico" data-gatsby-head="true"/></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" id="gatsby-focus-wrapper"><div><main class="container"><section class="Header__Nav-sc-88xloa-0 kiRgA-D"><nav><!--$--><img src="https://0hhanum.github.io/null_quiz_answers/images/logo.svg" class="Header__Img-sc-88xloa-1 iUiTAs"/><!--/$--></nav></section><section><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/atom-one-dark.min.css"/><div class="mdxfrontmatter__id__Container-sc-1gyqok2-0 joHxsW container"><h1>유틸리티 타입 (1)</h1><div><i>About </i><i>TS<!-- -->, </i><i>TS기본<!-- -->, </i><i>유틸리티_타입</i></div><div class="mdxfrontmatter__id__FlexEndContainer-sc-1gyqok2-1 ivHKbn"><i>2023/10/29</i></div><hr/></div><div class="mdxfrontmatter__id__Container-sc-1gyqok2-0 joHxsW container"><section><h1>유틸리티 타입?</h1>
-<blockquote><p>&quot;TypeScript는 공통 타입 변환을 용이하게 하기 위해 몇 가지 유틸리티 타입을
-제공합니다.&quot;</p><footer><cite>- 타입스크립트 핸드북</cite></footer></blockquote>
-<h2>Partial</h2>
-<p><code>Partial&lt;T&gt;</code>는 타입 <code>T</code>의 <mark>모든 프로퍼티를 선택적으로</mark> 만드는 타입을 구성합니다.</p>
-<pre><code class="language-javascript">type Partial&lt;T&gt; = {
-  [P in keyof T]?: T[P];
-};
-</code></pre>
-<p><code>Partial&lt;T&gt;</code>는 특정 타입 T의 모든 프로퍼티에 <code>?</code>를 붙여 선택적 프로퍼티로 만듭니다.</p>
-<pre><code class="language-javascript">interface IData {
-    title: string;
-    timestamp: number;
-    description: string;
-    tags: tag[]
-}
-function updateData(currentData: IData, newData: ?) {
-    update({
-    ...currentData,
-    ...newData,
-    timestamp: getTimestamp(),
-    });
-}
-</code></pre>
-<p>일반적으로 업데이트 함수는 기존 데이터의 특정 부분을 변경합니다.
-<code>updateData</code> 함수는 <code>newData</code>를 인자로 받아 해당 데이터를 타임스탬프와 함께 업데이트합니다.</p>
-<p>스프레드 연산자를 사 용한 것으로 보아 newData가 <b>어떤 프로퍼티를 가지는 지 확실하지 않습니다.</b>
-<code>title</code>을 업데이트 할 수도, <code>description</code>이나 <code>tags</code>를, 또는 셋 모두 업데이트 할 수도 있습니다.</p>
-<p>따라서 이 경우, <code>IData</code>의 모든 프로퍼티를 옵셔널로 만드는 <code>Partial</code> 유틸리티 타입이 적합합니다.</p>
-<pre><code class="language-javascript">Partial&lt;IData&gt;
-    {
-    title?: string;
-    timestamp?: number;
-    description?: string;
-    tags?: tag[]
-    }
-</code></pre>
-<h2>Required</h2>
-<p><code>Partial&lt;T&gt;</code>와 반대로 모든 프로퍼티를 필수로 설정하는 타입을 만드는 <code>Required&lt;T&gt;</code> 유틸리티 타입도 있습니다.</p>
-<pre><code class="language-javascript">interface IData {
-  title?: string;
-  description?: string;
-}
-const a: IData = { title: &quot;some title&quot; }; // description이 없어도 OK.
-const b: Required&lt;IData&gt; = { title: &quot;some title&quot; }; // 오류: 프로퍼티 description이 없습니다.
-</code></pre>
-<h2>Omit</h2>
-<p><code>Omit&lt;T, K&gt;</code>은 타입 <mark>T의 프로퍼티 중 K를 제거한 타입</mark>을 구성합니다.</p>
-<pre><code class="language-javascript">type Omit&lt;T, K extends keyof T&gt; = Pick&lt;T, Exclude&lt;keyof T, K&gt;&gt;;
-</code></pre>
-<p><code>T</code>의 프로퍼티를 인자로 받으며(<code>K extends keyof T</code>), <code>T</code> 프로퍼티 중 <code>K</code>를 제외한(<code>Pick&lt;T, Exclude&lt;keyof T, K&gt;&gt;</code>) 새로운 타입을 구성합니다.</p>
-<p>퀴즈의 <code>updateData</code> 함수는 <code>newData</code> 프로퍼티가 명확하지 않아도 범용적으로 사용할 수 있는 함수로 특정 프로퍼티를 제외하는 <code>Omit&lt;T, K&gt;</code>는 적합하지 않습니다.
-추상화 레벨이 한 단계 높아진다면 사용할 수는 있습니다. 아래와 같이요.</p>
-<pre><code class="language-javascript">function updateTitle(
-  currentData: IData,
-  newData: Omit&lt;IData, &quot;description&quot; | &quot;tags&quot;&gt;
-) {
-  update({
-    ...currentData,
-    ...newData,
-  });
-}
-</code></pre>
-<p>하지만 위와 같이 프로퍼티를 특정해 어떤 동작을 수행하는 경우, <code>IData</code>가 확장될 경우 의도하지 않은 속성이 같이 업데이트 될 위험이 있습니다.
-<code>newData.title</code>을 특정해 <code>title</code>을 업데이트 할 수도 있겠지만 위 경우 대상 프로퍼티를 정의해 주는 것이 논리적으로 적절합니다.</p>
-<p>이럴 경우에 <code>Pick&lt;T, K&gt;</code>을 사용합니다.</p>
-<h2>Pick</h2>
-<p><code>Pick&lt;T, K&gt;</code>은 타입 <code>T</code>에서 <mark>특정 프로퍼티를 선택해 새로운 타입을 구성</mark>합니다.</p>
-<pre><code class="language-javascript">type Pick&lt;T, K extends keyof T&gt; = {
-  [P in K]: T[P];
-};
-</code></pre>
-<p>두 번째 인자 <code>K</code>로 <code>T</code> 타입의 프로퍼티를 받으며, <code>K</code>를 프로퍼티로 가지는 새로운 타입을 구성합니다.
-위의 <code>updateTitle()</code>에 아래와 같이 적용할 수 있습니다.</p>
-<pre><code class="language-javascript">function updateTitle(currentData: IData, newData: Pick&lt;IData, &quot;title&quot;&gt;) {
-  update({
-    ...currentData,
-    ...newData,
-  });
-}
-</code></pre>
-<h2>Record</h2>
-<p><code>Record&lt;K, T&gt;</code>는 <mark>첫 번째 인자 타입 K를 프로퍼티로, 해당 프로퍼티의 타입으로 T</mark>를 가지는 새로운 객체 타입을 구성합니다.</p>
-<pre><code class="language-javascript">type Record&lt;K extends keyof any, T&gt; = {
-  [P in K]: T;
-};
-</code></pre>
-<p>아래와 같이 사용할 수 있습니다.</p>
-<pre><code class="language-javascript">type dataState = &quot;pending&quot; | &quot;fulfilled&quot; | &quot;error&quot;
-const obj: Record&lt;dataState, IData[]&gt; = {
-    pending: IData 타입의 객체 배열,
-    fulfilled: IData 타입의 객체 배열,
-    error: IData 타입의 객체 배열,
-}
-</code></pre>
-<p><code>Partial</code>과의 콤비네이션도 가넝.</p>
-<pre><code class="language-javascript">type dataState = &quot;pending&quot; | &quot;fulfilled&quot; | &quot;error&quot;
-const obj: Partial&lt;Record&lt;dataState, IData[]&gt;&gt; = {
-    pending: IData 타입의 객체 배열
-} // fulfilled, error 프로퍼티가 없어도 OK.
-</code></pre></section></div><article><h3>더 알아보려면?</h3><ul><li><a href="https://typescript-kr.github.io/pages/utility-types.html">https://typescript-kr.github.io/pages/utility-types.html</a></li></ul></article><div class="mdxfrontmatter__id__FlexEndContainer-sc-1gyqok2-1 ivHKbn"><a href="https://github.com/0hhanum/null_quiz_answers/issues/new?title=유틸리티 타입 (1) 수정 요청&amp;body=잘못된 정보를 고쳐주시면 기프티콘을 드려요 :)"><p>잘못된 정보가 있나요?</p></a></div></section></main></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/answer/v5o42oni321p/";/*]]>*/</script><!-- slice-start id="_gatsby-scripts-1" -->
+</style><title data-gatsby-head="true">프론트엔드 개발 툴 | null_quiz_answers</title><link rel="shortcut icon" type="image/x-icon" href="https://0hhanum.github.io/null_quiz_answers/images/favicon.ico" data-gatsby-head="true"/></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" id="gatsby-focus-wrapper"><div><main class="container"><section class="Header__Nav-sc-88xloa-0 kiRgA-D"><nav><!--$--><img src="https://0hhanum.github.io/null_quiz_answers/images/logo.svg" class="Header__Img-sc-88xloa-1 iUiTAs"/><!--/$--></nav></section><section><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/atom-one-dark.min.css"/><div class="mdxfrontmatter__id__Container-sc-1gyqok2-0 joHxsW container"><h1>프론트엔드 개발 툴</h1><div><i>About </i><i>FE<!-- -->, </i><i>번들러<!-- -->, </i><i>패키지 매니저</i></div><div class="mdxfrontmatter__id__FlexEndContainer-sc-1gyqok2-1 ivHKbn"><i>2023/11/06</i></div><hr/></div><div class="mdxfrontmatter__id__Container-sc-1gyqok2-0 joHxsW container"><section><p>효율, 협업, DX 등 다양한 이유로 다양한 개발 도구를 사용합니다.</p>
+<p><b>은탄환은 없다</b> 라는 말이 흔히 쓰이듯이,</p>
+<p>프로젝트 성격에 적합한 도구를 선택해야 합니다.</p>
+<h1>태스크 러너</h1>
+<p>단어 그대로 작업 실행을 도와주는 도우미입니다.</p>
+<p><b>반복적인 작업을 자동화하는데</b> 주로 사용합니다.</p>
+<p><code>Grunt</code>와 <code>gulp.js</code>는 태스크 러너입니다.</p>
+<p>스크립트를 하나로 묶고 난독화하거나, SCSS를 CSS로 컴파일하는 작업 등을 자동화하는데 사용합니다.</p>
+<p>번들링과 다양한 기능을 한번에 제공하는 <code>webpack</code>, <code>Vite</code>등 강력한 통합 기능 번들러가 태스크 러너의 일까지 수행할 수 있게 되면서 많이 사용하지 않게 되었습니다.</p>
+<h1>모듈 번들러</h1>
+<blockquote><p>브라우저에서 ESM(ES Modules)을 지원하기 전까지, JavaScript 모듈화를 네이티브
+레벨에서 진행할 수 없었습니다. 그래서 소스 모듈을 브라우저에서 실행할 수 있는
+파일로 크롤링, 처리 및 연결하는 &quot;번들링(Bundling)&quot;이라는 해결 방법을 사용  해야
+했습니다.</p><footer><cite>- Vite 가이드</cite></footer></blockquote>
+<p>번들러란 나눠진 JS 스크립트를 브라우저에서 실행할 수 있도록 하나의 스크립트로 묶어주는 툴입니다.</p>
+<p>프론트엔드 개발이 복잡해지면서, <b>협업과 유지보수를 위해 파일을 나눠 개발하는 모듈화에 대한 필요성이 늘어나</b> 번들러가 탄생했습니다.</p>
+<p>webpack, Vite, Turbopack 등의 모던 번들러들은</p>
+<p>스크립트 모듈화를 넘어 에셋 관리, 개발 서버와 프록시, HMR 등 다양한 기능을 포함하거나 플러그인으로 확장 가능해 번들러를 넘어 통합 개발 도구처럼 사용됩니다.</p>
+<h1>패키지 매니저</h1>
+<p>자바스크립트 생태계는 세계에서 가장 규모가 큰 오픈소스 생태계입니다. 없는 게 없죠.</p>
+<p>이를 편하게 이용할 수 있게 도와주는 것이 패키지 매니저입니다. <b>의존성이나 버전 관리, 패키지 배포</b> 등의 기능을 제공합니다.</p>
+<p>라이브러리 사용이 필연적인 프론트엔드 개발에서, 팀 내 개발 환경 통일에도 도움이 되겠죠?</p>
+<p>대표적으로 <code>npm</code>과 <code>yarn</code>이 있습니다. 기능은 거의 동일하며 <code>yarn</code>은 종속 패키지 병렬 다운로드를 지원합니다.</p>
+<h1>자바스크립트 엔진과 런타임 환경</h1>
+<p>퀴즈 정답은 <code>Node.js - V8</code> 입니다.</p>
+<p><code>Node.js</code>는 자바스크립트 런타임, <code>V8</code>은 자바스크립트 엔진입니다.</p>
+<h2>자바스크립트 엔진</h2>
+<p>말 그대로 JavaScript 코드를 실행하는 역할을 합니다.</p>
+<p>V8은 JIT 컴파일을 사용하며,</p>
+<p>크로미움 기반 브라우저, Node.js와 일렉트론 등의 JS 엔진입니다.</p>
+<p>다른 보기들처럼 동일 범주로 묶이려면</p>
+<p><code>V8 - SpiderMonkey(Firefox) | Chakra(Edge) | Nitro(Safari)</code></p>
+<p>가 되어야 맞겠죠?</p>
+<h2>자바스크립트 런타임</h2>
+<p>런타임은 프로그램이 구동되는 환경입니다.</p>
+<p>초기 자바스크립트는 브라우저 런타임에서만 동작했습니다.</p>
+<p>JS를 브라우저 밖에서 이용하려는(서버) 시도가 있었고,</p>
+<p>V8 엔진을 이용해 브라우저 밖에서도 동작하는 <code>Node.js</code>가 탄생했습니다.</p>
+<p><code>&gt; node index.js</code> 커맨드를 이용해 자바스크립트 파일을 실행할 수 있죠?</p>
+<p>서버사이드를 위한 런타임으로 동기적 모듈 시스템인 <code>CJS</code>를 사용합니다.</p>
+<p>다른 보기들처럼 동일 범주로 묶이려면 <code>Node.js - Bun | Deno</code> 등이 되어야 맞겠죠?</p></section></div><article><h3>더 알아보려면?</h3><ul><li><a href="https://yozm.wishket.com/magazine/detail/1620/">https://yozm.wishket.com/magazine/detail/1620/</a></li><li><a href="https://ui.toast.com/posts/ko_20220127">https://ui.toast.com/posts/ko_20220127</a></li><li><a href="https://bepyan.github.io/blog/2023/bundlers">https://bepyan.github.io/blog/2023/bundlers</a></li><li><a href="https://yozm.wishket.com/magazine/detail/1261/">https://yozm.wishket.com/magazine/detail/1261/</a></li></ul></article><div class="mdxfrontmatter__id__FlexEndContainer-sc-1gyqok2-1 ivHKbn"><a href="https://github.com/0hhanum/null_quiz_answers/issues/new?title=프론트엔드 개발 툴 수정 요청&amp;body=잘못된 정보를 고쳐주시면 기프티콘을 드려요 :)"><p>잘못된 정보가 있나요?</p></a></div></section></main></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/answer/c8lj1v3uj0xa/";/*]]>*/</script><!-- slice-start id="_gatsby-scripts-1" -->
           <script
             id="gatsby-chunk-mapping"
           >
