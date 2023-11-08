@@ -20,9 +20,9 @@ answer:
 level: 3
 category: "react"
 description:
-  - 리액트는 불필요한 리렌더링을 줄이기 위해 여러 개의 state 업데이트를 하나로 묶어요.
-  - React 18 부터는 Automatic batching을 지원해요.
-  - 리액트 이벤트 핸들러가 아니더라도 배칭이 가능해요.
+  - 리렌더링 최적화를 위해 상태 변경을 한 번에 처리해요.
+  - React 18 부터 Automatic batching을 지원해요.
+  - 리액트 이벤트 핸들러가 아니여도 배칭이 가능해요.
 ---
 
 # batching?
@@ -54,13 +54,13 @@ const Component = () => {
 
 동시에 일어나는 상태 변경을 한 번에 처리해 렌더링 횟수를 최적화합니다.
 
+<mark>
+  하지만 React 17까지는 이벤트 핸들러 밖에서 발생하는 업데이트에 대해서는
+  배칭하지 않았습니다.
+</mark>
 
-<mark>하지만 React 17까지는 이벤트 핸들러 밖에서 발생하는 업데이트에 대해서는 배칭하지 않았습니다.</mark>
-
-<br/>
-<br/>
-
-
+<br />
+<br />
 
 ```javascript
 const Component = () => {
@@ -96,17 +96,20 @@ React 18의 `createRoot`로 생성된 루트 내의 모든 업데이트는 어�
 
 리액트 팀은 이를 `Automatic batching`이라고 소개했습니다.
 
-<b>신기한 점은 자동 배칭이 짧은 tick 동안 쌓여있는 업데이트들을 묶어 실행한다는 것입니다.</b>
+<b>
+  신기한 점은 자동 배칭이 짧은 tick 동안 쌓여있는 업데이트들을 묶어 실행한다는
+  것입니다.
+</b>
 
-<br/>
-<br/>
+<br />
+<br />
 
 ```javascript
 const Component = () => {
   const [state1, setState1] = useState(true);
   const [state2, setState2] = useState(true);
   const onClick = async () => {
-    setState1((curr) => !curr); 
+    setState1((curr) => !curr);
     setState2((curr) => !curr); // 리렌더링
     const state = await getServerState(); // 비동기 데이터 waiting
     setState1(state);
@@ -132,12 +135,15 @@ const Component = () => {
 내부적으로 타이머를 돌리는건지, 동작원리가 궁금해져 찾아본 결과 리액트 팀의 답변을 찾았습니다.
 
 <blockquote>
-  "실질적으로 말하자면, React가 '조금 기다린다'는 것을 의미합니다 ("작업 또는 마이크로 태스크가 끝날 때까지"인 경우 기술 용어). 그러면 React가 화면을 업데이트합니다."
+  "실질적으로 말하자면, React가 '조금 기다린다'는 것을 의미합니다 ("작업 또는
+  마이크로 태스크가 끝날 때까지"인 경우 기술 용어). 그러면 React가 화면을
+  업데이트합니다."
   <footer>
-    <cite>https://github.com/reactwg/react-18/discussions/46#discussioncomment-846862</cite>
+    <cite>
+      https://github.com/reactwg/react-18/discussions/46#discussioncomment-846862
+    </cite>
   </footer>
 </blockquote>
-
 
 간단하게 리액트가 `batching` 중일시 업데이트를 큐에 쌓아두고 마이크로 태스크 큐가 비면 배칭된 업데이트를 실행한다는 식의 답변을 확인했습니다.
 
@@ -149,10 +155,10 @@ const Component = () => {
 const Component = () => {
   const [state1, setState1] = useState(0);
   const [state2, setState2] = useState(0);
-  console.log("rendered", state1, state2)
+  console.log("rendered", state1, state2);
   const onClick = () => {
     // setTimeout1
-    setTimeout(() => { 
+    setTimeout(() => {
       setState1(1);
       setState2(1);
     }, 100);
@@ -171,7 +177,9 @@ const Component = () => {
 
 결과는 일관적이지 않습니다.
 
-<b>`setTimeout1`과 `setTimeout2`가 동시에 실행되기도, 묶여 실행되기도 합니다.</b>
+<b>
+  `setTimeout1`과 `setTimeout2`가 동시에 실행되기도, 묶여 실행되기도 합니다.
+</b>
 
 DOM 페인팅이라던지 어떤 이벤트들이 마이크로태스크큐에 남아있다면 묶여 처리되는걸로 예상됩니다.
 
