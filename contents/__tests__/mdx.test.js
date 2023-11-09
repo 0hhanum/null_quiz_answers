@@ -6,7 +6,7 @@ const { describe, test } = require("@jest/globals");
 const BASE_DIR = path.join(__dirname, "../");
 const QUESTION_TYPES = ["객관식", "주관식", "OX", "빈칸"];
 const 객관식_보기_개수 = [2, 4];
-const CATEGORIES = ["js", "ts", "fe", "cs", "react"];
+const CATEGORIES = ["js", "ts", "fe", "dev", "react"];
 
 // Utility function to read MDX files and parse frontmatter
 const readMdxFile = (filePath) => {

@@ -1,7 +1,7 @@
 // Describe mdx frontmatter type
 
 type questionType = "객관식" | "주관식" | "OX" | "빈칸";
-type category = "cs" | "fe" | "react" | "js" | "ts";
+type category = "dev" | "fe" | "react" | "js" | "ts";
 
 interface IFrontmatter {
   id: string;
@@ -15,4 +15,5 @@ interface IFrontmatter {
   answer: string[];
   level: number; // 1, 2, 3, 4, 5
   category: category;
+  description: string;
 }
