@@ -1,0 +1,61 @@
+---
+id: x30znuyb52hh
+title: 왜 다르게 동작할까요?
+date: 2023-11-09
+tags:
+  - JS
+  - 스코프
+  - 클로저
+relatedLinks:
+  - https://developer.mozilla.org/ko/docs/Web/JavaScript/Closures
+  - https://stackoverflow.com/questions/762011/what-is-the-difference-between-let-and-var
+questionType: 객관식
+question:
+  - 다르게 동작하는 이유는?
+  - "<code lang=javascript>function a() {\n\tfor (let i = 0; i < 10; i++) {\n\t\tconst func = () => console.log(i);\n\t\tsetTimeout(func, 100);\n\t}\n}\na();</code>"
+  - "<code lang=javascript>function a() {\n\tfor (var i = 0; i < 10; i++) {\n\t\tconst func = () => console.log(i);\n\t\tsetTimeout(func, 100);\n\t}\n}\na();</code>"
+choices:
+  - 클로저 때문
+  - 스코프 때문
+answer:
+  - B
+level: 1
+category: "js"
+description:
+  - var는 함수 스코프, let은 블록 스코프를 가져요.
+  - 클로저가 사용되지만 var는 콜백함수가 모두 동일한 변수를 참조해요.
+---
+
+❗️ 스코프와 클로저의 개념에 대해 자세히 다루지 않습니다.
+
+# var는 함수 스코프, let은 블록 스코프
+
+두 변수 선언 방식의 `스코프 레벨`이 달라 결과가 달라집니다.
+
+`var`는 함수 레벨의 스코프를 가지기 때문에 `for`문이 종료되어도 부모 스코프에서(퀴즈의 경우 전역 스코프) 참조가 가능합니다. 아래처럼요.
+
+```javascript
+function example() {
+  for (var i = 0; i < 10; i++) {
+    // do something
+  }
+  console.log(i); // 10
+}
+```
+
+하지만 `let`은 블록 레벨 스코프를 가지기 때문에 `for`문이 종료되면 해당 블록 내에서 선언한 변수는 접근할 수 없습니다.
+
+```javascript
+function example() {
+  for (let i = 0; i < 10; i++) {
+    // do something
+  }
+  console.log(i); // Uncaught ReferenceError: i is not defined
+}
+```
+
+그럼 `for문`도 함수 실행도 종료된 이후 `setTimeout`내 콜백에서 `i`를 참조할 수 있는 이유는 무엇일까요?
+
+# 클로저
+
+`setTimeout` 콜백 함수 내에서 `i`를 참조해 클로저가 생성되었기 때문입니다.
