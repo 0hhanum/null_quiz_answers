@@ -9,14 +9,14 @@ data-styled.g3[id="mdxfrontmatter__id__Container-sc-1gyqok2-0"]{content:"joHxsW,
 data-styled.g4[id="mdxfrontmatter__id__FlexEndContainer-sc-1gyqok2-1"]{content:"ivHKbn,"}/*!sc*/
 </style><title data-gatsby-head="true">유니언과 교차 타입 | null_quiz_answers</title><link rel="shortcut icon" type="image/x-icon" href="https://0hhanum.github.io/null_quiz_answers/images/favicon.ico" data-gatsby-head="true"/></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" id="gatsby-focus-wrapper"><div><main class="container"><section class="Header__Nav-sc-88xloa-0 kiRgA-D"><nav><!--$--><img src="https://0hhanum.github.io/null_quiz_answers/images/logo.svg" class="Header__Img-sc-88xloa-1 iUiTAs"/><!--/$--></nav></section><section><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/atom-one-dark.min.css"/><div class="mdxfrontmatter__id__Container-sc-1gyqok2-0 joHxsW container"><h1>유니언과 교차 타입</h1><div><i>About </i><i>TS<!-- -->, </i><i>유니온<!-- -->, </i><i>인터섹션</i></div><div class="mdxfrontmatter__id__FlexEndContainer-sc-1gyqok2-1 ivHKbn"><i>2024/03/13</i></div><hr/></div><div class="mdxfrontmatter__id__Container-sc-1gyqok2-0 joHxsW container"><section><h1>유니온 타입</h1>
 <p>유니온 타입(Union Type)이란 자바스크립트의 OR 연산자(||)와 같이 A이거나 B이다 라는 의미의 타입입니다.</p>
-<pre><code class="language-typescript">function foo(bar: string | number) {
+<pre><code class="language-javascript">function foo(bar: string | number) {
   ...
 }
 </code></pre>
 <p>파라미터 <code>bar</code>의 인자로 <code>string</code>과 <code>number</code> 타입 모두 올 수 있습니다.</p>
 <h1>인터섹션 타입</h1>
 <p>인터섹션 타입은 여러 타입을 모두 만족하는 하나의 타입을 의미합니다.</p>
-<pre><code class="language-typescript">interface A {
+<pre><code class="language-javascript">interface A {
   foo: string;
   bar: number;
 }
@@ -27,7 +27,7 @@ interface B {
 type C = A &amp; B;
 </code></pre>
 <p>인터페이스 <code>A</code>와 <code>B</code>를 모두 만족해야 하기 때문에 C는 아래와 같이 정의됩니다.</p>
-<pre><code class="language-typescript">{
+<pre><code class="language-javascript">{
   foo: string;
   bar: number;
   baz: number;
@@ -39,7 +39,7 @@ type C = A &amp; B;
 <p><code>interface</code>나 객체의 타입을 다룰 때 유니온 타입(|)을 <strong>합집합</strong> 처럼 생각하면 문제가 생길 수 있습니다.</p>
 <p>유니온 타입의 정의인 &#x27;<strong>A거나 B이다</strong>&#x27;라는 정의에 주목해야 합니다. 유니온 타입은 두 타입의 특성을 결합하지 않고, 대신 두 타입 중 <strong>적어도 하나라도 일치하는</strong> 값을 허용합니다.</p>
 <h2>예시 1</h2>
-<pre><code class="language-typescript">interface A {
+<pre><code class="language-javascript">interface A {
   foo: string;
   bar: number;
 }
@@ -74,7 +74,7 @@ const c4: C = {
 <p>다시말해 유니온 타입의 핵심은, <strong>선언된 타입 중 적어도 하나의 전체 조건을 만족시키는</strong> 값이어야 한다는 점입니다.</p>
 <p>조금 더 복잡한 예시를 보겠습니다. 동일한 프로퍼티 <code>foo</code>를 가지지만 서로 타입이 다른 경우입니다.</p>
 <h2>예시 2</h2>
-<pre><code class="language-typescript">interface A {
+<pre><code class="language-javascript">interface A {
   foo: string;
   bar: number;
 }
@@ -100,6 +100,6 @@ const c2: C = {
           <script
             id="gatsby-chunk-mapping"
           >
-            window.___chunkMapping="{\"app\":[\"/app-a86cb2c31d858a745cbe.js\"],\"component---src-pages-404-tsx\":[\"/component---src-pages-404-tsx-ccdec56dd52c4aecf218.js\"],\"component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-fe-dev-tools-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-fe-dev-tools-mdx-06ebfc8c5e9f2dc290bd.js\"],\"component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-async-error-handling-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-async-error-handling-mdx-f7baae61a774a3c89bb3.js\"],\"component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-code-evaluate-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-code-evaluate-mdx-6735e3b5d716416ad023.js\"],\"component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-map-with-async-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-map-with-async-mdx-3263195c177d6e108881.js\"],\"component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-prototype-method-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-prototype-method-mdx-268780fdd1d07e138790.js\"],\"component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-variable-scope-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-variable-scope-mdx-f66cb4a4f585a571398a.js\"],\"component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-react-about-use-effect-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-react-about-use-effect-mdx-d8b3b4139c1eac8a466e.js\"],\"component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-react-automatic-batching-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-react-automatic-batching-mdx-3490f7658abb98798987.js\"],\"component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-ts-union-and-intersection-types-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-ts-union-and-intersection-types-mdx-c19abe9f86f11e5c560e.js\"],\"component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-ts-utility-type-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-ts-utility-type-mdx-805f4b6abfaa39c18202.js\"],\"component---src-pages-index-tsx\":[\"/component---src-pages-index-tsx-7ea1c52a8efe7dc0cda8.js\"]}";
+            window.___chunkMapping="{\"app\":[\"/app-a86cb2c31d858a745cbe.js\"],\"component---src-pages-404-tsx\":[\"/component---src-pages-404-tsx-ccdec56dd52c4aecf218.js\"],\"component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-fe-dev-tools-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-fe-dev-tools-mdx-06ebfc8c5e9f2dc290bd.js\"],\"component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-async-error-handling-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-async-error-handling-mdx-f7baae61a774a3c89bb3.js\"],\"component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-code-evaluate-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-code-evaluate-mdx-6735e3b5d716416ad023.js\"],\"component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-map-with-async-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-map-with-async-mdx-3263195c177d6e108881.js\"],\"component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-prototype-method-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-prototype-method-mdx-268780fdd1d07e138790.js\"],\"component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-variable-scope-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-js-variable-scope-mdx-f66cb4a4f585a571398a.js\"],\"component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-react-about-use-effect-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-react-about-use-effect-mdx-d8b3b4139c1eac8a466e.js\"],\"component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-react-automatic-batching-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-react-automatic-batching-mdx-3490f7658abb98798987.js\"],\"component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-ts-union-and-intersection-types-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-ts-union-and-intersection-types-mdx-c11449f54850e7ccbbba.js\"],\"component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-ts-utility-type-mdx\":[\"/component---src-pages-answer-mdx-frontmatter-id-tsx-content-file-path-contents-ts-utility-type-mdx-805f4b6abfaa39c18202.js\"],\"component---src-pages-index-tsx\":[\"/component---src-pages-index-tsx-7ea1c52a8efe7dc0cda8.js\"]}";
           </script>
-        <script>window.___webpackCompilationHash="abd287d6bb6846a59936";</script><script src="/null_quiz_answers/webpack-runtime-1d105e296bc2e0a15be8.js" async></script><script src="/null_quiz_answers/framework-e6d1486946e8e879fece.js" async></script><script src="/null_quiz_answers/app-a86cb2c31d858a745cbe.js" async></script><!-- slice-end id="_gatsby-scripts-1" --></body></html>
+        <script>window.___webpackCompilationHash="3859d657e3d311ac5003";</script><script src="/null_quiz_answers/webpack-runtime-f39143191f159cf17a02.js" async></script><script src="/null_quiz_answers/framework-e6d1486946e8e879fece.js" async></script><script src="/null_quiz_answers/app-a86cb2c31d858a745cbe.js" async></script><!-- slice-end id="_gatsby-scripts-1" --></body></html>
