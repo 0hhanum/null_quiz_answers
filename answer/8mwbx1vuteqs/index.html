@@ -7,47 +7,96 @@ data-styled.g2[id="Header__Img-sc-88xloa-1"]{content:"iUiTAs,"}/*!sc*/
 data-styled.g3[id="mdxfrontmatter__id__Container-sc-1gyqok2-0"]{content:"joHxsW,"}/*!sc*/
 .ivHKbn{display:flex;justify-content:end;}/*!sc*/
 data-styled.g4[id="mdxfrontmatter__id__FlexEndContainer-sc-1gyqok2-1"]{content:"ivHKbn,"}/*!sc*/
-</style><title data-gatsby-head="true">프론트엔드 개발 툴 | null_quiz_answers</title><link rel="shortcut icon" type="image/x-icon" href="https://0hhanum.github.io/null_quiz_answers/images/favicon.ico" data-gatsby-head="true"/></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" id="gatsby-focus-wrapper"><div><main class="container"><section class="Header__Nav-sc-88xloa-0 kiRgA-D"><nav><!--$--><img src="https://0hhanum.github.io/null_quiz_answers/images/logo.svg" class="Header__Img-sc-88xloa-1 iUiTAs"/><!--/$--></nav></section><section><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/atom-one-dark.min.css"/><div class="mdxfrontmatter__id__Container-sc-1gyqok2-0 joHxsW container"><h1>프론트엔드 개발 툴</h1><div><i>About </i><i>FE<!-- -->, </i><i>번들러<!-- -->, </i><i>패키지 매니저</i></div><div class="mdxfrontmatter__id__FlexEndContainer-sc-1gyqok2-1 ivHKbn"><i>2023/11/06</i></div><hr/></div><div class="mdxfrontmatter__id__Container-sc-1gyqok2-0 joHxsW container"><section><p>효율, 협업, DX 등 다양한 이유로 다양한 개발 도구를 사용합니다.</p>
-<p><b>은탄환은 없다</b> 라는 말이 흔히 쓰이듯이,</p>
-<p>프로젝트 성격에 적합한 도구를 선택해야 합니다.</p>
-<h1>태스크 러너</h1>
-<p>단어 그대로 작업 실행을 도와주는 도우미입니다.</p>
-<p><b>반복적인 작업을 자동화하는데</b> 주로 사용합니다.</p>
-<p><code>Grunt</code>와 <code>gulp.js</code>는 태스크 러너입니다.</p>
-<p>스크립트를 하나로 묶고 난독화하거나, SCSS를 CSS로 컴파일하는 작업 등을 자동화하는데 사용합니다.</p>
-<p>번들링과 다양한 기능을 한번에 제공하는 <code>webpack</code>, <code>Vite</code>등 강력한 통합 기능 번들러가 태스크 러너의 일까지 수행할 수 있게 되면서 많이 사용하지 않게 되었습니다.</p>
-<h1>모듈 번들러</h1>
-<blockquote><p>브라우저에서 ESM(ES Modules)을 지원하기 전까지, JavaScript 모듈화를 네이티브
-레벨에서 진행할 수 없었습니다. 그래서 소스 모듈을 브라우저에서 실행할 수 있는
-파일로 크롤링, 처리 및 연결하는 &quot;번들링(Bundling)&quot;이라는 해결 방법을 사용  해야
-했습니다.</p><footer><cite>- Vite 가이드</cite></footer></blockquote>
-<p>번들러란 나눠진 JS 스크립트를 브라우저에서 실행할 수 있도록 하나의 스크립트로 묶어주는 툴입니다.</p>
-<p>프론트엔드 개발이 복잡해지면서, <b>협업과 유지보수를 위해 파일을 나눠 개발하는 모듈화에 대한 필요성이 늘어나</b> 번들러가 탄생했습니다.</p>
-<p>webpack, Vite, Turbopack 등의 모던 번들러들은</p>
-<p>스크립트 모듈화를 넘어 에셋 관리, 개발 서버와 프록시, HMR 등 다양한 기능을 포함하거나 플러그인으로 확장 가능해 번들러를 넘어 통합 개발 도구처럼 사용됩니다.</p>
-<h1>패키지 매니저</h1>
-<p>자바스크립트 생태계는 세계에서 가장 규모가 큰 오픈소스 생태계입니다. 없는 게 없죠.</p>
-<p>이를 편하게 이용할 수 있게 도와주는 것이 패키지 매니저입니다. <b>의존성이나 버전 관리, 패키지 배포</b> 등의 기능을 제공합니다.</p>
-<p>라이브러리 사용이 필연적인 프론트엔드 개발에서, 팀 내 개발 환경 통일에도 도움이 되겠죠?</p>
-<p>대표적으로 <code>npm</code>과 <code>yarn</code>이 있습니다. 기능은 거의 동일하며 <code>yarn</code>은 종속 패키지 병렬 다운로드를 지원합니다.</p>
-<h1>자바스크립트 엔진과 런타임 환경</h1>
-<p>퀴즈 정답은 <code>Node.js - V8</code> 입니다.</p>
-<p><code>Node.js</code>는 자바스크립트 런타임, <code>V8</code>은 자바스크립트 엔진입니다.</p>
-<h2>자바스크립트 엔진</h2>
-<p>말 그대로 JavaScript 코드를 실행하는 역할을 합니다.</p>
-<p>V8은 JIT 컴파일을 사용하며,</p>
-<p>크로미움 기반 브라우저, Node.js와 일렉트론 등의 JS 엔진입니다.</p>
-<p>다른 보기들처럼 동일 범주로 묶이려면</p>
-<p><code>V8 - SpiderMonkey(Firefox) | Chakra(Edge) | Nitro(Safari)</code></p>
-<p>가 되어야 맞겠죠?</p>
-<h2>자바스크립트 런타임</h2>
-<p>런타임은 프로그램이 구동되는 환경입니다.</p>
-<p>초기 자바스크립트는 브라우저 런타임에서만 동작했습니다.</p>
-<p>JS를 브라우저 밖에서 이용하려는(서버) 시도가 있었고,</p>
-<p>V8 엔진을 이용해 브라우저 밖에서도 동작하는 <code>Node.js</code>가 탄생했습니다.</p>
-<p><code>&gt; node index.js</code> 커맨드를 이용해 자바스크립트 파일을 실행할 수 있죠?</p>
-<p>서버사이드를 위한 런타임으로 동기적 모듈 시스템인 <code>CJS</code>를 사용합니다.</p>
-<p>다른 보기들처럼 동일 범주로 묶이려면 <code>Node.js - Bun | Deno</code> 등이 되어야 맞겠죠?</p></section></div><article><h3>더 알아보려면?</h3><ul><li><a href="https://yozm.wishket.com/magazine/detail/1620/">https://yozm.wishket.com/magazine/detail/1620/</a></li><li><a href="https://ui.toast.com/posts/ko_20220127">https://ui.toast.com/posts/ko_20220127</a></li><li><a href="https://bepyan.github.io/blog/2023/bundlers">https://bepyan.github.io/blog/2023/bundlers</a></li><li><a href="https://yozm.wishket.com/magazine/detail/1261/">https://yozm.wishket.com/magazine/detail/1261/</a></li></ul></article><div class="mdxfrontmatter__id__FlexEndContainer-sc-1gyqok2-1 ivHKbn"><a href="https://github.com/0hhanum/null_quiz_answers/issues/new?title=프론트엔드 개발 툴 수정 요청&amp;body=잘못된 정보를 고쳐주시면 기프티콘을 드려요 :)"><p>잘못된 정보가 있나요?</p></a></div></section></main></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/answer/c8lj1v3uj0xa/";/*]]>*/</script><!-- slice-start id="_gatsby-scripts-1" -->
+</style><title data-gatsby-head="true">유니언과 교차 타입 | null_quiz_answers</title><link rel="shortcut icon" type="image/x-icon" href="https://0hhanum.github.io/null_quiz_answers/images/favicon.ico" data-gatsby-head="true"/></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" id="gatsby-focus-wrapper"><div><main class="container"><section class="Header__Nav-sc-88xloa-0 kiRgA-D"><nav><!--$--><img src="https://0hhanum.github.io/null_quiz_answers/images/logo.svg" class="Header__Img-sc-88xloa-1 iUiTAs"/><!--/$--></nav></section><section><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/atom-one-dark.min.css"/><div class="mdxfrontmatter__id__Container-sc-1gyqok2-0 joHxsW container"><h1>유니언과 교차 타입</h1><div><i>About </i><i>TS<!-- -->, </i><i>유니온<!-- -->, </i><i>인터섹션</i></div><div class="mdxfrontmatter__id__FlexEndContainer-sc-1gyqok2-1 ivHKbn"><i>2024/03/13</i></div><hr/></div><div class="mdxfrontmatter__id__Container-sc-1gyqok2-0 joHxsW container"><section><h1>유니온 타입</h1>
+<p>유니온 타입(Union Type)이란 자바스크립트의 OR 연산자(||)와 같이 A이거나 B이다 라는 의미의 타입입니다.</p>
+<pre><code class="language-typescript">function foo(bar: string | number) {
+  ...
+}
+</code></pre>
+<p>파라미터 <code>bar</code>의 인자로 <code>string</code>과 <code>number</code> 타입 모두 올 수 있습니다.</p>
+<h1>인터섹션 타입</h1>
+<p>인터섹션 타입은 여러 타입을 모두 만족하는 하나의 타입을 의미합니다.</p>
+<pre><code class="language-typescript">interface A {
+  foo: string;
+  bar: number;
+}
+interface B {
+  foo: string;
+  baz: number;
+}
+type C = A &amp; B;
+</code></pre>
+<p>인터페이스 <code>A</code>와 <code>B</code>를 모두 만족해야 하기 때문에 C는 아래와 같이 정의됩니다.</p>
+<pre><code class="language-typescript">{
+  foo: string;
+  bar: number;
+  baz: number;
+}
+</code></pre>
+<p>세 프로퍼티 중 하나라도 빠지면 컴파일 오류가 발생합니다.</p>
+<p>문제의 경우, 타입 <code>a</code>, <code>b</code>가 모두 <code>foo</code> 프로퍼티를 가지며, 서로 다른 타입으로 정의되었기 때문에 타입 <code>a &amp; b</code> 를 만족시킬 수 있는 객체는  존재하지 않습니다.</p>
+<h1>❗️ 주의 ❗️</h1>
+<p><code>interface</code>나 객체의 타입을 다룰 때 유니온 타입(|)을 <strong>합집합</strong> 처럼 생각하면 문제가 생길 수 있습니다.</p>
+<p>유니온 타입의 정의인 &#x27;<strong>A거나 B이다</strong>&#x27;라는 정의에 주목해야 합니다. 유니온 타입은 두 타입의 특성을 결합하지 않고, 대신 두 타입 중 <strong>적어도 하나라도 일치하는</strong> 값을 허용합니다.</p>
+<h2>예시 1</h2>
+<pre><code class="language-typescript">interface A {
+  foo: string;
+  bar: number;
+}
+interface B {
+  baz: number;
+  foobar: string;
+}
+type C = A | B;
+
+const c1: C = {
+  foo: &quot;foo&quot;,
+  bar: 0,
+}; // 문제 없음 - A에 부합
+
+const c2: C = {
+  baz: 1,
+  foobar: &quot;foobar&quot;,
+}; // 문제 없음 - B에 부합
+
+const c3: C = {
+  foo: &quot;foo&quot;,
+  bar: 0,
+  foobar: &quot;foobar&quot;,
+}; // 문제 없음 - B의 속성을 가지고 있지만 A에 부합
+
+const c4: C = {
+  foo: &quot;foo&quot;,
+  foobar: &quot;foobar&quot;,
+}; // 오류 - A도 B도 부합하지 않음
+</code></pre>
+<p>위와 같이 객체 <code>c4</code>는 합집합의 개념으로 생각한다면 말이 되지만 타입 <code>A</code>, <code>B</code> 중 어떤 것도 만족시키지 못하기 때문에 컴파일 오류가 발생합니다.</p>
+<p>다시말해 유니온 타입의 핵심은, <strong>선언된 타입 중 적어도 하나의 전체 조건을 만족시키는</strong> 값이어야 한다는 점입니다.</p>
+<p>조금 더 복잡한 예시를 보겠습니다. 동일한 프로퍼티 <code>foo</code>를 가지지만 서로 타입이 다른 경우입니다.</p>
+<h2>예시 2</h2>
+<pre><code class="language-typescript">interface A {
+  foo: string;
+  bar: number;
+}
+interface B {
+  foo: number;
+  baz: string;
+}
+type C = A | B;
+
+const c1: C = {
+  foo: &quot;foo&quot;,
+  bar: 1,
+}; // 문제 없음 - A 부합
+
+const c2: C = {
+  foo: &quot;foo&quot;,
+  bar: 0,
+  baz: &quot;baz&quot;,
+}; // **문제 없  음** - A 부합
+</code></pre>
+<p>퀴즈와 동일한 케이스입니다.
+타입 <code>B</code>의 <code>foo</code> 속성은 <code>number</code>이므로 <code>c2</code>가 타입 <code>B</code>를 만족시키지는 못하지만, <strong><code>A</code>에는 부합합니다.</strong> 따라서 <code>c2</code>는 타입 <code>C</code>에 부합합니다.</p></section></div><article><h3>더 알아보려면?</h3><ul><li><a href="https://typescript-kr.github.io/pages/utility-types.html">https://typescript-kr.github.io/pages/utility-types.html</a></li><li><a href="https://joshua1988.github.io/ts/guide/operator.html">https://joshua1988.github.io/ts/guide/operator.html</a></li></ul></article><div class="mdxfrontmatter__id__FlexEndContainer-sc-1gyqok2-1 ivHKbn"><a href="https://github.com/0hhanum/null_quiz_answers/issues/new?title=유니언과 교차 타입 수정 요청&amp;body=잘못된 정보를 고쳐주시면 기프티콘을 드려요 :)"><p>잘못된 정보가 있나요?</p></a></div></section></main></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/answer/8mwbx1vuteqs/";/*]]>*/</script><!-- slice-start id="_gatsby-scripts-1" -->
           <script
             id="gatsby-chunk-mapping"
           >
