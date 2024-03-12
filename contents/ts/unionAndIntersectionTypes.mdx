@@ -1,0 +1,143 @@
+---
+id: 8mwbx1vuteqs
+title: 유니언과 교차 타입
+date: 2024-03-13
+tags:
+  - TS
+  - 유니온
+  - 인터섹션
+relatedLinks:
+  - https://typescript-kr.github.io/pages/utility-types.html
+  - https://joshua1988.github.io/ts/guide/operator.html
+questionType: 객관식
+question:
+  - 빈칸에 들어갈 적절한 타입은?
+  - "<code lang=typescript>type a = {\n\tfoo: string;\n\tbar: number;\n};\ntype b = {\n\tfoo: number;\n\tbaz: number;\n} \nconst obj: ______ = {\n\tfoo: "foo",\n\tbar: 1,\n\tbaz: 1,\n}; </code>"
+choices:
+  - "a | b"
+  - "a & b"
+answer:
+  - A
+level: 2
+category: "ts"
+description:
+  - 유니온 타입(|)은 a거나 b, 인터섹션 타입(&)은 a와 b를 모두 만족하는 타입을 의미해요.
+  - 문제의 경우 인터섹션(&) 타입을 사용하면 a와 b의 프로퍼티 foo의 타입이 서로 달라 어떤 객체도 만족시킬 수 없는 모순이 발생해요.
+---
+
+# 유니온 타입
+
+유니온 타입(Union Type)이란 자바스크립트의 OR 연산자(||)와 같이 A이거나 B이다 라는 의미의 타입입니다.
+
+```typescript
+function foo(bar: string | number) {
+  ...
+}
+```
+
+파라미터 `bar`의 인자로 `string`과 `number` 타입 모두 올 수 있습니다.
+
+# 인터섹션 타입
+
+인터섹션 타입은 여러 타입을 모두 만족하는 하나의 타입을 의미합니다.
+
+```typescript
+interface A {
+  foo: string;
+  bar: number;
+}
+interface B {
+  foo: string;
+  baz: number;
+}
+type C = A & B;
+```
+
+인터페이스 `A`와 `B`를 모두 만족해야 하기 때문에 C는 아래와 같이 정의됩니다.
+
+```typescript
+{
+  foo: string;
+  bar: number;
+  baz: number;
+}
+```
+
+세 프로퍼티 중 하나라도 빠지면 컴파일 오류가 발생합니다.
+
+문제의 경우, 타입 `a`, `b`가 모두 `foo` 프로퍼티를 가지며, 서로 다른 타입으로 정의되었기 때문에 타입 `a & b` 를 만족시킬 수 있는 객체는 존재하지 않습니다.
+
+# ❗️ 주의 ❗️
+
+`interface`나 객체의 타입을 다룰 때 유니온 타입(|)을 **합집합** 처럼 생각하면 문제가 생길 수 있습니다.
+
+유니온 타입의 정의인 '**A거나 B이다**'라는 정의에 주목해야 합니다. 유니온 타입은 두 타입의 특성을 결합하지 않고, 대신 두 타입 중 **적어도 하나라도 일치하는** 값을 허용합니다.
+
+## 예시 1
+
+```typescript
+interface A {
+  foo: string;
+  bar: number;
+}
+interface B {
+  baz: number;
+  foobar: string;
+}
+type C = A | B;
+
+const c1: C = {
+  foo: "foo",
+  bar: 0,
+}; // 문제 없음 - A에 부합
+
+const c2: C = {
+  baz: 1,
+  foobar: "foobar",
+}; // 문제 없음 - B에 부합
+
+const c3: C = {
+  foo: "foo",
+  bar: 0,
+  foobar: "foobar",
+}; // 문제 없음 - B의 속성을 가지고 있지만 A에 부합
+
+const c4: C = {
+  foo: "foo",
+  foobar: "foobar",
+}; // 오류 - A도 B도 부합하지 않음
+```
+
+위와 같이 객체 `c4`는 합집합의 개념으로 생각한다면 말이 되지만 타입 `A`, `B` 중 어떤 것도 만족시키지 못하기 때문에 컴파일 오류가 발생합니다.
+
+다시말해 유니온 타입의 핵심은, **선언된 타입 중 적어도 하나의 전체 조건을 만족시키는** 값이어야 한다는 점입니다.
+
+조금 더 복잡한 예시를 보겠습니다. 동일한 프로퍼티 `foo`를 가지지만 서로 타입이 다른 경우입니다.
+
+## 예시 2
+
+```typescript
+interface A {
+  foo: string;
+  bar: number;
+}
+interface B {
+  foo: number;
+  baz: string;
+}
+type C = A | B;
+
+const c1: C = {
+  foo: "foo",
+  bar: 1,
+}; // 문제 없음 - A 부합
+
+const c2: C = {
+  foo: "foo",
+  bar: 0,
+  baz: "baz",
+}; // **문제 없음** - A 부합
+```
+
+퀴즈와 동일한 케이스입니다.
+타입 `B`의 `foo` 속성은 `number`이므로 `c2`가 타입 `B`를 만족시키지는 못하지만, **`A`에는 부합합니다.** 따라서 `c2`는 타입 `C`에 부합합니다.
