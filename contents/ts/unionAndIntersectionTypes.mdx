@@ -29,7 +29,7 @@ description:
 
 유니온 타입(Union Type)이란 자바스크립트의 OR 연산자(||)와 같이 A이거나 B이다 라는 의미의 타입입니다.
 
-```typescript
+```javascript
 function foo(bar: string | number) {
   ...
 }
@@ -41,7 +41,7 @@ function foo(bar: string | number) {
 
 인터섹션 타입은 여러 타입을 모두 만족하는 하나의 타입을 의미합니다.
 
-```typescript
+```javascript
 interface A {
   foo: string;
   bar: number;
@@ -55,7 +55,7 @@ type C = A & B;
 
 인터페이스 `A`와 `B`를 모두 만족해야 하기 때문에 C는 아래와 같이 정의됩니다.
 
-```typescript
+```javascript
 {
   foo: string;
   bar: number;
@@ -75,7 +75,7 @@ type C = A & B;
 
 ## 예시 1
 
-```typescript
+```javascript
 interface A {
   foo: string;
   bar: number;
@@ -116,7 +116,7 @@ const c4: C = {
 
 ## 예시 2
 
-```typescript
+```javascript
 interface A {
   foo: string;
   bar: number;
