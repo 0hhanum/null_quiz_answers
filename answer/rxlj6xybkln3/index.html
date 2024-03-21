@@ -7,35 +7,40 @@ data-styled.g2[id="Header__Img-sc-88xloa-1"]{content:"iUiTAs,"}/*!sc*/
 data-styled.g3[id="mdxfrontmatter__id__Container-sc-1gyqok2-0"]{content:"joHxsW,"}/*!sc*/
 .ivHKbn{display:flex;justify-content:end;}/*!sc*/
 data-styled.g4[id="mdxfrontmatter__id__FlexEndContainer-sc-1gyqok2-1"]{content:"ivHKbn,"}/*!sc*/
-</style><title data-gatsby-head="true">다음 코드 스니펫의 결과는? | null_quiz_answers</title><link rel="shortcut icon" type="image/x-icon" href="https://0hhanum.github.io/null_quiz_answers/images/favicon.ico" data-gatsby-head="true"/></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" id="gatsby-focus-wrapper"><div><main class="container"><section class="Header__Nav-sc-88xloa-0 kiRgA-D"><nav><!--$--><img src="https://0hhanum.github.io/null_quiz_answers/images/logo.svg" class="Header__Img-sc-88xloa-1 iUiTAs"/><!--/$--></nav></section><section><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/atom-one-dark.min.css"/><div class="mdxfrontmatter__id__Container-sc-1gyqok2-0 joHxsW container"><h1>다음 코드 스니펫의 결과는?</h1><div><i>About </i><i>JS<!-- -->, </i><i>심심풀이</i></div><div class="mdxfrontmatter__id__FlexEndContainer-sc-1gyqok2-1 ivHKbn"><i>2023/10/20</i></div><hr/></div><div class="mdxfrontmatter__id__Container-sc-1gyqok2-0 joHxsW container"><section><blockquote><p>트위터 @heyImMapleLeaf 트윗에서 따온 퀴즈입니다. 링크 하단 첨부</p></blockquote>
-<h2>10?</h2>
-<p>정답을 맞추셨나요?
-결과가 10인 이유는 연산자의 결합 순서와 평가 시점의 <code>i</code>값 때문입니다.</p>
-<p><code>i += x()</code>는 <code>i = i + x()</code>로도 나타낼 수 있습니다.</p>
-<p><mark>해당 라인이 평가되는 시점의 i는 0 입니다.</mark> 따라서 <code>i = 0 + x()</code>가 됩니다.</p>
-<p>순서대로 적어보면
-<code>i += x()</code> -&gt; <code>i = i + x()</code> -&gt; <code>i = 0 + x()</code> -&gt; <code>i = 0 + 10</code></p>
-<p>이렇게 됩니다.</p>
-<p><code>x()</code>의 <code>return</code> 전에 콘솔을 찍어보면 이해하기 쉬운데요,</p>
-<pre><code class="language-javascript">function x() {
-  i++;
-  console.log(i);
-  return 10;
+</style><title data-gatsby-head="true">타입 가드 | null_quiz_answers</title><link rel="shortcut icon" type="image/x-icon" href="https://0hhanum.github.io/null_quiz_answers/images/favicon.ico" data-gatsby-head="true"/></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" id="gatsby-focus-wrapper"><div><main class="container"><section class="Header__Nav-sc-88xloa-0 kiRgA-D"><nav><!--$--><img src="https://0hhanum.github.io/null_quiz_answers/images/logo.svg" class="Header__Img-sc-88xloa-1 iUiTAs"/><!--/$--></nav></section><section><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/atom-one-dark.min.css"/><div class="mdxfrontmatter__id__Container-sc-1gyqok2-0 joHxsW container"><h1>타입 가드</h1><div><i>About </i><i>TS<!-- -->, </i><i>타입 가드<!-- -->, </i><i>is 키워드</i></div><div class="mdxfrontmatter__id__FlexEndContainer-sc-1gyqok2-1 ivHKbn"><i>2024/03/22</i></div><hr/></div><div class="mdxfrontmatter__id__Container-sc-1gyqok2-0 joHxsW container"><section><h1>타입 좁히기</h1>
+<p>타입스크립트는 컴파일 시점에 코드의 제어 흐름을 분석하여 타입을 좁혀나갑니다.
+조건문을 사용할 때 조건에 따라 변수의 타입이 변할 수 있음을 인식합니다.</p>
+<pre><code class="language-javascript">interface Animal {
+  ownerName: string | null;
 }
-i += x();
-console.log(i);
-// 1
-// 10
+
+function getOwnerName(animal: Animal): string {
+  if (animal.ownerName === null) {
+    return &#x27;wildness&#x27;;
+  } else {
+    // animal.ownerName 타입은 string
+    return animal.ownerName;
+  }
+}
+
+출처: 『자바스크립트 개발자를 위한 타입스크립트』
 </code></pre>
-<p><code>i++</code>가 실행되어 <code>i</code>가 <code>1</code>이 되었다가 <code>10</code>이 됩니다.</p>
-<u>이런 헷갈리는 코드를 작성하지 않는 게 중요하겠죠?</u>
-<h3>번외</h3>
-<p>재미있는 건 연산의 순서를 변경하면 결과도 달라진다는 것.
-<code>i = x() + i</code> 의 결과는 <code>11</code>입니다.</p>
-<p>동일하게 순서대로 생각해보면</p>
-<p><code>i = x() + i</code> -&gt; <code>i = 10 + i</code> (이때 i = 1) -&gt; <code>i = 10 + 1</code></p>
-<p>이래서 11이 됩니다.</p>
-<ins>역시 이렇게 헷갈리는 코드를 작성하지 않는게 중요하겠죠? ~_~</ins></section></div><article><h3>더 알아보려면?</h3><ul><li><a href="https://twitter.com/heyImMapleLeaf/status/1593070398916431872?s=20&amp;t=cycM9GNHSp4RwhKBmSPWsw&amp;ck_subscriber_id=2209005291">https://twitter.com/heyImMapleLeaf/status/1593070398916431872?s=20&amp;t=cycM9GNHSp4RwhKBmSPWsw&amp;ck_subscriber_id=2209005291</a></li><li><a href="https://bytes.dev/archives/233?ck_subscriber_id=2209005291">https://bytes.dev/archives/233?ck_subscriber_id=2209005291</a></li></ul></article><div class="mdxfrontmatter__id__FlexEndContainer-sc-1gyqok2-1 ivHKbn"><a href="https://github.com/0hhanum/null_quiz_answers/issues/new?title=다음 코드 스니펫의 결과는? 수정 요청&amp;body=잘못된 정보를 고쳐주시면 기프티콘을 드려요 :)"><p>잘못된 정보가 있나요?</p></a></div></section></main></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/answer/6ef532envc74/";/*]]>*/</script><!-- slice-start id="_gatsby-scripts-1" -->
+<p>위 예시와 같이 제어 흐름을 분석하여 타입스크립트 컴파일러는 <code>else</code>문 내에서 <code>animal</code>은 <code>ownerName</code>을 가진다는 걸 알 수 있습니다.</p>
+<p>이렇게 타입 좁히기를 유발하는 표현을 <strong>타입 가드</strong> 라고 합니다.</p>
+<p>퀴즈로 돌아가서, <code>isCircle()</code>을 통과했으니 조건문 내부의 <code>shape</code>은 <code>Circle</code> 타입이라고 알 수 있다면 편하겠지만, 그렇게 동작하지 않습니다.
+<code>isCircle()</code>이 <code>true</code>를 반환하지만 타입스크립트는 해당 <code>true</code>가 반환되었을때 어떤 타입 정보가 유효한지까지는 알 수 없습니다.</p>
+<p>이럴 때는 명시적으로 타입 가드를 선언해줘야 합니다.</p>
+<p>타입 가드는 크게 두 종류로 나뉘며, 한 종류는 예시와 같이 코드의 흐름을 분석해 타입을 좁히는 타입 가드이며,
+다른 하나는 프로그래머가 직접 명시해 타입을 좁히는 <strong>사용자 정의 타입 가드</strong> 입니다.</p>
+<h1>사용자 정의 타입 가드 (feat. &quot;is&quot;)</h1>
+<p>사용자 정의 타입 가드는 <code>is</code> 키워드를 이용해
+어떤 값이 특정 타입이라고 명시하는 형태를 반환하는 함수로 정의합니다.</p>
+<pre><code class="language-javascript">function isCircle(shape: Shape): shape is Circle {
+    return &quot;radius&quot; in shape &amp;&amp; typeof (shape as Circle).radius === &quot;number&quot;;
+  }
+</code></pre>
+<p>위 함수는 <code>isCircle</code> 함수가 <code>true</code>를 반환할 경우, <code>shape</code>가 <code>Circle</code> 타입임을 알려주는 타입 가드입니다.
+위 타입 가드를 사용하면 타입스크립트는 해당 조건문의 범위 내에서 <code>shape</code>을 <code>Circle</code>타입으로 좁혀서 처리합니다.</p></section></div><article><h3>더 알아보려면?</h3><ul><li><a href="https://ahnheejong.gitbook.io/ts-for-jsdev/06-type-system-deepdive/type-narrowing">https://ahnheejong.gitbook.io/ts-for-jsdev/06-type-system-deepdive/type-narrowing</a></li><li><a href="https://radlohead.gitbook.io/typescript-deep-dive/type-system/typeguard#type-guard-callback">https://radlohead.gitbook.io/typescript-deep-dive/type-system/typeguard#type-guard-callback</a></li><li><a href="https://velog.io/@kwak1539/%ED%83%80%EC%9E%85%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-is-as-%EB%AC%B8%EB%B2%95-%EC%A0%95%EB%A6%AC">https://velog.io/@kwak1539/%ED%83%80%EC%9E%85%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-is-as-%EB%AC%B8%EB%B2%95-%EC%A0%95%EB%A6%AC</a></li></ul></article><div class="mdxfrontmatter__id__FlexEndContainer-sc-1gyqok2-1 ivHKbn"><a href="https://github.com/0hhanum/null_quiz_answers/issues/new?title=타입 가드 수정 요청&amp;body=잘못된 정보를 고쳐주시면 기프티콘을 드려요 :)"><p>잘못된 정보가 있나요?</p></a></div></section></main></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/answer/rxlj6xybkln3/";/*]]>*/</script><!-- slice-start id="_gatsby-scripts-1" -->
           <script
             id="gatsby-chunk-mapping"
           >
