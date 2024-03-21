@@ -1,0 +1,72 @@
+---
+id: rxlj6xybkln3
+title: 타입 가드
+date: 2024-03-22
+tags:
+  - TS
+  - 타입 가드
+  - is 키워드
+relatedLinks:
+  - https://ahnheejong.gitbook.io/ts-for-jsdev/06-type-system-deepdive/type-narrowing
+  - https://radlohead.gitbook.io/typescript-deep-dive/type-system/typeguard#type-guard-callback
+  - https://velog.io/@kwak1539/%ED%83%80%EC%9E%85%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8-is-as-%EB%AC%B8%EB%B2%95-%EC%A0%95%EB%A6%AC
+questionType: OX
+question:
+  - "<code lang=typescript>interface Circle {\n\tradius: number;\n}\n\ninterface Square {\n\tsideLength: number;\n}\n\ntype Shape = Circle | Square;\n\nfunction isCircle(shape: Shape): boolean {\n\treturn 'radius' in shape && typeof (shape as Circle).radius === 'number';\n}\nfunction getArea(shape: Shape) {\n\tif (isCircle(shape)) {\n\t\treturn shape.radius ** 2 * Math.PI;\n\t}\n} </code>"
+  - 컴파일 에러가 발생할까요?
+answer:
+  - O
+level: 1
+category: "ts"
+description:
+  - isCircle()는 단순히 boolean 값을 반환해요.
+  - boolean 값으로는 타입스크립트가 shape의 타입을 알 수 없어요.
+---
+
+# 타입 좁히기
+
+타입스크립트는 컴파일 시점에 코드의 제어 흐름을 분석하여 타입을 좁혀나갑니다.
+조건문을 사용할 때 조건에 따라 변수의 타입이 변할 수 있음을 인식합니다.
+
+```javascript
+interface Animal {
+  ownerName: string | null;
+}
+
+function getOwnerName(animal: Animal): string {
+  if (animal.ownerName === null) {
+    return 'wildness';
+  } else {
+    // animal.ownerName 타입은 string
+    return animal.ownerName;
+  }
+}
+
+출처: 『자바스크립트 개발자를 위한 타입스크립트』
+```
+
+위 예시와 같이 제어 흐름을 분석하여 타입스크립트 컴파일러는 `else`문 내에서 `animal`은 `ownerName`을 가진다는 걸 알 수 있습니다.
+
+이렇게 타입 좁히기를 유발하는 표현을 **타입 가드** 라고 합니다.
+
+퀴즈로 돌아가서, `isCircle()`을 통과했으니 조건문 내부의 `shape`은 `Circle` 타입이라고 알 수 있다면 편하겠지만, 그렇게 동작하지 않습니다.
+`isCircle()`이 `true`를 반환하지만 타입스크립트는 해당 `true`가 반환되었을때 어떤 타입 정보가 유효한지까지는 알 수 없습니다.
+
+이럴 때는 명시적으로 타입 가드를 선언해줘야 합니다.
+
+타입 가드는 크게 두 종류로 나뉘며, 한 종류는 예시와 같이 코드의 흐름을 분석해 타입을 좁히는 타입 가드이며,
+다른 하나는 프로그래머가 직접 명시해 타입을 좁히는 **사용자 정의 타입 가드** 입니다.
+
+# 사용자 정의 타입 가드 (feat. "is")
+
+사용자 정의 타입 가드는 `is` 키워드를 이용해
+어떤 값이 특정 타입이라고 명시하는 형태를 반환하는 함수로 정의합니다.
+
+```javascript
+function isCircle(shape: Shape): shape is Circle {
+    return "radius" in shape && typeof (shape as Circle).radius === "number";
+  }
+```
+
+위 함수는 `isCircle` 함수가 `true`를 반환할 경우, `shape`가 `Circle` 타입임을 알려주는 타입 가드입니다.
+위 타입 가드를 사용하면 타입스크립트는 해당 조건문의 범위 내에서 `shape`을 `Circle`타입으로 좁혀서 처리합니다.
