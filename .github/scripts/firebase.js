@@ -82,7 +82,7 @@ const updateQuizData = async (quiz) => {
 };
 
 const fetchUsers = async () => {
-  const snapshot = await userRef.once();
+  const snapshot = await userRef.once("value");
   if (!snapshot.exists()) {
     throw new Error("NO USERS");
   }
@@ -138,7 +138,7 @@ const sendNotification = async (quizId, category) => {
       "Something went wrong when update firebase quiz data:",
       error
     );
-    throw error;
+    process.exit(1);
   }
 
   try {
@@ -147,8 +147,7 @@ const sendNotification = async (quizId, category) => {
     await sendNotification(quizzes[0].id, quizzes[0].category);
   } catch (error) {
     console.error("Something went wrong when send push notification", error);
-    throw error;
-  } finally {
-    process.exit(0);
+    process.exit(1);
   }
+  process.exit(0);
 })();
