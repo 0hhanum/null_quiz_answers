@@ -104,8 +104,6 @@ const sendNotification = async (quizId, category) => {
   while (expoTokens.length > 0) {
     expoTokenBatches.push(expoTokens.splice(0, 100));
   }
-  console.log("expoTokenBatches", expoTokenBatches);
-  console.log("users", users);
   for (const tokens of expoTokenBatches) {
     const headers = new Headers();
     headers.append("Content-Type", "application/json");
