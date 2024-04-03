@@ -87,7 +87,6 @@ const fetchUsers = async () => {
     throw new Error("NO USERS");
   }
   const users = snapshot.val();
-  console.log("Users: ", users);
   return users;
 };
 
