@@ -104,27 +104,30 @@ const sendNotification = async (quizId, category) => {
   while (expoTokens.length > 0) {
     expoTokenBatches.push(expoTokens.splice(0, 100));
   }
-
+  console.log("expoTokenBatches", expoTokenBatches);
+  console.log("users", users);
   for (const tokens of expoTokenBatches) {
     const headers = new Headers();
     headers.append("Content-Type", "application/json");
-    const data = JSON.stringify({
+    const body = JSON.stringify({
       to: tokens,
       sound: "default",
       title: notificationTitle,
       body: notificationSubtitle,
       data: { quizId, category },
     });
-    await fetch(notificationServerURL, {
+    const response = await fetch(notificationServerURL, {
       method: "POST",
       headers,
-      data,
+      body,
       redirect: "follow",
-    })
-      .then((response) => response.text())
-      .then((result) => {
-        console.log("Push notification sent successfully.", result);
-      });
+    });
+    const result = await response.text();
+    if (response.status !== 200) {
+      console.error("Something went wrong when send push notification");
+      throw new Error(result);
+    }
+    console.log("Push notification sent successfully.");
   }
 };
 
