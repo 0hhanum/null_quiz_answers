@@ -106,23 +106,25 @@ const sendNotification = async (quizId, category) => {
   }
 
   for (const tokens of expoTokenBatches) {
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    const data = JSON.stringify({
+      to: tokens,
+      sound: "default",
+      title: notificationTitle,
+      body: notificationSubtitle,
+      data: { quizId, category },
+    });
     await fetch(notificationServerURL, {
       method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Accept-encoding": "gzip, deflate",
-        "Content-Type": "application/json",
-      },
-      data: {
-        to: tokens,
-        sound: "default",
-        title: notificationTitle,
-        body: notificationSubtitle,
-        data: { quizId, category },
-      },
-    }).then(() => {
-      console.log("Push notification sent successfully.");
-    });
+      headers,
+      data,
+      redirect: "follow",
+    })
+      .then((response) => response.text())
+      .then((result) => {
+        console.log("Push notification sent successfully.", result);
+      });
   }
 };
 
