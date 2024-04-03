@@ -142,9 +142,10 @@ const sendNotification = async (quizId, category) => {
   }
 
   try {
-    if (quizzes.length === 0) return;
-    // TODO:: notificate & indicate in App when more than 2 quiz changes
-    await sendNotification(quizzes[0].id, quizzes[0].category);
+    if (quizzes.length !== 0) {
+      // TODO:: notificate & indicate in App when more than 2 quiz changes
+      await sendNotification(quizzes[0].id, quizzes[0].category);
+    }
   } catch (error) {
     console.error("Something went wrong when send push notification", error);
     process.exit(1);
