@@ -32,51 +32,120 @@ admin.initializeApp({
 const db = admin.database();
 const quizRef = db.ref("quiz");
 const quizCategoryRef = db.ref("quizCategory");
+const userRef = db.ref("users");
 
-const updateQuizData = async (mdxFilePath) => {
+const parseQuizData = (mdxFilePath) => {
   const absoluteMdxPath = path.join(__dirname, mdxFilePath);
   try {
     if (fs.existsSync(absoluteMdxPath)) {
-      const {
-        id,
-        title,
-        tags,
-        question,
-        questionType,
-        choices,
-        answer,
-        category,
-        level,
-        description,
-      } = mdxParser(absoluteMdxPath);
-      await quizRef.child(id).set({
-        id,
-        title,
-        tags,
-        question,
-        questionType,
-        answer,
-        choices: choices || null,
-        level,
-        category,
-        description,
-      });
-      await quizCategoryRef.child(category).update({
-        [id]: true,
-      });
+      const quiz = mdxParser(mdxFilePath);
+      return quiz;
     }
+  } catch (e) {
+    console.error("Something went wrong when parse mdx", e);
+  }
+};
+
+const updateQuizData = async (quiz) => {
+  if (!quiz) return;
+  const {
+    id,
+    title,
+    tags,
+    question,
+    questionType,
+    choices,
+    answer,
+    category,
+    level,
+    description,
+  } = quiz;
+  try {
+    await quizRef.child(id).set({
+      id,
+      title,
+      tags,
+      question,
+      questionType,
+      answer,
+      choices: choices || null,
+      level,
+      category,
+      description,
+    });
+    await quizCategoryRef.child(category).update({
+      [id]: true,
+    });
   } catch (e) {
     console.error(e);
   }
 };
 
+const fetchUsers = async () => {
+  const snapshot = await userRef.once();
+  if (!snapshot.exists()) {
+    throw new Error("NO USERS");
+  }
+  const users = snapshot.val();
+  console.log("Users: ", users);
+  return users;
+};
+
+const sendNotification = async (quizId, category) => {
+  const notificationTitle = "새로운 퀴즈가 추가되었어요.";
+  const notificationSubtitle = "풀어볼까요?";
+  const notificationServerURL = "https://exp.host/--/api/v2/push/send";
+  const users = Object.values(await fetchUsers());
+  const expoTokens = users
+    .map((user) => user.expoNotificationToken)
+    .filter((token) => token !== undefined);
+
+  // Split users into batches of 100 for Expo push notification limit
+  const expoTokenBatches = [];
+  while (expoTokens.length > 0) {
+    expoTokenBatches.push(expoTokens.splice(0, 100));
+  }
+
+  for (const tokens of expoTokenBatches) {
+    await fetch(notificationServerURL, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Accept-encoding": "gzip, deflate",
+        "Content-Type": "application/json",
+      },
+      data: {
+        to: tokens,
+        sound: "default",
+        title: notificationTitle,
+        body: notificationSubtitle,
+        data: { quizId, category },
+      },
+    }).then(() => {
+      console.log("Push notification sent successfully.");
+    });
+  }
+};
+
 (async () => {
+  const quizzes = changedMdxFilePaths.map(parseQuizData);
   try {
-    const updatePromises = changedMdxFilePaths.map(updateQuizData);
-    await Promise.all(updatePromises);
+    const promisesOfUpdateQuiz = quizzes.map(updateQuizData);
+    await Promise.all(promisesOfUpdateQuiz);
     console.log("All updates completed.");
   } catch (error) {
-    console.error("An error occurred:", error);
+    console.error(
+      "Something went wrong when update firebase quiz data:",
+      error
+    );
+  }
+
+  try {
+    if (quizzes.length === 0) return;
+    // TODO:: notificate & indicate in App when more than 2 quiz changes
+    await sendNotification(quizzes[0].id, quizzes[0].category);
+  } catch (error) {
+    console.error("Something went wrong when send push notification", error);
   } finally {
     process.exit(0);
   }
