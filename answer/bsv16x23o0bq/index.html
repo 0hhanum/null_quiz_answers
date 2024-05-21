@@ -7,107 +7,33 @@ data-styled.g2[id="Header__Img-sc-88xloa-1"]{content:"iUiTAs,"}/*!sc*/
 data-styled.g3[id="mdxfrontmatter__id__Container-sc-1gyqok2-0"]{content:"joHxsW,"}/*!sc*/
 .ivHKbn{display:flex;justify-content:end;}/*!sc*/
 data-styled.g4[id="mdxfrontmatter__id__FlexEndContainer-sc-1gyqok2-1"]{content:"ivHKbn,"}/*!sc*/
-</style><title data-gatsby-head="true">유틸리티 타입 (1) | null_quiz_answers</title><link rel="shortcut icon" type="image/x-icon" href="https://0hhanum.github.io/null_quiz_answers/images/favicon.ico" data-gatsby-head="true"/></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" id="gatsby-focus-wrapper"><div><main class="container"><section class="Header__Nav-sc-88xloa-0 kiRgA-D"><nav><!--$--><img src="https://0hhanum.github.io/null_quiz_answers/images/logo.svg" class="Header__Img-sc-88xloa-1 iUiTAs"/><!--/$--></nav></section><section><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/atom-one-dark.min.css"/><div class="mdxfrontmatter__id__Container-sc-1gyqok2-0 joHxsW container"><h1>유틸리티 타입 (1)</h1><div><i>About </i><i>TS<!-- -->, </i><i>TS기본<!-- -->, </i><i>유틸리티_타입</i></div><div class="mdxfrontmatter__id__FlexEndContainer-sc-1gyqok2-1 ivHKbn"><i>2023/10/29</i></div><hr/></div><div class="mdxfrontmatter__id__Container-sc-1gyqok2-0 joHxsW container"><section><h1>유틸리티 타입?</h1>
-<blockquote><p>&quot;TypeScript는 공통 타입 변환을 용이하게 하기 위해 몇 가지 유틸리티 타입을
-제공합니다.&quot;</p><footer><cite>- 타입스크립트 핸드북</cite></footer></blockquote>
-<h2>Partial</h2>
-<p><code>Partial&lt;T&gt;</code>는 타입 <code>T</code>의 <mark>모든 프로퍼티를 선택적으로</mark> 만드는 타입을 구성합니다.</p>
-<pre><code class="language-javascript">type Partial&lt;T&gt; = {
-  [P in keyof T]?: T[P];
-};
-</code></pre>
-<p><code>Partial&lt;T&gt;</code>는 특정 타입 T의 모든 프로퍼티에 <code>?</code>를 붙여 선택적 프로퍼티로 만듭니다.</p>
-<pre><code class="language-javascript">interface IData {
-    title: string;
-    timestamp: number;
-    description: string;
-    tags: tag[]
-}
-function updateData(currentData: IData, newData: ?) {
-    update({
-    ...currentData,
-    ...newData,
-    timestamp: getTimestamp(),
-    });
-}
-</code></pre>
-<p>일반적으로 업데이트 함수는 기존 데이터의 특정 부분을 변경합니다.
-<code>updateData</code> 함수는 <code>newData</code>를 인자로 받아 해당 데이터를 타임스탬프와 함께 업데이트합니다.</p>
-<p>스프레드 연산자를 사 용한 것으로 보아 newData가 <b>어떤 프로퍼티를 가지는 지 확실하지 않습니다.</b>
-<code>title</code>을 업데이트 할 수도, <code>description</code>이나 <code>tags</code>를, 또는 셋 모두 업데이트 할 수도 있습니다.</p>
-<p>따라서 이 경우, <code>IData</code>의 모든 프로퍼티를 옵셔널로 만드는 <code>Partial</code> 유틸리티 타입이 적합합니다.</p>
-<pre><code class="language-javascript">Partial&lt;IData&gt;
-    {
-    title?: string;
-    timestamp?: number;
-    description?: string;
-    tags?: tag[]
-    }
-</code></pre>
-<h2>Required</h2>
-<p><code>Partial&lt;T&gt;</code>와 반대로 모든 프로퍼티를 필수로 설정하는 타입을 만드는 <code>Required&lt;T&gt;</code> 유틸리티 타입도 있습니다.</p>
-<pre><code class="language-javascript">interface IData {
-  title?: string;
-  description?: string;
-}
-const a: IData = { title: &quot;some title&quot; }; // description이 없어도 OK.
-const b: Required&lt;IData&gt; = { title: &quot;some title&quot; }; // 오류: 프로퍼티 description이 없습니다.
-</code></pre>
-<h2>Omit</h2>
-<p><code>Omit&lt;T, K&gt;</code>은 타입 <mark>T의 프로퍼티 중 K를 제거한 타입</mark>을 구성합니다.</p>
-<pre><code class="language-javascript">type Omit&lt;T, K extends keyof T&gt; = Pick&lt;T, Exclude&lt;keyof T, K&gt;&gt;;
-</code></pre>
-<p><code>T</code>의 프로퍼티를 인자로 받으며(<code>K extends keyof T</code>), <code>T</code> 프로퍼티 중 <code>K</code>를 제외한(<code>Pick&lt;T, Exclude&lt;keyof T, K&gt;&gt;</code>) 새로운 타입을 구성합니다.</p>
-<p>퀴즈의 <code>updateData</code> 함수는 <code>newData</code> 프로퍼티가 명확하지 않아도 범용적으로 사용할 수 있는 함수로 특정 프로퍼티를 제외하는 <code>Omit&lt;T, K&gt;</code>는 적합하지 않습니다.
-추상화 레벨이 한 단계 높아진다면 사용할 수는 있습니다. 아래와 같이요.</p>
-<pre><code class="language-javascript">function updateTitle(
-  currentData: IData,
-  newData: Omit&lt;IData, &quot;description&quot; | &quot;tags&quot;&gt;
-) {
-  update({
-    ...currentData,
-    ...newData,
-  });
-}
-</code></pre>
-<p>하지만 위와 같이 프로퍼티를 특정해 어떤 동작을 수행하는 경우, <code>IData</code>가 확장될 경우 의도하지 않은 속성이 같이 업데이트 될 위험이 있습니다.
-<code>newData.title</code>을 특정해 <code>title</code>을 업데이트 할 수도 있겠지만 위 경우 대상 프로퍼티를 정의해 주는 것이 논리적으로 적절합니다.</p>
-<p>이럴 경우에 <code>Pick&lt;T, K&gt;</code>을 사용합니다.</p>
-<h2>Pick</h2>
-<p><code>Pick&lt;T, K&gt;</code>은 타입 <code>T</code>에서 <mark>특정 프로퍼티를 선택해 새로운 타입을 구성</mark>합니다.</p>
-<pre><code class="language-javascript">type Pick&lt;T, K extends keyof T&gt; = {
-  [P in K]: T[P];
-};
-</code></pre>
-<p>두 번째 인자 <code>K</code>로 <code>T</code> 타입의 프로퍼티를 받으며, <code>K</code>를 프로퍼티로 가지는 새로운 타입을 구성합니다.
-위의 <code>updateTitle()</code>에 아래와 같이 적용할 수 있습니다.</p>
-<pre><code class="language-javascript">function updateTitle(currentData: IData, newData: Pick&lt;IData, &quot;title&quot;&gt;) {
-  update({
-    ...currentData,
-    ...newData,
-  });
-}
-</code></pre>
-<h2>Record</h2>
-<p><code>Record&lt;K, T&gt;</code>는 <mark>첫 번째 인자 타입 K를 프로퍼티로, 해당 프로퍼티의 타입으로 T</mark>를 가지는 새로운 객체 타입을 구성합니다.</p>
-<pre><code class="language-javascript">type Record&lt;K extends keyof any, T&gt; = {
-  [P in K]: T;
-};
-</code></pre>
-<p>아래와 같이 사용할 수 있습니다.</p>
-<pre><code class="language-javascript">type dataState = &quot;pending&quot; | &quot;fulfilled&quot; | &quot;error&quot;
-const obj: Record&lt;dataState, IData[]&gt; = {
-    pending: IData 타입의 객체 배열,
-    fulfilled: IData 타입의 객체 배열,
-    error: IData 타입의 객체 배열,
-}
-</code></pre>
-<p><code>Partial</code>과의 콤비네이션도 가넝.</p>
-<pre><code class="language-javascript">type dataState = &quot;pending&quot; | &quot;fulfilled&quot; | &quot;error&quot;
-const obj: Partial&lt;Record&lt;dataState, IData[]&gt;&gt; = {
-    pending: IData 타입의 객체 배열
-} // fulfilled, error 프로퍼티가 없어도 OK.
-</code></pre></section></div><article><h3>더 알아보려면?</h3><ul><li><a href="https://typescript-kr.github.io/pages/utility-types.html">https://typescript-kr.github.io/pages/utility-types.html</a></li></ul></article><div class="mdxfrontmatter__id__FlexEndContainer-sc-1gyqok2-1 ivHKbn"><a href="https://github.com/0hhanum/null_quiz_answers/issues/new?title=유틸리티 타입 (1) 수정 요청&amp;body=잘못된 정보를 고쳐주시면 기프티콘을 드려요 :)"><p>잘못된 정보가 있나요?</p></a></div></section></main></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/answer/v5o42oni321p/";/*]]>*/</script><!-- slice-start id="_gatsby-scripts-1" -->
+</style><title data-gatsby-head="true">TCP/IP 프로토콜 스위트 | null_quiz_answers</title><link rel="shortcut icon" type="image/x-icon" href="https://0hhanum.github.io/null_quiz_answers/images/favicon.ico" data-gatsby-head="true"/></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" id="gatsby-focus-wrapper"><div><main class="container"><section class="Header__Nav-sc-88xloa-0 kiRgA-D"><nav><!--$--><img src="https://0hhanum.github.io/null_quiz_answers/images/logo.svg" class="Header__Img-sc-88xloa-1 iUiTAs"/><!--/$--></nav></section><section><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/atom-one-dark.min.css"/><div class="mdxfrontmatter__id__Container-sc-1gyqok2-0 joHxsW container"><h1>TCP/IP 프로토콜 스위트</h1><div><i>About </i><i>TCP/IP 모델<!-- -->, </i><i>네트워크</i></div><div class="mdxfrontmatter__id__FlexEndContainer-sc-1gyqok2-1 ivHKbn"><i>2024/05/21</i></div><hr/></div><div class="mdxfrontmatter__id__Container-sc-1gyqok2-0 joHxsW container"><section><h1>TCP/IP 모델</h1>
+<p>TCP/IP 모델은 네트워크 통신을 효과적으로 수행하기 위해 4개(5개)의 계층으로 구성된 프로토콜 집합입니다.
+각 계층은 특정한 역할을 담당하며, 데이터를 송수신하는 과정에서 순차적으로 캡슐화 및 역캡슐화가 이루어집니다.</p>
+<h1>4계층</h1>
+<ul>
+<li>Application Layer: 사용자가 접하는 응용 프로그램의 동작에 필요한 정보를 담는 계층</li>
+<li>Transport Layer: 데이터의 신뢰성과 무결성을 보장하는 계층. 포트 정보가 담김</li>
+<li>Internet Layer: IP 주소를 기반으로 패킷을 목적지로 전달하기 위한 계층</li>
+<li>Network Interface(Access) Layer: 실제 네트워크 하드웨어와 통신하는 계층. MAC 주소로 장치를 식별</li>
+</ul>
+<h1>캡슐화와 헤더</h1>
+<p>각 계층을 거칠 때마다 데이터에는 해당 계층의 헤더가 추가됩니다.
+HTTP 통신을 예로 들면 아래와 같습니다.</p>
+<ol>
+<li>Application Layer
+HTTP 헤더가 추가</li>
+<li>Transport Layer
+TCP 헤더가 추가</li>
+<li>Internet Layer
+IP 헤더가 추가</li>
+<li>Network Interface(Access) Layer
+이더넷 헤더가 추가</li>
+</ol>
+<p>이러한 헤더는 수신 호스트에서 역순 으로 제거되어 원래의 데이터를 복원합니다.</p>
+<h1>HTTP와 Application Layer</h1>
+<p>HTTP(Hypertext Transfer Protocol)는 웹 브라우저와 웹 서버 간에 데이터를 주고받기 위한 프로토콜입니다.
+HTTP는 웹 페이지를 요청하고 응답을 받는 과정에서 사용되며 TCP/IP 모델의 최상위 계층인 Application Layer에 속합니다.</p></section></div><article><h3>더 알아보려면?</h3><ul><li><a href="https://velog.io/@haero_kim/%EB%AC%BC-%ED%9D%90%EB%A5%B4%EB%93%AF-%EC%9D%BD%EC%96%B4%EB%B3%B4%EB%8A%94-TCPIP">https://velog.io/@haero_kim/%EB%AC%BC-%ED%9D%90%EB%A5%B4%EB%93%AF-%EC%9D%BD%EC%96%B4%EB%B3%B4%EB%8A%94-TCPIP</a></li><li><a href="https://yozm.wishket.com/magazine/detail/2005/">https://yozm.wishket.com/magazine/detail/2005/</a></li></ul></article><div class="mdxfrontmatter__id__FlexEndContainer-sc-1gyqok2-1 ivHKbn"><a href="https://github.com/0hhanum/null_quiz_answers/issues/new?title=TCP/IP 프로토콜 스위트 수정 요청&amp;body=잘못된 정보를 고쳐주시면 기프티콘을 드려요 :)"><p>잘못된 정보가 있나요?</p></a></div></section></main></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/answer/bsv16x23o0bq/";/*]]>*/</script><!-- slice-start id="_gatsby-scripts-1" -->
           <script
             id="gatsby-chunk-mapping"
           >
