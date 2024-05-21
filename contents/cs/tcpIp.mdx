@@ -1,0 +1,61 @@
+---
+id: bsv16x23o0bq
+title: TCP/IP 프로토콜 스위트
+date: 2024-05-21
+tags:
+  - TCP/IP 모델
+  - 네트워크
+relatedLinks:
+  - https://velog.io/@haero_kim/%EB%AC%BC-%ED%9D%90%EB%A5%B4%EB%93%AF-%EC%9D%BD%EC%96%B4%EB%B3%B4%EB%8A%94-TCPIP
+  - https://yozm.wishket.com/magazine/detail/2005/
+questionType: 객관식
+question:
+  - TCP/IP 모델에서 HTTP 프토토콜이 속하는 계층은?
+choices:
+  - "Application Layer"
+  - "Transport layer"
+  - "Internet Layer"
+  - "Network Interface Layer"
+answer:
+  - A
+level: 1
+category: "cs"
+description:
+  - TCP/IP 모델은 네트워크 통신을 위한 프로토콜의 집합이에요.
+  - 일반적으로 4개의 계층으로 구분해요.
+  - HTTP는 웹 브라우저와 웹 서버 간에 데이터를 주고받기 위한 프로토콜로, 웹 페이지를 전송하는데 사용돼요.
+  - HTTP는 Application 계층에 속해요.
+---
+
+# TCP/IP 모델
+
+TCP/IP 모델은 네트워크 통신을 효과적으로 수행하기 위해 4개(5개)의 계층으로 구성된 프로토콜 집합입니다.
+각 계층은 특정한 역할을 담당하며, 데이터를 송수신하는 과정에서 순차적으로 캡슐화 및 역캡슐화가 이루어집니다.
+
+# 4계층
+
+- Application Layer: 사용자가 접하는 응용 프로그램의 동작에 필요한 정보를 담는 계층
+- Transport Layer: 데이터의 신뢰성과 무결성을 보장하는 계층. 포트 정보가 담김
+- Internet Layer: IP 주소를 기반으로 패킷을 목적지로 전달하기 위한 계층
+- Network Interface(Access) Layer: 실제 네트워크 하드웨어와 통신하는 계층. MAC 주소로 장치를 식별
+
+# 캡슐화와 헤더
+
+각 계층을 거칠 때마다 데이터에는 해당 계층의 헤더가 추가됩니다.
+HTTP 통신을 예로 들면 아래와 같습니다.
+
+1. Application Layer
+   HTTP 헤더가 추가
+2. Transport Layer
+   TCP 헤더가 추가
+3. Internet Layer
+   IP 헤더가 추가
+4. Network Interface(Access) Layer
+   이더넷 헤더가 추가
+
+이러한 헤더는 수신 호스트에서 역순으로 제거되어 원래의 데이터를 복원합니다.
+
+# HTTP와 Application Layer
+
+HTTP(Hypertext Transfer Protocol)는 웹 브라우저와 웹 서버 간에 데이터를 주고받기 위한 프로토콜입니다.
+HTTP는 웹 페이지를 요청하고 응답을 받는 과정에서 사용되며 TCP/IP 모델의 최상위 계층인 Application Layer에 속합니다.
