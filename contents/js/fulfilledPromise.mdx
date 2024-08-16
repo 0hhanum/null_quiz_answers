@@ -13,7 +13,7 @@ questionType: OX
 question:
   - async/await 또는 then 메서드를 이용하면 이미 Fulfilled 된 Promise 객체의 Result 값에 접근할 수 있다.
   - 즉, 아래에서 1이 두번 찍힌다.
-  - "<code lang=javascript>const a = Promise.resolve(1);\n\ta.then(result => console.log(result));\n\ta.then(result => console.log(result));</code>"
+  - "<code lang=javascript>const a = Promise.resolve(1);\na.then(result => console.log(result));\na.then(result => console.log(result));</code>"
 answer:
   - O
 level: 1
@@ -32,10 +32,7 @@ description:
 
 Promise의 상태 변경과는 '직접적인' 연관은 없습니다. `Fulfilled`나 `Rejected`라면 핸들러 함수를 실행할 뿐이죠.
 
-<mark>
-  다만 중요한 점은 이미 `Fulfilled`나 `Rejected` 상태에서 실행하더라도, 동작
-  방식은 같아
-</mark>
+<mark>다만 중요한 점은 이미 `Fulfilled`나 `Rejected` 상태에서 실행하더라도, 동작 방식은 같아</mark>
 
 <mark>핸들러를 태스크 큐에 넣어 즉시 실행한다는 점입니다.</mark>
 
