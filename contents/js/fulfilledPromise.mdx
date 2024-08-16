@@ -1,0 +1,67 @@
+---
+id: eroq9aaolm81
+title: 이미 Fulfilled 된 Promise
+date: 2024-08-16
+tags:
+  - JS
+  - JS미세팁
+relatedLinks:
+  - https://www.lydiahallie.com/blog/promise-execution
+  - https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Promise/then
+  - https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Statements/async_function
+questionType: OX
+question:
+  - async/await 또는 then 메서드를 이용하면 이미 Fulfilled 된 Promise 객체의 Result 값에 접근할 수 있다.
+  - 즉, 아래에서 1이 두번 찍힌다.
+  - "<code lang=javascript>const a = Promise.resolve(1);\n\ta.then(result => console.log(result));\n\ta.then(result => console.log(result));</code>"
+answer:
+  - O
+level: 1
+category: "js"
+description:
+  - then과 async/await은 Promise의 상태가 Fulfilled 인지만 확인하고 코드를 실행해요.
+---
+
+# then
+
+`then`이란 어감 때문에 Promise의 상태가 `Pending`에서 변경될 때 콜백이 실행될 것 같지 않나요? 저는 그랬는데.
+
+하지만 그렇지 않습니다.
+
+`then`은 Promise가 이행되거나 거부되었을 때 실행되는 Promise 객체의 메서드로
+
+Promise의 상태 변경과는 '직접적인' 연관은 없습니다. `Fulfilled`나 `Rejected`라면 핸들러 함수를 실행할 뿐이죠.
+
+<mark>다만 중요한 점은 이미 `Fulfilled`나 `Rejected` 상태에서 실행하더라도, 동작 방식은 같아
+
+핸들러를 태스크 큐에 넣어 즉시 실행한다는 점입니다.</mark>
+
+```javascript
+const a = Promise.resolve(1);
+a.then((res) => console.log(res));
+a.then((res) => console.log(res));
+console.log(123);
+
+// 123
+// 1
+// 1
+```
+
+따라서 123이 먼저 출력되게 됩니다.
+
+# async await
+
+async / await도 마찬가지입니다.
+
+```javascript
+const a = Promise.resolve(1);
+async function b() {
+  console.log(await a);
+  console.log(await a);
+}
+b();
+// 1
+// 1
+```
+
+프로미스의 상태 변경 자체와는 상관없이 Promise가 이행되었다면 코드를 실행합니다.
