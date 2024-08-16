@@ -32,9 +32,12 @@ description:
 
 Promise의 상태 변경과는 '직접적인' 연관은 없습니다. `Fulfilled`나 `Rejected`라면 핸들러 함수를 실행할 뿐이죠.
 
-<mark>다만 중요한 점은 이미 `Fulfilled`나 `Rejected` 상태에서 실행하더라도, 동작 방식은 같아
+<mark>
+  다만 중요한 점은 이미 `Fulfilled`나 `Rejected` 상태에서 실행하더라도, 동작
+  방식은 같아
+</mark>
 
-핸들러를 태스크 큐에 넣어 즉시 실행한다는 점입니다.</mark>
+<mark>핸들러를 태스크 큐에 넣어 즉시 실행한다는 점입니다.</mark>
 
 ```javascript
 const a = Promise.resolve(1);
