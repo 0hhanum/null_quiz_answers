@@ -1,0 +1,57 @@
+---
+id: ce2w1xz4v7fa
+title: 쿠키와 보안
+date: 2024-08-23
+tags:
+  - web
+  - 보안
+relatedLinks:
+  - https://developer.mozilla.org/ko/docs/Web/HTTP/Cookies
+questionType: 객관식
+question:
+  - 쿠키에 세션 ID 등 민감한 정보를 저장하는 경우, XSS 공격에 주의해야 합니다.
+  - Webview 외부에서 주입한 JS 코드로 쿠키에 접근해 정보를 탈취하지 못하도록 하려면
+  - 쿠키의 어떤 속성을 사용해야 할까요?
+choices:
+  - "HttpOnly"
+  - "Secure"
+answer:
+  - A
+level: 2
+category: "dev"
+description:
+  - HttpOnly 쿠키는 쿠키 API로 접근할 수 없어요.
+  - Secure는 HTTPS 연결에서만 쿠키를 전송하도록 강제하는 속성이에요.
+---
+
+# XSS(Cross-Site-Scripting) 공격
+
+XSS는 웹의 취약점을 이용한 공격으로, 피공격자가 모르게 악의적인 스크립트를 웹 페이지에서 실행하는 공격 방식입니다.
+
+예를 들면, Webview는 외부(모바일 앱)에서 주입한 JS코드를 Webview 내에서 실행하는 기능을 제공합니다.
+
+만약 아래와 같은 코드를 실행하도록 한다면 어떨까요?
+
+```javascript
+(function () {
+  const cookies = document.cookie;
+  const sessionData = Object.keys(sessionStorage);
+  window.ReactNativeWebView.postMessage(
+    // RN 웹뷰 객체 메서드
+    JSON.stringify({
+      cookies,
+      sessionData,
+    })
+  );
+})();
+```
+
+피공격자는 본인도 모르게 자신의 쿠키와 웹 스토리지 정보를 웹뷰 외부로 보내게 됩니다.
+이런 공격을 예방하려면 기본적으로 쿠키나 웹 스토리지에는 민감한 정보를 저장해서는 안됩니다.
+
+# HttpOnly
+
+추가적인 XSS 예방 대책은 쿠키의 `HttpOnly` 속성입니다. 서버에서 보내는 쿠키에 `HttpOnly` 플래그를 설정하면
+브라우저의 `document.cookie` API로 해당 쿠키에 접근할 수 없게 되며, 서버로 보내는 요청에만 포함됩니다.
+
+`Secure`와 `HttpOnly`는 민감한 쿠키를 안전하게 보호하기 위한 권장 설정입니다.
