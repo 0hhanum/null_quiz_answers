@@ -7,114 +7,98 @@ data-styled.g2[id="Header__Img-sc-88xloa-1"]{content:"iUiTAs,"}/*!sc*/
 data-styled.g3[id="mdxfrontmatter__id__Container-sc-1gyqok2-0"]{content:"joHxsW,"}/*!sc*/
 .ivHKbn{display:flex;justify-content:end;}/*!sc*/
 data-styled.g4[id="mdxfrontmatter__id__FlexEndContainer-sc-1gyqok2-1"]{content:"ivHKbn,"}/*!sc*/
-</style><title data-gatsby-head="true">리렌더링 횟수는? | null_quiz_answers</title><link rel="shortcut icon" type="image/x-icon" href="https://0hhanum.github.io/null_quiz_answers/images/favicon.ico" data-gatsby-head="true"/></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" id="gatsby-focus-wrapper"><div><main class="container"><section class="Header__Nav-sc-88xloa-0 kiRgA-D"><nav><!--$--><img src="https://0hhanum.github.io/null_quiz_answers/images/logo.svg" class="Header__Img-sc-88xloa-1 iUiTAs"/><!--/$--></nav></section><section><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/atom-one-dark.min.css"/><div class="mdxfrontmatter__id__Container-sc-1gyqok2-0 joHxsW container"><h1>리렌더링 횟수는?</h1><div><i>About </i><i>React<!-- -->, </i><i>Automatic Batching<!-- -->, </i><i>React 18</i></div><div class="mdxfrontmatter__id__FlexEndContainer-sc-1gyqok2-1 ivHKbn"><i>2023/11/04</i></div><hr/></div><div class="mdxfrontmatter__id__Container-sc-1gyqok2-0 joHxsW container"><section><h1>batching?</h1>
-<p>배칭이란 리액트가 더 나은 성능을 위해 여러 상태 업데이트를 하나로 묶어 리렌더링 하는 것을 의미합니다.</p>
-<pre><code class="language-javascript">const Component = () =&gt; {
-  const [state1, setState1] = useState(true);
-  const [state2, setState2] = useState(true);
+</style><title data-gatsby-head="true">객체와 Map 순회 | null_quiz_answers</title><link rel="shortcut icon" type="image/x-icon" href="https://0hhanum.github.io/null_quiz_answers/images/favicon.ico" data-gatsby-head="true"/></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" id="gatsby-focus-wrapper"><div><main class="container"><section class="Header__Nav-sc-88xloa-0 kiRgA-D"><nav><!--$--><img src="https://0hhanum.github.io/null_quiz_answers/images/logo.svg" class="Header__Img-sc-88xloa-1 iUiTAs"/><!--/$--></nav></section><section><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/atom-one-dark.min.css"/><div class="mdxfrontmatter__id__Container-sc-1gyqok2-0 joHxsW container"><h1>객체와 Map 순회</h1><div><i>About </i><i>JS</i></div><div class="mdxfrontmatter__id__FlexEndContainer-sc-1gyqok2-1 ivHKbn"><i>2024/08/30</i></div><hr/></div><div class="mdxfrontmatter__id__Container-sc-1gyqok2-0 joHxsW container"><section><h1>이터러블(Iterable)</h1>
+<p>JS에서 이터러블은 반복 가능한 객체를 말합니다. 즉 <code>for...of</code>와 같은 반복문에서 사용할 수 있는 객체입니다.</p>
+<p>이터러블 객체는 <code>Symbol.iterator</code> 메서드를 가지고 있어야 합니다.</p>
+<p>즉, 이터러블 객체는 <mark>Symbol.iterator</mark> 메서드를 구현하는 객체라고 할 수 있습니다.</p>
+<p><code>Symbol.iterator</code> 메서드를 호출하면 <mark>이터레이터 객체</mark>를 반환해야 합니다.</p>
+<p>실제 순회(반복)은 이터레이터 객체를 통해 이루어지게 됩니다.</p>
+<p><code>Array</code>, <code>String</code>, <code>Map</code>, <code>Set</code> 등은 모두 기본적으로 이터러블입니다.</p>
+<h1>이터레이터</h1>
+<p>이터레이터는 이터러블에서 반환되는 객체로, <code>next()</code> 메서드가 구현되어야 합니다.</p>
+<p>이 <code>next()</code> 메서드는 이터레이션을 한 단계씩 진행할 때 호출되며,</p>
+<p>이터레이션이 끝날 때까지 각 호출 시마다 <code>{ value: 값, done: boolean }</code> 형태의 객체를 반환합니다.</p>
+<p>value는 현재 순회 중인 값을 나타내며, done은 이터레이션이 끝났는지를 나타내는 불리언 값입니다.</p>
+<h1>일반 객체를 이터러블로 만들어보기</h1>
+<p>굳이 이럴 필요는 없지만 이해를 돕기 위해 일반 객체를 이터러블로 만드는 예제를 진행하겠습니다.</p>
+<pre><code class="language-javascript">const myObject = {
+  a: 1,
+  b: 2,
+  c: 3,
 
-  const onClick = () =&gt; {
-    setState1(false); // 리렌더링 전
-    setState2(true); // 리렌더링 전
-    // **핸들러 함수가 마무리되면 리렌더링
-  };
+  // Symbol.iterator 메서드를 추가하여 이터러블로 만듭니다.
+  [Symbol.iterator]() {
+    const entries = Object.entries(this); // 객체의 [key, value] 쌍 배열을 가져옴
+    let index = 0; // 초기 인덱스 설정
 
-  ...
+    return {
+      // 이터레이터 객체의 next 메서드
+      next() {
+        if (index &lt; entries.length) {
+          const [key, value] = entries[index]; // 현재 인덱스의 [key, value] 쌍
+          index++; // 인덱스 증가
+          return { value: [key, value], done: false }; // [key, value] 반환
+        } else {
+          return { done: true }; // 순회 완료 시 done: true
+        }
+      },
+    };
+  },
 };
-</code></pre>
-<p>리액트는 상태 변경에 대응해 리렌더링합니다.</p>
-<p>하지만 위 경우, <code>setState1</code>과 <code>setState2</code>에 모두 반응하여 두 번 리렌더링한다면 성능적으로 좋지 않겠죠?</p>
-<p>또한 절반만 완료된 업데이트가 반영되어 의도하지 않은 상태 조합을 가질 수도 있습니다.</p>
-<p>이를 위해 리액트 팀은 <code>batching</code>이라는 개념을 도입했습니다.</p>
-<p>동시에 일어나는 상태 변경을 한 번에 처리해 렌더링 횟수를 최적화합니다.</p>
-<mark>하지만 React 17까지는 이벤트 핸들러 밖에서 발생하는 업데이트에 대해서는
-배칭하지 않았습니다.</mark>
-<br/>
-<br/>
-<pre><code class="language-javascript">const Component = () =&gt; {
-  const [state1, setState1] = useState(true);
-  const [state2, setState2] = useState(true);
 
-  const onClick = () =&gt; {
-    fetchiApi().then(() =&gt; {
-      // onClick 핸들러가 마무리 된 후에 실행
-      // fetchApi의 콜백으로 동작
-      setState1(false); // 리렌더링
-      setState2(true); // 리렌더링
-    })
-  };
+// 이터러블이 된 객체를 for...of 루프를 사용해 순회할 수 있습니다.
+for (const [key, value] of myObject) {
+  console.log(key, value); // &quot;a 1&quot;, &quot;b 2&quot;, &quot;c 3&quot; 출력
+}
+</code></pre>
+<p>이해가 좀 되셨나요?</p>
+<h1>Enumerable</h1>
+<p>js에서 Enumerable은 다른 언어와 조금 다르게, 객체의 속성을 <code>for...in</code> 루프와 같은 방법으로 열거할 수 있는 속성을 의미합니다.</p>
+<pre><code class="language-javascript">const foo = {
+  a: 1,
+  b: 2,
+};
+for (const key in foo) {
+  console.log(key);
+}
 
-  ...
-};
+// a
+// b
 </code></pre>
-<p>위 예시처럼, <code>onClick</code> 함수가 종료된 후에 실행되는 비동기 요청에 대한 콜백이나,</p>
-<p><code>setTimeout</code>, <code>Promise</code> 혹은 네이티브 이벤트에 대한 핸들러 내부의 업데이트는 배칭되지 않았습니다.</p>
-<p>리렌더링이 두 번 발생하고 있죠.</p>
-<p>이를 해결하기 위해 React 18에서 <code>Automatic batching</code>이 소개됩니다.</p>
-<h1>Automatic batching</h1>
-<p>React 18의 <code>createRoot</code>로 생성된 루트 내의 모든 업데이트는 어디서 왔는가와 무관하게 자동으로 배칭됩니다.</p>
-<p><code>timeout</code>, <code>Promise</code>등의 비동기 처리 콜백이나 외부(네이티브) 이벤트 핸들러에 대해서도 배칭이 동작합니다.</p>
-<p>리액트 팀은 이를 <code>Automatic batching</code>이라고 소개했습니다.</p>
-<b><p>신기한 점은 자동 배칭이 짧은 tick 동안 쌓여있는 업데이트들을 묶어 실행한다는
-것입니다.</p></b>
-<br/>
-<br/>
-<pre><code class="language-javascript">const Component = () =&gt; {
-  const [state1, setState1] = useState(true);
-  const [state2, setState2] = useState(true);
-  const onClick = async () =&gt; {
-    setState1((curr) =&gt; !curr);
-    setState2((curr) =&gt; !curr); // 리렌더링
-    const state = await getServerState(); // 비동기 데이터 waiting
-    setState1(state);
-    setState2(state); // 리렌더링
-    // -------- 한 번에 리렌더링 --------- //
-    setTimeout(() =&gt; {
-      setState1((curr) =&gt; !curr);
-      setState2((curr) =&gt; !curr);
-    }, 100);
-    setTimeout(() =&gt; {
-      setState1((curr) =&gt; !curr);
-      setState2((curr) =&gt; !curr);
-    }, 100);
-    // ------------------------------- //
+<p>기본적으로 객체의 속성은 Enumerable이기 때문에 위와 같이 동작합니다.</p>
+<p><code>Object.defineProperty()</code> 메서드를 통해 속성을 변경해 확인할 수 있습니다.</p>
+<pre><code class="language-javascript">Object.defineProperty(foo, &quot;a&quot;, {
+  enumerable: false,
+});
+
+for (const key in foo) {
+  console.log(key); // &#x27;b&#x27;만 출력됩니다
+}
+</code></pre>
+<p>객체에 정의된 프로토타입 속성도 Enumerable 입니다.</p>
+<pre><code class="language-javascript">function Person(name, age) {
+  this.name = name;
+  this.age = age;
+  this.getAge = function () {
+    return this.age;
   };
+}
+
+Person.prototype.getName = function () {
+  return this.name;
 };
+
+const han = new Person(&quot;han&quot;, 50);
+for (const i in han) {
+  console.log(i);
+}
+// name
+// age
+// getAge
+// getName
 </code></pre>
-<p>퀴즈 정답은 3 입니다.</p>
-<p>핸들러 내부의 업데이트는 배칭 처리를 할 수 있다고 쳐도, 언제 끝날 지 모르는 외부 업데이트를 어떻게 배치 처리 하는지 신기하지 않나요?</p>
-<p>내부적으로 타이머를 돌리는건지, 동작원리가 궁금해져 찾아본 결과 리액트 팀의 답변을 찾았습니다.</p>
-<blockquote><p>&quot;실질적으로 말하자면, React가 &#x27;조금 기다린다&#x27;는 것을 의미합니다 (&quot;작업 또는
-마이크로 태스크가 끝날 때까지&quot;인 경우 기술 용어). 그러면 React가 화면을
-업데이트합니다.&quot;</p><footer><cite><p>https://github.com/reactwg/react-18/discussions/46#discussioncomment-846862</p></cite></footer></blockquote>
-<p>간단하게 리액트가 <code>batching</code> 중일시 업데이트를 큐에 쌓아두고 마이크로 태스크 큐가 비면 배칭된 업데이트를 실행한다는 식의 답변을 확인했습니다.</p>
-<p>위의 코드를 테스트해보면 100ms의 <code>setTimeout</code>이 두 개 돌아가고 있는데도 배칭되어 실행됩니다.</p>
-<p>재미있는 테스트를 해보겠습니다.</p>
-<pre><code class="language-javascript">const Component = () =&gt; {
-  const [state1, setState1] = useState(0);
-  const [state2, setState2] = useState(0);
-  console.log(&quot;rendered&quot;, state1, state2);
-  const onClick = () =&gt; {
-    // setTimeout1
-    setTimeout(() =&gt; {
-      setState1(1);
-      setState2(1);
-    }, 100);
-    // setTimeout2
-    setTimeout(() =&gt; {
-      setState1(2);
-      setState2(2);
-    }, 101);
-  };
-};
-</code></pre>
-<p>위 테스트의 결과는 어떨 것 같나요?</p>
-<p>1ms 차이를 두고 배치 처리가 되는지 테스트하는 코드입니다.</p>
-<p>결과는 일관적이지 않습니다.</p>
-<b><p><code>setTimeout1</code>과 <code>setTimeout2</code>가 동시에 실행되기도, 묶여 실행되기도 합니다.</p></b>
-<p>DOM 페인팅이라던지 어떤 이벤트들이 마이크로태스크큐에 남아있다면 묶여 처리되는걸로 예상됩니다.</p>
-<p>리액트 팀의 답변 이해를 돕는 테스트랄까요.</p>
-<p>재미있죠?</p></section></div><article><h3>더 알아보려면?</h3><ul><li><a href="https://immigration9.github.io/react/2021/06/12/automatic-batching-react.html">https://immigration9.github.io/react/2021/06/12/automatic-batching-react.html</a></li><li><a href="https://react.dev/blog/2022/03/08/react-18-upgrade-guide#automatic-batching">https://react.dev/blog/2022/03/08/react-18-upgrade-guide#automatic-batching</a></li><li><a href="https://github.com/reactwg/react-18/discussions/21">https://github.com/reactwg/react-18/discussions/21</a></li></ul></article><div class="mdxfrontmatter__id__FlexEndContainer-sc-1gyqok2-1 ivHKbn"><a href="https://github.com/0hhanum/null_quiz_answers/issues/new?title=리렌더링 횟수는? 수정 요청&amp;body=잘못된 정보를 고쳐주시면 기프티콘을 드려요 :)"><p>잘못된 정보가 있나요?</p></a></div></section></main></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/answer/qwf0tk47bp5s/";/*]]>*/</script><!-- slice-start id="_gatsby-scripts-1" -->
+<p>이제 왜 Object의 프로토타입 속성들이 <code>for...in</code> 구문으로 순회되지 않는지 감이 오시나요?
+<code>enumerable</code> 속성이 <code>false</code>이기 때문입니다 !</p></section></div><article><h3>더 알아보려면?</h3><ul><li><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Iteration_protocols">https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Iteration_protocols</a></li><li><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Symbol/iterator">https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Symbol/iterator</a></li><li><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Enumerability_and_ownership_of_properties">https://developer.mozilla.org/ko/docs/Web/JavaScript/Enumerability_and_ownership_of_properties</a></li></ul></article><div class="mdxfrontmatter__id__FlexEndContainer-sc-1gyqok2-1 ivHKbn"><a href="https://github.com/0hhanum/null_quiz_answers/issues/new?title=객체와 Map 순회 수정 요청&amp;body=잘못된 정보를 고쳐주시면 기프티콘을 드려요 :)"><p>잘못된 정보가 있나요?</p></a></div></section></main></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/answer/p528sq6cgnzh/";/*]]>*/</script><!-- slice-start id="_gatsby-scripts-1" -->
           <script
             id="gatsby-chunk-mapping"
           >
