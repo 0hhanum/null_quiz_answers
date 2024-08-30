@@ -1,0 +1,147 @@
+---
+id: p528sq6cgnzh
+title: 객체와 Map 순회
+date: 2024-08-30
+tags:
+  - JS
+relatedLinks:
+  - https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Iteration_protocols
+  - https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Symbol/iterator
+  - https://developer.mozilla.org/ko/docs/Web/JavaScript/Enumerability_and_ownership_of_properties
+questionType: 객관식
+question:
+  - 일반 객체 {} 와 달리
+  - for...of 문으로 Map 인스턴스를 순회할 수 있는 이유는
+  - Map 인스턴스가 기본적으로 ______ 이기 때문이다.
+choices:
+  - "Iterable"
+  - "Enumerable"
+answer:
+  - A
+level: 2
+category: "js"
+description:
+  - for...of 문은 이터러블 프로토콜을 따르는 객체만을 순회해요.
+  - for...in을 통해 객체의 enumerable한 속성을 순회할 수 있어요.
+---
+
+# 이터러블(Iterable)
+
+JS에서 이터러블은 반복 가능한 객체를 말합니다. 즉 `for...of`와 같은 반복문에서 사용할 수 있는 객체입니다.
+
+이터러블 객체는 `Symbol.iterator` 메서드를 가지고 있어야 합니다.
+
+즉, 이터러블 객체는 <mark>Symbol.iterator</mark> 메서드를 구현하는 객체라고 할 수 있습니다.
+
+`Symbol.iterator` 메서드를 호출하면 <mark>이터레이터 객체</mark>를 반환해야 합니다.
+
+실제 순회(반복)은 이터레이터 객체를 통해 이루어지게 됩니다.
+
+`Array`, `String`, `Map`, `Set` 등은 모두 기본적으로 이터러블입니다.
+
+# 이터레이터
+
+이터레이터는 이터러블에서 반환되는 객체로, `next()` 메서드가 구현되어야 합니다.
+
+이 `next()` 메서드는 이터레이션을 한 단계씩 진행할 때 호출되며,
+
+이터레이션이 끝날 때까지 각 호출 시마다 `{ value: 값, done: boolean }` 형태의 객체를 반환합니다.
+
+value는 현재 순회 중인 값을 나타내며, done은 이터레이션이 끝났는지를 나타내는 불리언 값입니다.
+
+# 일반 객체를 이터러블로 만들어보기
+
+굳이 이럴 필요는 없지만 이해를 돕기 위해 일반 객체를 이터러블로 만드는 예제를 진행하겠습니다.
+
+```javascript
+const myObject = {
+  a: 1,
+  b: 2,
+  c: 3,
+
+  // Symbol.iterator 메서드를 추가하여 이터러블로 만듭니다.
+  [Symbol.iterator]() {
+    const entries = Object.entries(this); // 객체의 [key, value] 쌍 배열을 가져옴
+    let index = 0; // 초기 인덱스 설정
+
+    return {
+      // 이터레이터 객체의 next 메서드
+      next() {
+        if (index < entries.length) {
+          const [key, value] = entries[index]; // 현재 인덱스의 [key, value] 쌍
+          index++; // 인덱스 증가
+          return { value: [key, value], done: false }; // [key, value] 반환
+        } else {
+          return { done: true }; // 순회 완료 시 done: true
+        }
+      },
+    };
+  },
+};
+
+// 이터러블이 된 객체를 for...of 루프를 사용해 순회할 수 있습니다.
+for (const [key, value] of myObject) {
+  console.log(key, value); // "a 1", "b 2", "c 3" 출력
+}
+```
+
+이해가 좀 되셨나요?
+
+# Enumerable
+
+js에서 Enumerable은 다른 언어와 조금 다르게, 객체의 속성을 `for...in` 루프와 같은 방법으로 열거할 수 있는 속성을 의미합니다.
+
+```javascript
+const foo = {
+  a: 1,
+  b: 2,
+};
+for (const key in foo) {
+  console.log(key);
+}
+
+// a
+// b
+```
+
+기본적으로 객체의 속성은 Enumerable이기 때문에 위와 같이 동작합니다.
+
+`Object.defineProperty()` 메서드를 통해 속성을 변경해 확인할 수 있습니다.
+
+```javascript
+Object.defineProperty(foo, "a", {
+  enumerable: false,
+});
+
+for (const key in foo) {
+  console.log(key); // 'b'만 출력됩니다
+}
+```
+
+객체에 정의된 프로토타입 속성도 Enumerable 입니다.
+
+```javascript
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+  this.getAge = function () {
+    return this.age;
+  };
+}
+
+Person.prototype.getName = function () {
+  return this.name;
+};
+
+const han = new Person("han", 50);
+for (const i in han) {
+  console.log(i);
+}
+// name
+// age
+// getAge
+// getName
+```
+
+이제 왜 Object의 프로토타입 속성들이 `for...in` 구문으로 순회되지 않는지 감이 오시나요?
+`enumerable` 속성이 `false`이기 때문입니다 !
